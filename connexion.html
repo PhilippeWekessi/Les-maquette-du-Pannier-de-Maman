@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connexion — Le Panier de Maman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#2F5233; --green-leaf:#4C7A3D; --orange:#E8752D;
+    --tomato:#C1442E; --cream:#FBF3E3; --kraft:#E9D9B6; --kraft-dark:#CBB27F;
+    --charcoal:#2B2420; --charcoal-soft:#5A5148; --white:#fff;
+    --font-display:'Baloo 2',sans-serif; --font-body:'Work Sans',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:var(--font-body);color:var(--charcoal);
+    background:var(--cream);min-height:100vh;
+    display:flex;align-items:center;justify-content:center;padding:24px;
+  }
+  button{font-family:inherit;cursor:pointer;border:none;}
+  input{font-family:inherit;}
+  a{color:inherit;text-decoration:none;}
+
+  .auth-card{
+    width:100%;max-width:420px;background:#fff;border-radius:22px;
+    box-shadow:0 16px 40px rgba(43,36,32,0.12);overflow:hidden;
+  }
+  .auth-head{background:var(--green-deep);padding:30px 30px 24px;text-align:center;color:#fff;}
+  .auth-head__brand{font-family:var(--font-display);font-weight:700;font-size:1.3rem;}
+  .auth-head__sub{font-size:0.85rem;color:#B7D3A8;margin-top:4px;}
+
+  .auth-body{padding:32px 30px 32px;}
+  .auth-body__title{font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--green-deep);margin-bottom:20px;text-align:center;}
+
+  .form-group{margin-bottom:16px;}
+  .form-group label{display:block;font-size:0.85rem;font-weight:600;margin-bottom:6px;color:var(--charcoal-soft);}
+  .form-group input{
+    width:100%;padding:12px 14px;border:1.5px solid var(--kraft-dark);border-radius:10px;
+    font-size:0.92rem;background:var(--cream);color:var(--charcoal);
+  }
+  .form-group input:focus{outline:2px solid var(--green-leaf);}
+  .field-hint{font-size:0.76rem;color:var(--charcoal-soft);margin-top:4px;}
+
+  .submit-btn{
+    width:100%;background:var(--orange);color:#fff;padding:14px 0;border-radius:999px;
+    font-weight:700;font-size:0.98rem;margin-top:8px;transition:transform .15s ease;
+  }
+  .submit-btn:hover{transform:translateY(-2px);}
+
+  .switch-link{text-align:center;font-size:0.86rem;color:var(--charcoal-soft);margin-top:18px;}
+  .switch-link a{color:var(--green-deep);font-weight:700;}
+</style>
+</head>
+<body>
+
+<div class="auth-card">
+  <div class="auth-head">
+    <div class="auth-head__brand">Le Panier de Maman</div>
+    <div class="auth-head__sub">Fruits et légumes frais, livrés chez vous</div>
+  </div>
+
+  <div class="auth-body">
+    <div class="auth-body__title">Se connecter</div>
+
+    <div class="form-group">
+      <label>Email ou numéro de téléphone</label>
+      <input type="text" placeholder="Ex : panier@gmail.com ou 01 90 00 00 00">
+    </div>
+    <div class="form-group">
+      <label>Mot de passe</label>
+      <input type="password" placeholder="Votre mot de passe">
+      <div class="field-hint"><a href="#" id="forgotLink">Mot de passe oublié ?</a></div>
+    </div>
+
+    <button class="submit-btn" id="loginBtn">Se connecter</button>
+
+    <div class="switch-link">Pas encore de compte ? <a href="choix-inscription.html">Créer un compte</a></div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('loginBtn').addEventListener('click', () => {
+    // Démo : redirection selon le rôle sera gérée par le backend une fois connecté.
+    // Ici on redirige simplement vers l'accueil.
+    window.location.href = 'accueil.html';
+  });
+</script>
+
+</body>
+</html>

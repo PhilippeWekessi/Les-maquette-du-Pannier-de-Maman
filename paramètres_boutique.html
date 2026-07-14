@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paramètres boutique — Le Panier de Maman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#2F5233; --green-leaf:#4C7A3D; --orange:#E8752D;
+    --tomato:#C1442E; --cream:#FBF3E3; --kraft:#E9D9B6; --kraft-dark:#CBB27F;
+    --charcoal:#2B2420; --charcoal-soft:#5A5148; --white:#fff;
+    --font-display:'Baloo 2',sans-serif; --font-body:'Work Sans',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-body);color:var(--charcoal);background:var(--cream);line-height:1.5;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  input,select{font-family:inherit;}
+  .wrap{max-width:700px;margin:0 auto;padding:0 20px;}
+
+  .topbar{background:var(--green-deep);color:#fff;padding:18px 0;}
+  .topbar__inner{display:flex;align-items:center;gap:14px;padding:0 4px;}
+  .topbar__back{font-size:1.3rem;}
+  .topbar__brand{font-family:var(--font-display);font-weight:700;font-size:1.2rem;}
+
+  main{padding:28px 0 60px;}
+
+  .section-card{background:#fff;border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 6px 18px rgba(43,36,32,0.06);}
+  .section-card__title{font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:var(--green-deep);margin-bottom:6px;}
+  .section-card__hint{font-size:0.82rem;color:var(--charcoal-soft);margin-bottom:18px;}
+
+  .form-group{margin-bottom:16px;}
+  .form-group:last-child{margin-bottom:0;}
+  .form-group label{display:block;font-size:0.82rem;font-weight:600;margin-bottom:6px;color:var(--charcoal-soft);}
+  .form-group input,.form-group select,.form-group textarea{
+    width:100%;padding:12px 14px;border:1.5px solid var(--kraft-dark);border-radius:10px;
+    font-size:0.92rem;background:var(--cream);color:var(--charcoal);
+  }
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:2px solid var(--green-leaf);}
+  .form-group textarea{resize:vertical;min-height:80px;}
+
+  /* HORAIRES */
+  .hours-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #F0E9DB;}
+  .hours-row:last-child{border-bottom:none;}
+  .hours-row__day{font-weight:600;font-size:0.9rem;width:90px;flex-shrink:0;}
+  .hours-row__times{display:flex;align-items:center;gap:8px;flex:1;}
+  .hours-row__times input{padding:9px 10px;font-size:0.85rem;}
+  .hours-row__closed-label{font-size:0.85rem;color:var(--charcoal-soft);flex:1;}
+  .toggle{position:relative;width:44px;height:24px;background:var(--kraft-dark);border-radius:999px;transition:background .25s ease;flex-shrink:0;}
+  .toggle.is-on{background:var(--green-leaf);}
+  .toggle__knob{position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform .25s ease;}
+  .toggle.is-on .toggle__knob{transform:translateX(20px);}
+
+  /* ZONE LIVRAISON */
+  .radius-display{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+  .radius-display b{font-family:var(--font-display);color:var(--green-deep);font-size:1.3rem;}
+  input[type="range"]{width:100%;accent-color:var(--green-deep);}
+
+  .save-bar{
+    position:sticky;bottom:0;background:var(--cream);padding:16px 0;border-top:1px solid var(--kraft-dark);
+    display:flex;justify-content:flex-end;
+  }
+  .save-btn{background:var(--orange);color:#fff;padding:13px 28px;border-radius:999px;font-weight:700;font-size:0.94rem;transition:transform .15s ease;}
+  .save-btn:hover{transform:translateY(-2px);}
+
+  .toast{
+    position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--green-deep);color:#fff;padding:12px 22px;border-radius:999px;
+    font-size:0.86rem;font-weight:600;z-index:200;opacity:0;transition:opacity .25s ease,transform .25s ease;pointer-events:none;
+  }
+  .toast.is-visible{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a href="vendeuse.html" class="topbar__back">←</a>
+    <div class="topbar__brand">Paramètres de ma boutique</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- INFOS BOUTIQUE -->
+  <div class="section-card">
+    <div class="section-card__title">Informations de la boutique</div>
+    <div class="section-card__hint">Ces infos sont visibles par les clients sur la page d'accueil.</div>
+
+    <div class="form-group">
+      <label>Nom de la boutique</label>
+      <input type="text" value="Le Panier de Maman">
+    </div>
+    <div class="form-group">
+      <label>Description courte</label>
+      <textarea>Fruits et légumes frais du quartier, récoltés le matin même.</textarea>
+    </div>
+    <div class="form-group">
+      <label>Numéro WhatsApp de contact</label>
+      <input type="tel" value="+229 00 00 00 00">
+    </div>
+  </div>
+
+  <!-- HORAIRES -->
+  <div class="section-card">
+    <div class="section-card__title">Horaires d'ouverture</div>
+    <div class="section-card__hint">La boutique se ferme automatiquement aux clients en dehors de ces horaires.</div>
+
+    <div id="hoursList">
+      <div class="hours-row" data-day="Lundi">
+        <div class="hours-row__day">Lundi</div>
+        <div class="hours-row__times"><input type="time" value="07:00"><span>à</span><input type="time" value="18:00"></div>
+        <button class="toggle is-on" data-day-toggle><div class="toggle__knob"></div></button>
+      </div>
+      <div class="hours-row" data-day="Mardi">
+        <div class="hours-row__day">Mardi</div>
+        <div class="hours-row__times"><input type="time" value="07:00"><span>à</span><input type="time" value="18:00"></div>
+        <button class="toggle is-on" data-day-toggle><div class="toggle__knob"></div></button>
+      </div>
+      <div class="hours-row" data-day="Mercredi">
+        <div class="hours-row__day">Mercredi</div>
+        <div class="hours-row__times"><input type="time" value="07:00"><span>à</span><input type="time" value="18:00"></div>
+        <button class="toggle is-on" data-day-toggle><div class="toggle__knob"></div></button>
+      </div>
+      <div class="hours-row" data-day="Jeudi">
+        <div class="hours-row__day">Jeudi</div>
+        <div class="hours-row__times"><input type="time" value="07:00"><span>à</span><input type="time" value="18:00"></div>
+        <button class="toggle is-on" data-day-toggle><div class="toggle__knob"></div></button>
+      </div>
+      <div class="hours-row" data-day="Vendredi">
+        <div class="hours-row__day">Vendredi</div>
+        <div class="hours-row__times"><input type="time" value="07:00"><span>à</span><input type="time" value="18:00"></div>
+        <button class="toggle is-on" data-day-toggle><div class="toggle__knob"></div></button>
+      </div>
+      <div class="hours-row" data-day="Samedi">
+        <div class="hours-row__day">Samedi</div>
+        <div class="hours-row__times"><input type="time" value="08:00"><span>à</span><input type="time" value="14:00"></div>
+        <button class="toggle is-on" data-day-toggle><div class="toggle__knob"></div></button>
+      </div>
+      <div class="hours-row" data-day="Dimanche">
+        <div class="hours-row__day">Dimanche</div>
+        <div class="hours-row__times" style="display:none"><input type="time" value="08:00"><span>à</span><input type="time" value="14:00"></div>
+        <div class="hours-row__closed-label">Fermé</div>
+        <button class="toggle" data-day-toggle><div class="toggle__knob"></div></button>
+      </div>
+    </div>
+    <div class="form-group" style="margin-top:20px">
+        <label>Adresse de référence de la boutique</label>
+        <input type="text" value="Cadjèhoun, Cotonou">
+    </div>
+  </div>
+
+</main>
+
+<div class="save-bar wrap">
+  <button class="save-btn" id="saveBtn">Enregistrer les modifications</button>
+</div>
+
+<div class="toast" id="toast">Modifications enregistrées ✓</div>
+
+<script>
+  // Toggle horaires par jour
+  document.querySelectorAll('[data-day-toggle]').forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      toggle.classList.toggle('is-on');
+      const row = toggle.closest('.hours-row');
+      const times = row.querySelector('.hours-row__times');
+      const closedLabel = row.querySelector('.hours-row__closed-label');
+      const isOpen = toggle.classList.contains('is-on');
+      times.style.display = isOpen ? 'flex' : 'none';
+      if(closedLabel) closedLabel.style.display = isOpen ? 'none' : 'block';
+      else if(!isOpen){
+        const label = document.createElement('div');
+        label.className = 'hours-row__closed-label';
+        label.textContent = 'Fermé';
+        row.insertBefore(label, toggle);
+      }
+    });
+  });
+
+  // Slider rayon de livraison
+  const radiusSlider = document.getElementById('radiusSlider');
+  const radiusValue = document.getElementById('radiusValue');
+  radiusSlider.addEventListener('input', () => { radiusValue.textContent = radiusSlider.value + ' km'; });
+
+  // Sauvegarde (démo)
+  document.getElementById('saveBtn').addEventListener('click', () => {
+    const toast = document.getElementById('toast');
+    toast.classList.add('is-visible');
+    setTimeout(() => toast.classList.remove('is-visible'), 2200);
+  });
+</script>
+
+</body>
+</html>

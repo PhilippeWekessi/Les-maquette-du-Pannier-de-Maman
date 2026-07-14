@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Vendeur/Vendeuse — Le Panier de Maman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#2F5233; --green-leaf:#4C7A3D; --orange:#E8752D;
+    --tomato:#C1442E; --cream:#FBF3E3; --kraft:#E9D9B6; --kraft-dark:#CBB27F;
+    --charcoal:#2B2420; --charcoal-soft:#5A5148; --white:#fff;
+    --font-display:'Baloo 2',sans-serif; --font-body:'Work Sans',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-body);color:var(--charcoal);background:var(--cream);}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  img{display:block;max-width:100%;}
+
+  .app{display:flex;min-height:100vh;}
+
+  .sidebar{
+    width:230px;flex-shrink:0;background:var(--green-deep);color:#fff;
+    padding:24px 18px;position:relative;
+    display:flex;flex-direction:column;
+    transition:transform .25s ease;
+  }
+  .sidebar__brand{font-family:var(--font-display);font-weight:700;font-size:1.1rem;}
+  .sidebar__sub{font-size:0.78rem;color:#B7D3A8;margin-bottom:34px;}
+
+  .nav{list-style:none;display:flex;flex-direction:column;gap:6px;}
+  .nav li{
+    padding:11px 14px;border-radius:10px;font-size:0.92rem;font-weight:500;
+    cursor:pointer;color:#D9E6D1;transition:background .15s ease,color .15s ease;
+  }
+  .nav li a{display:block;color:inherit;}
+  .nav li:hover{background:rgba(255,255,255,0.08);color:#fff;}
+  .nav li.active{background:var(--orange);color:#fff;font-weight:600;}
+
+  .sidebar__foot{margin-top:auto;font-size:0.75rem;color:#8FAE86;padding-top:20px;}
+
+  @media (max-width:880px){
+    .sidebar{position:fixed;top:0;left:0;bottom:0;z-index:60;transform:translateX(-100%);}
+    .sidebar.is-open{transform:translateX(0);}
+  }
+
+  .main{flex:1;min-width:0;padding:26px 30px 50px;}
+
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:28px;flex-wrap:wrap;gap:14px;
+  }
+  .topbar__search{
+    display:flex;align-items:center;gap:10px;background:#fff;
+    border:1.5px solid var(--kraft-dark);border-radius:999px;padding:10px 18px;
+    min-width:220px;flex:1;max-width:340px;
+  }
+  .topbar__search input{border:0;outline:none;background:transparent;font-size:0.9rem;width:100%;color:var(--charcoal);}
+  .topbar__right{display:flex;align-items:center;gap:14px;}
+  .topbar__toggle{display:none;background:var(--green-deep);color:#fff;padding:9px 12px;border-radius:8px;font-size:1.1rem;}
+  .topbar__hello{font-size:0.9rem;color:var(--charcoal-soft);}
+  .avatar{
+    width:38px;height:38px;border-radius:50%;background:var(--orange);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.95rem;
+  }
+  .avatar a{color:#fff;display:flex;align-items:center;justify-content:center;width:100%;height:100%;}
+  @media (max-width:880px){.topbar__toggle{display:block;}}
+
+  .section-title{font-family:var(--font-display);font-weight:700;font-size:1.3rem;color:var(--green-deep);margin-bottom:18px;}
+
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;}
+  .card{
+    grid-column:span 12;background:#fff;border-radius:16px;padding:22px;
+    box-shadow:0 6px 18px rgba(43,36,32,0.06);
+  }
+  .span-8{grid-column:span 8;}
+  .span-4{grid-column:span 4;}
+  @media (max-width:960px){ .span-8,.span-4{grid-column:span 12;} }
+
+  .card h3{font-family:var(--font-display);font-size:1.05rem;color:var(--green-deep);margin-bottom:4px;}
+  .card__muted{font-size:0.85rem;color:var(--charcoal-soft);margin-bottom:14px;}
+  .chart-wrap{position:relative;height:220px;}
+  .chart-wrap.small{height:180px;}
+
+  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  @media (max-width:700px){.stats-row{grid-template-columns:repeat(2,1fr);}}
+  .stat{
+    background:var(--cream);border-radius:12px;padding:16px;
+    border-left:4px solid var(--green-leaf);
+  }
+  .stat.warn{border-left-color:var(--tomato);}
+  .stat__value{font-family:var(--font-display);font-weight:700;font-size:1.35rem;color:var(--green-deep);}
+  .stat__label{font-size:0.8rem;color:var(--charcoal-soft);margin-top:3px;}
+
+  .driver-list{display:flex;flex-direction:column;gap:12px;}
+  .driver-row{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 14px;background:var(--cream);border-radius:12px;
+  }
+  .driver-row__name{font-weight:600;font-size:0.92rem;}
+  .driver-row__zone{font-size:0.78rem;color:var(--charcoal-soft);}
+  .driver-status{display:flex;align-items:center;gap:7px;font-size:0.8rem;font-weight:600;}
+  .driver-dot{width:9px;height:9px;border-radius:50%;}
+  .driver-status.online .driver-dot{background:var(--green-leaf);}
+  .driver-status.online{color:var(--green-leaf);}
+  .driver-status.offline .driver-dot{background:#B7AFA3;}
+  .driver-status.offline{color:#8A8177;}
+
+  table{width:100%;border-collapse:collapse;}
+  thead th{
+    text-align:left;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.04em;
+    color:var(--charcoal-soft);padding:10px 12px;border-bottom:1.5px solid var(--kraft-dark);
+  }
+  tbody td{padding:13px 12px;font-size:0.9rem;border-bottom:1px solid #F0E9DB;}
+  tbody tr:last-child td{border-bottom:none;}
+  .badge{font-size:0.76rem;font-weight:600;padding:5px 12px;border-radius:999px;white-space:nowrap;}
+  .badge.new{background:#FDEBD3;color:var(--orange);}
+  .badge.progress{background:#DCEAF7;color:#2E6B9E;}
+  .badge.done{background:#E4F1DF;color:var(--green-leaf);}
+  .badge.cancel{background:#FBE0DC;color:var(--tomato);}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;
+    font-weight:600;font-size:0.88rem;background:var(--orange);color:#fff;transition:transform .15s;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-outline{background:#fff;color:var(--green-deep);border:1.5px solid var(--green-deep);}
+
+  .view{display:none;}
+  .view.active{display:block;}
+
+  /* AVIS */
+  .review-card{background:#fff;border-radius:14px;padding:18px 20px;margin-bottom:12px;box-shadow:0 4px 14px rgba(43,36,32,0.05);}
+  .review-card__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
+  .review-card__client{font-weight:600;font-size:0.9rem;}
+  .review-card__date{font-size:0.76rem;color:var(--charcoal-soft);}
+  .review-card__stars{color:#F2A65A;font-size:0.95rem;letter-spacing:2px;}
+  .review-card__text{font-size:0.9rem;color:var(--charcoal-soft);line-height:1.6;}
+
+  .toast{
+    position:fixed;bottom:24px;right:24px;z-index:200;
+    background:var(--green-deep);color:#fff;padding:16px 20px;border-radius:14px;
+    box-shadow:0 12px 28px rgba(0,0,0,0.25);
+    max-width:300px;font-size:0.88rem;
+    opacity:0;transform:translateY(16px);
+    transition:opacity .3s ease,transform .3s ease;
+    pointer-events:none;
+  }
+  .toast.is-visible{opacity:1;transform:translateY(0);}
+  .toast b{color:#F2A65A;}
+
+  .overlay-bg{
+    display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:50;
+  }
+  .overlay-bg.is-open{display:block;}
+  @media (min-width:881px){.overlay-bg{display:none !important;}}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__brand">Le Panier de Maman</div>
+    <div class="sidebar__sub">Espace Vendeur / Vendeuse</div>
+    <ul class="nav">
+      <li class="active" data-view="dashboard-view">Tableau de bord</li>
+      <li data-view="orders-view">Commandes</li>
+      <li data-view="drivers-view">Livreurs</li>
+      <li><a href="parametres-boutique.html">Ma boutique</a></li>
+      <li data-view="reviews-view">Avis des clients</li>
+      <li data-view="settings-view">Paramètres</li>
+    </ul>
+    <div class="sidebar__foot">v1.0 — Le Panier de Maman</div>
+  </aside>
+
+  <div class="overlay-bg" id="overlayBg"></div>
+
+  <main class="main">
+
+    <div class="topbar">
+      <button class="topbar__toggle" id="sidebarToggle">☰</button>
+      <div class="topbar__search">
+        <input placeholder="Rechercher une commande, un client...">
+      </div>
+      <div class="topbar__right">
+        <span class="topbar__hello">Bonjour, Rosine</span>
+        <div class="avatar"><a href="profil_vendeur_vendeuse.html">R</a></div>
+      </div>
+    </div>
+
+    <!-- ================= ACCUEIL ================= -->
+    <section id="dashboard-view" class="view active">
+      <div class="section-title">Vue d'ensemble de ma boutique</div>
+      <div class="grid">
+
+        <div class="card span-8">
+          <h3>Revenu de la semaine</h3>
+          <div class="card__muted">Total encaissé, du lundi à aujourd'hui</div>
+          <div class="chart-wrap"><canvas id="chartLine"></canvas></div>
+        </div>
+
+        <div class="card span-4">
+          <h3>Produits les plus vendus</h3>
+          <div class="card__muted">Répartition cette semaine</div>
+          <div class="chart-wrap small"><canvas id="chartDoughnut"></canvas></div>
+        </div>
+
+        <div class="card span-8">
+          <h3>Statistiques rapides</h3>
+          <div class="stats-row" style="margin-top:14px">
+            <div class="stat">
+              <div class="stat__value">7</div>
+              <div class="stat__label">Commandes aujourd'hui</div>
+            </div>
+            <div class="stat">
+              <div class="stat__value">18 400F</div>
+              <div class="stat__label">Revenu aujourd'hui</div>
+            </div>
+            <div class="stat">
+              <div class="stat__value">2</div>
+              <div class="stat__label">Livreurs disponibles</div>
+            </div>
+            <div class="stat warn">
+              <div class="stat__value">1</div>
+              <div class="stat__label">Produit en rupture</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card span-4">
+          <h3>Livraisons</h3>
+          <div class="card__muted">Livrées vs annulées, 4 dernières semaines</div>
+          <div class="chart-wrap small"><canvas id="chartBar"></canvas></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= COMMANDES ================= -->
+    <section id="orders-view" class="view">
+      <div class="section-title">Mes commandes récentes</div>
+      <div class="card">
+        <table>
+          <thead>
+            <tr><th>Client</th><th>Produits</th><th>Montant</th><th>Livreur</th><th>Statut</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Aïcha D.</td><td>2kg carottes, 1 chou</td><td>800F</td><td>Koffi A.</td><td><span class="badge new">Nouvelle</span></td></tr>
+            <tr><td>Josué K.</td><td>1 sac oranges</td><td>6000F</td><td>Bruno S.</td><td><span class="badge progress">En livraison</span></td></tr>
+            <tr><td>Rachida M.</td><td>Tomates, chou</td><td>550F</td><td>Koffi A.</td><td><span class="badge done">Livrée</span></td></tr>
+            <tr><td>Ismaël T.</td><td>3kg carottes</td><td>300F</td><td>—</td><td><span class="badge cancel">Annulée</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ================= LIVREURS ================= -->
+    <section id="drivers-view" class="view">
+      <div class="section-title">Livreurs disponibles</div>
+      <div class="card">
+        <div class="driver-list">
+          <div class="driver-row">
+            <div><div class="driver-row__name">Koffi A.</div><div class="driver-row__zone">Zone : Akpakpa</div></div>
+            <div class="driver-status online"><span class="driver-dot"></span>En ligne</div>
+          </div>
+          <div class="driver-row">
+            <div><div class="driver-row__name">Bruno S.</div><div class="driver-row__zone">Zone : Cadjèhoun</div></div>
+            <div class="driver-status online"><span class="driver-dot"></span>En ligne</div>
+          </div>
+          <div class="driver-row">
+            <div><div class="driver-row__name">Léa M.</div><div class="driver-row__zone">Zone : Fidjrossè</div></div>
+            <div class="driver-status offline"><span class="driver-dot"></span>Hors ligne</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= AVIS DES CLIENTS ================= -->
+    <section id="reviews-view" class="view">
+      <div class="section-title">Avis de mes clients</div>
+
+      <div class="review-card">
+        <div class="review-card__top">
+          <div class="review-card__client">Aïcha D.</div>
+          <span class="review-card__stars">★★★★★</span>
+        </div>
+        <div class="review-card__date">Il y a 2 jours</div>
+        <div class="review-card__text" style="margin-top:6px">Toujours fraîches et bien sucrées. Livraison rapide en plus !</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-card__top">
+          <div class="review-card__client">Josué K.</div>
+          <span class="review-card__stars">★★★★☆</span>
+        </div>
+        <div class="review-card__date">Il y a 1 semaine</div>
+        <div class="review-card__text" style="margin-top:6px">Bons produits, juste un peu petits cette fois-ci.</div>
+      </div>
+    </section>
+
+    <!-- ================= PARAMETRES ================= -->
+    <section id="settings-view" class="view">
+      <div class="section-title"><a href="paramètres_boutique.html"></a>Paramètres</div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const navItems = document.querySelectorAll('.nav li[data-view]');
+  const views = document.querySelectorAll('.view');
+  const sidebar = document.getElementById('sidebar');
+  const overlayBg = document.getElementById('overlayBg');
+
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      navItems.forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      views.forEach(v => v.classList.remove('active'));
+      document.getElementById(item.dataset.view).classList.add('active');
+      sidebar.classList.remove('is-open');
+      overlayBg.classList.remove('is-open');
+    });
+  });
+
+  document.getElementById('sidebarToggle').addEventListener('click', () => {
+    sidebar.classList.add('is-open');
+    overlayBg.classList.add('is-open');
+  });
+  overlayBg.addEventListener('click', () => {
+    sidebar.classList.remove('is-open');
+    overlayBg.classList.remove('is-open');
+  });
+
+  const toast = document.getElementById('toast');
+  function showToast(message){
+    toast.innerHTML = message;
+    toast.classList.add('is-visible');
+    setTimeout(() => toast.classList.remove('is-visible'), 4000);
+  }
+  document.getElementById('simulateOrderBtn').addEventListener('click', () => {
+    showToast('<b>Nouvelle commande</b><br>Aïcha D. — 2kg carottes, 1 chou (800F)');
+  });
+  setTimeout(() => {
+    showToast('<b>Paiement reçu</b><br>Josué K. — 6000F via Kkiapay');
+  }, 3000);
+
+  const green = '#4C7A3D', orange = '#E8752D', tomato = '#C1442E', kraft = '#CBB27F';
+
+  new Chart(document.getElementById('chartLine'), {
+    type: 'line',
+    data: {
+      labels: ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'],
+      datasets: [{
+        label: 'Revenu (FCFA)',
+        data: [4200, 5600, 3900, 7200, 8100, 9800, 6400],
+        borderColor: green,
+        backgroundColor: 'rgba(76,122,61,0.1)',
+        tension: 0.35,
+        fill: true
+      }]
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}} }
+  });
+
+  new Chart(document.getElementById('chartDoughnut'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Oranges','Carottes','Chou','Tomates'],
+      datasets: [{ data: [35,28,20,17], backgroundColor:[orange, green, kraft, tomato] }]
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{boxWidth:12,font:{size:11}}}} }
+  });
+
+  new Chart(document.getElementById('chartBar'), {
+    type: 'bar',
+    data: {
+      labels: ['Sem. 1','Sem. 2','Sem. 3','Sem. 4'],
+      datasets: [
+        { label:'Livrées', data:[22,26,19,30], backgroundColor: green },
+        { label:'Annulées', data:[3,2,4,1], backgroundColor: tomato }
+      ]
+    },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{boxWidth:12,font:{size:11}}}} }
+  });
+</script>
+
+</body>
+</html>

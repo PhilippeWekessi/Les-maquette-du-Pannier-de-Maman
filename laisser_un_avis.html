@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laisser un avis — Le Panier de Maman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#2F5233; --green-leaf:#4C7A3D; --orange:#E8752D;
+    --tomato:#C1442E; --cream:#FBF3E3; --kraft:#E9D9B6; --kraft-dark:#CBB27F;
+    --charcoal:#2B2420; --charcoal-soft:#5A5148; --white:#fff;
+    --font-display:'Baloo 2',sans-serif; --font-body:'Work Sans',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-body);color:var(--charcoal);background:var(--cream);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  img{display:block;max-width:100%;}
+
+  .review-card{width:100%;max-width:460px;background:#fff;border-radius:22px;box-shadow:0 16px 40px rgba(43,36,32,0.12);padding:30px;}
+
+  .order-recap{display:flex;align-items:center;gap:12px;background:var(--cream);border-radius:14px;padding:14px 16px;margin-bottom:24px;}
+  .order-recap img{width:48px;height:48px;border-radius:10px;object-fit:cover;flex-shrink:0;}
+  .order-recap__title{font-weight:700;font-size:0.92rem;}
+  .order-recap__sub{font-size:0.78rem;color:var(--charcoal-soft);}
+
+  h1{font-family:var(--font-display);font-weight:700;font-size:1.3rem;color:var(--green-deep);margin-bottom:6px;text-align:center;}
+  .subtitle{font-size:0.88rem;color:var(--charcoal-soft);text-align:center;margin-bottom:26px;}
+
+  .rating-block{text-align:center;margin-bottom:26px;}
+  .rating-label{font-size:0.85rem;font-weight:600;color:var(--charcoal-soft);margin-bottom:12px;}
+  .star-picker{display:flex;justify-content:center;gap:8px;}
+  .star-btn{font-size:2.2rem;color:var(--kraft-dark);background:none;transition:transform .1s ease,color .15s ease;}
+  .star-btn.selected{color:#F2A65A;}
+  .star-btn:hover{transform:scale(1.1);}
+  .rating-text{margin-top:10px;font-size:0.85rem;color:var(--green-deep);font-weight:600;min-height:18px;}
+
+  .tags-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:24px;}
+  .tag-chip{background:var(--cream);border:1.5px solid var(--kraft-dark);padding:7px 14px;border-radius:999px;font-size:0.82rem;font-weight:600;color:var(--charcoal-soft);transition:all .15s ease;}
+  .tag-chip.selected{background:var(--green-deep);color:#fff;border-color:var(--green-deep);}
+
+  .form-group{margin-bottom:20px;}
+  .form-group label{display:block;font-size:0.85rem;font-weight:600;margin-bottom:8px;color:var(--charcoal-soft);}
+  .form-group textarea{
+    width:100%;border:1.5px solid var(--kraft-dark);border-radius:12px;padding:14px;
+    font-family:inherit;font-size:0.92rem;resize:vertical;min-height:90px;background:var(--cream);color:var(--charcoal);
+  }
+  .form-group textarea:focus{outline:2px solid var(--green-leaf);}
+
+  .submit-btn{
+    width:100%;background:var(--orange);color:#fff;padding:14px 0;border-radius:999px;
+    font-weight:700;font-size:0.98rem;transition:transform .15s ease;
+  }
+  .submit-btn:hover{transform:translateY(-2px);}
+  .submit-btn:disabled{background:var(--kraft-dark);cursor:not-allowed;transform:none;}
+
+  .skip-link{display:block;text-align:center;font-size:0.85rem;color:var(--charcoal-soft);margin-top:16px;}
+
+  .success-view{display:none;text-align:center;}
+  .success-view.active{display:block;}
+  .review-form.hidden{display:none;}
+  .success-icon{width:60px;height:60px;border-radius:50%;background:#E4F1DF;color:var(--green-leaf);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:700;margin:0 auto 16px;}
+</style>
+</head>
+<body>
+
+<div class="review-card">
+
+  <div class="review-form" id="reviewForm">
+    <div class="order-recap">
+      <img src="images6.jpg" alt="commande">
+      <div>
+        <div class="order-recap__title">Commande #A1023</div>
+        <div class="order-recap__sub">Tomates, chou — livrée hier</div>
+      </div>
+    </div>
+
+    <h1>Comment s'est passée votre commande ?</h1>
+    <div class="subtitle">Votre avis aide maman et les autres clients</div>
+
+    <div class="rating-block">
+      <div class="rating-label">Note globale</div>
+      <div class="star-picker" id="starPicker">
+        <button class="star-btn" data-star="1">★</button>
+        <button class="star-btn" data-star="2">★</button>
+        <button class="star-btn" data-star="3">★</button>
+        <button class="star-btn" data-star="4">★</button>
+        <button class="star-btn" data-star="5">★</button>
+      </div>
+      <div class="rating-text" id="ratingText"></div>
+    </div>
+
+    <div class="tags-row" id="tagsRow">
+      <button class="tag-chip" data-tag>Produits frais</button>
+      <button class="tag-chip" data-tag>Livraison rapide</button>
+      <button class="tag-chip" data-tag>Bon emballage</button>
+      <button class="tag-chip" data-tag>Livreur sympa</button>
+      <button class="tag-chip" data-tag>Prix correct</button>
+    </div>
+
+    <div class="form-group">
+      <label>Un commentaire à ajouter ? (facultatif)</label>
+      <textarea placeholder="Dites-nous ce que vous avez pensé de votre commande..."></textarea>
+    </div>
+
+    <button class="submit-btn" id="submitReviewBtn" disabled>Envoyer mon avis</button>
+    <a href="#" class="skip-link">Passer cette étape</a>
+  </div>
+
+  <div class="success-view" id="successView">
+    <div class="success-icon">✓</div>
+    <h1>Merci pour votre avis !</h1>
+    <div class="subtitle">Votre retour a bien été envoyé à maman.</div>
+    <button class="submit-btn" style="margin-top:10px" id="backHomeBtn">Retour au marché</button>
+  </div>
+
+</div>
+
+<script>
+  let selectedStars = 0;
+  const starBtns = document.querySelectorAll('.star-btn');
+  const ratingText = document.getElementById('ratingText');
+  const submitBtn = document.getElementById('submitReviewBtn');
+  const labels = { 1: 'Décevant', 2: 'Peut mieux faire', 3: 'Correct', 4: 'Très bien', 5: 'Excellent !' };
+
+  starBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedStars = parseInt(btn.dataset.star);
+      starBtns.forEach(b => b.classList.toggle('selected', parseInt(b.dataset.star) <= selectedStars));
+      ratingText.textContent = labels[selectedStars];
+      submitBtn.disabled = false;
+    });
+  });
+
+  document.querySelectorAll('[data-tag]').forEach(tag => {
+    tag.addEventListener('click', () => tag.classList.toggle('selected'));
+  });
+
+  submitBtn.addEventListener('click', () => {
+    document.getElementById('reviewForm').classList.add('hidden');
+    document.getElementById('successView').classList.add('active');
+  });
+
+  document.getElementById('backHomeBtn').addEventListener('click', () => {
+    // Redirection vers la page d'accueil dans la vraie application
+  });
+</script>
+
+</body>
+</html>

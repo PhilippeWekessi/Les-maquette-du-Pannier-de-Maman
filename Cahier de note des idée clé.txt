@@ -1,0 +1,95 @@
+Projet 2 : App vente fruits/légumes (ma mère)
+Phases
+
+Phase 1 : Solo (ma mère) — Bénin
+Phase 2 : Multi-vendeurs — Bénin
+Phase 3 : Multi-pays — Afrique
+
+Rôles
+
+Admin (toi) — voit tout
+Vendeuse (mère) — gère sa boutique
+Client
+Livreur
+
+Gestion boutique (mère)
+
+Ajout/modif produits, prix
+Statut ouvert/fermé
+Annonces (nouveaux produits)
+Stock automatique (décrémente à la commande)
+Historique ventes (jour/semaine)
+
+Commande client
+
+Catalogue + panier
+Calcul auto sous-total
+Frais de livraison selon distance (API type Google Maps)
+Affichage : sous-total + frais transport = total (transparent)
+Zone de livraison limitée (rayon max)
+
+Paiement
+
+Kkiapay (en ligne)
+Option paiement à la livraison (cash)
+
+Livraison
+
+Partage position GPS/lien Maps client
+Double validation (client + livreur) = confirmation livraison
+
+Communication
+
+Client ↔ vendeuse : lien WhatsApp (V1) → chat interne (V2)
+Client ↔ livreur : WhatsApp/appel (V1)
+
+Notifications
+
+Push : nouvelle commande, paiement reçu, statut
+SMS (API type Twilio/opérateur local) pour non-smartphone
+Rappel panier abandonné
+
+Confiance/fidélisation
+
+Avis/notation clients (utile surtout Phase 2)
+
+
+Voici comment mener cette étude concrètement, avec ta mère :
+1. Observer son fonctionnement actuel
+
+Comment elle vend aujourd'hui (au marché, à domicile, sur commande téléphonique ?)
+Qui sont ses clients actuels (voisins, habitués, marché de passage ?)
+Quels sont ses produits les plus vendus, les moins vendus
+Comment elle gère son stock aujourd'hui (elle achète tous les combien, où ?)
+
+2. Discuter avec elle directement — questions à poser
+
+Est-ce qu'elle a déjà des clients qui commandent à l'avance ou par téléphone ?
+Est-ce qu'elle serait à l'aise à utiliser un smartphone/app elle-même, ou faut-il que ce soit toi (ou quelqu'un) qui gère ça pour elle au début ?
+Quels horaires elle travaille réellement (pour définir "ouvert/fermé")
+Est-ce qu'elle a déjà un moyen de livraison (elle-même, un proche, personne) ?
+Quels sont ses prix actuels, sa marge, pour voir si les frais de livraison/plateforme restent viables pour elle
+
+3. Comprendre ses clients potentiels
+
+Ce sont des gens du quartier ? Des gens plus loin qui aimeraient se faire livrer ?
+Ils ont l'habitude de payer en ligne (Mobile Money) ou préfèrent le cash ?
+Ont-ils un smartphone Android, ou faut-il vraiment prévoir le SMS comme option principale ?
+
+4. Identifier les vrais obstacles
+
+Est-ce que la zone où elle vend a une bonne couverture réseau/internet ?
+Y a-t-il déjà des livreurs moto disponibles dans son quartier (motos-taxis, "zémidjans") que tu pourrais mobiliser ?
+Est-ce qu'elle a besoin d'aide pour prendre les photos des produits, écrire les prix, etc. (souvent la partie "prendre en photo + mettre en ligne" bloque les petits commerçants)
+
+5. Test avant de coder
+Tu peux même tester "à la main" avant l'app : proposer à quelques clients de commander par WhatsApp/appel, toi ou ta mère notez la commande sur papier, un livreur (toi, un proche, un zémidjan) livre, le client paie en Mobile Money direct à ta mère. Ça te permet de voir en vrai si le concept marche, où sont les frictions, avant même d'avoir une seule ligne de code.
+Résumé à noter
+
+Observer fonctionnement actuel (vente, stock, clients)
+Interviewer ta mère (aisance smartphone, horaires, livraison actuelle, prix/marge)
+Comprendre clients potentiels (zone, moyens paiement, type téléphone)
+Vérifier obstacles (réseau, livreurs dispo, aide photos/mise en ligne)
+Tester le concept "à la main" avant de coder (commande WhatsApp + livraison manuelle)
+
+

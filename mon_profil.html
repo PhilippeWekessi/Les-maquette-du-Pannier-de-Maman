@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon profil — Le Panier de Maman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#2F5233; --green-leaf:#4C7A3D; --orange:#E8752D;
+    --tomato:#C1442E; --cream:#FBF3E3; --kraft:#E9D9B6; --kraft-dark:#CBB27F;
+    --charcoal:#2B2420; --charcoal-soft:#5A5148; --white:#fff;
+    --font-display:'Baloo 2',sans-serif; --font-body:'Work Sans',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-body);color:var(--charcoal);background:var(--cream);line-height:1.5;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  img{display:block;max-width:100%;}
+  input{font-family:inherit;}
+  .wrap{max-width:640px;margin:0 auto;padding:0 20px;}
+
+  .nav{position:sticky;top:0;z-index:50;background:var(--green-deep);color:#fff;}
+  .nav__inner{display:flex;align-items:center;gap:14px;padding:16px 24px;}
+  .nav__back{font-size:1.3rem;}
+  .nav__brand{font-family:var(--font-display);font-weight:700;font-size:1.1rem;}
+
+  main{padding:32px 0 60px;}
+
+  .profile-head{display:flex;align-items:center;gap:16px;margin-bottom:32px;}
+  .profile-avatar{
+    width:68px;height:68px;border-radius:50%;background:var(--green-deep);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-family:var(--font-display);
+    font-weight:700;font-size:1.6rem;flex-shrink:0;
+  }
+  .profile-head h1{font-family:var(--font-display);font-weight:700;font-size:1.35rem;color:var(--charcoal);}
+  .profile-head p{font-size:0.86rem;color:var(--charcoal-soft);margin-top:2px;}
+
+  .section-card{background:#fff;border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 6px 18px rgba(43,36,32,0.06);}
+  .section-card__title{font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:var(--green-deep);margin-bottom:16px;}
+
+  .form-group{margin-bottom:16px;}
+  .form-group:last-child{margin-bottom:0;}
+  .form-group label{display:block;font-size:0.82rem;font-weight:600;margin-bottom:6px;color:var(--charcoal-soft);}
+  .form-group input{
+    width:100%;padding:12px 14px;border:1.5px solid var(--kraft-dark);border-radius:10px;
+    font-size:0.92rem;background:var(--cream);color:var(--charcoal);
+  }
+  .form-group input:focus{outline:2px solid var(--green-leaf);}
+  .form-group input:disabled{color:var(--charcoal-soft);cursor:not-allowed;}
+
+  .save-btn{
+    background:var(--orange);color:#fff;padding:12px 24px;border-radius:999px;
+    font-weight:700;font-size:0.9rem;margin-top:16px;transition:transform .15s ease;
+  }
+  .save-btn:hover{transform:translateY(-2px);}
+
+  /* ADRESSES */
+  .address-list{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+  .address-item{display:flex;align-items:center;justify-content:space-between;background:var(--cream);border-radius:12px;padding:14px 16px;flex-wrap:wrap;gap:10px;}
+  .address-item__label{font-weight:700;font-size:0.9rem;}
+  .address-item__detail{font-size:0.82rem;color:var(--charcoal-soft);}
+  .address-item__default{font-size:0.72rem;font-weight:700;color:var(--green-leaf);background:#E4F1DF;padding:3px 10px;border-radius:999px;display:inline-block;margin-top:4px;}
+  .address-item__remove{font-size:0.8rem;color:var(--tomato);font-weight:600;}
+
+  .add-address-btn{
+    width:100%;background:#fff;color:var(--green-deep);border:1.5px dashed var(--green-leaf);
+    padding:12px 0;border-radius:12px;font-weight:600;font-size:0.9rem;
+  }
+
+  /* NOTIFICATIONS */
+  .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #F0E9DB;}
+  .toggle-row:last-child{border-bottom:none;}
+  .toggle-row__label{font-size:0.92rem;font-weight:600;}
+  .toggle-row__desc{font-size:0.78rem;color:var(--charcoal-soft);margin-top:2px;}
+  .toggle{position:relative;width:48px;height:26px;background:var(--kraft-dark);border-radius:999px;transition:background .25s ease;flex-shrink:0;}
+  .toggle.is-on{background:var(--green-leaf);}
+  .toggle__knob{position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .25s ease;}
+  .toggle.is-on .toggle__knob{transform:translateX(22px);}
+
+  .logout-btn{
+    width:100%;background:#fff;color:var(--tomato);border:1.5px solid var(--tomato);
+    padding:13px 0;border-radius:999px;font-weight:700;font-size:0.92rem;margin-top:8px;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav__inner">
+    <a href="#" class="nav__back">←</a>
+    <div class="nav__brand">Mon profil</div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <div class="profile-head">
+    <div class="profile-avatar">A</div>
+    <div>
+      <h1>Aïcha D.</h1>
+      <p>Cliente depuis mars 2026</p>
+    </div>
+  </div>
+
+  <!-- INFOS PERSONNELLES -->
+  <div class="section-card">
+    <div class="section-card__title">Informations personnelles</div>
+    <div class="form-group">
+      <label>Nom et prénom</label>
+      <input type="text" value="Aïcha Djibril">
+    </div>
+    <div class="form-group">
+      <label>Numéro de téléphone</label>
+      <input type="tel" value="01 90 22 14 08" disabled>
+    </div>
+    <button class="save-btn">Enregistrer les modifications</button>
+  </div>
+
+  <!-- ADRESSES -->
+  <div class="section-card">
+    <div class="section-card__title">Mes adresses de livraison</div>
+    <div class="address-list" id="addressList">
+      <div class="address-item">
+        <div>
+          <div class="address-item__label">Maison</div>
+          <div class="address-item__detail">Cadjèhoun, près de la pharmacie</div>
+          <span class="address-item__default">Par défaut</span>
+        </div>
+        <button class="address-item__remove">Retirer</button>
+      </div>
+      <div class="address-item">
+        <div>
+          <div class="address-item__label">Travail</div>
+          <div class="address-item__detail">Akpakpa, non loin du marché</div>
+        </div>
+        <button class="address-item__remove">Retirer</button>
+      </div>
+    </div>
+    <button class="add-address-btn" id="addAddressBtn">+ Ajouter une adresse</button>
+  </div>
+
+  <!-- NOTIFICATIONS -->
+  <div class="section-card">
+    <div class="section-card__title">Notifications</div>
+
+    <div class="toggle-row">
+      <div>
+        <div class="toggle-row__label">Notifications push</div>
+        <div class="toggle-row__desc">Statut de commande, nouvelles annonces</div>
+      </div>
+      <button class="toggle is-on" data-toggle><div class="toggle__knob"></div></button>
+    </div>
+
+    <div class="toggle-row">
+      <div>
+        <div class="toggle-row__label">SMS</div>
+        <div class="toggle-row__desc">Reçevoir les mises à jour par SMS aussi</div>
+      </div>
+      <button class="toggle is-on" data-toggle><div class="toggle__knob"></div></button>
+    </div>
+
+    <div class="toggle-row">
+      <div>
+        <div class="toggle-row__label">Offres et promotions</div>
+        <div class="toggle-row__desc">Annonces de nouveaux produits</div>
+      </div>
+      <button class="toggle" data-toggle><div class="toggle__knob"></div></button>
+    </div>
+  </div>
+
+  <button class="logout-btn">Se déconnecter</button>
+
+</main>
+
+<script>
+  document.querySelectorAll('[data-toggle]').forEach(t => {
+    t.addEventListener('click', () => t.classList.toggle('is-on'));
+  });
+
+  document.querySelectorAll('.address-item__remove').forEach(btn => {
+    btn.addEventListener('click', (e) => e.target.closest('.address-item').remove());
+  });
+
+  document.getElementById('addAddressBtn').addEventListener('click', () => {
+    const label = prompt('Nom de l\'adresse (ex : Maison, Travail)');
+    const detail = prompt('Adresse (quartier, repère)');
+    if(!label || !detail) return;
+    const item = document.createElement('div');
+    item.className = 'address-item';
+    item.innerHTML = `
+      <div><div class="address-item__label">${label}</div><div class="address-item__detail">${detail}</div></div>
+      <button class="address-item__remove">Retirer</button>
+    `;
+    item.querySelector('.address-item__remove').addEventListener('click', () => item.remove());
+    document.getElementById('addressList').appendChild(item);
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes commandes — Le Panier de Maman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#2F5233; --green-leaf:#4C7A3D; --orange:#E8752D;
+    --tomato:#C1442E; --cream:#FBF3E3; --kraft:#E9D9B6; --kraft-dark:#CBB27F;
+    --charcoal:#2B2420; --charcoal-soft:#5A5148; --white:#fff;
+    --font-display:'Baloo 2',sans-serif; --font-body:'Work Sans',sans-serif; --font-hand:'Caveat',cursive;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-body);color:var(--charcoal);background:var(--cream);line-height:1.5;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  img{display:block;max-width:100%;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 20px;}
+
+  .nav{position:sticky;top:0;z-index:50;background:var(--green-deep);color:#fff;}
+  .nav__inner{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;}
+  .nav__brand{font-family:var(--font-display);font-weight:700;font-size:1.2rem;}
+
+  .page-header{padding:32px 0 20px;}
+  .page-header h1{font-family:var(--font-display);font-weight:700;font-size:1.7rem;color:var(--green-deep);}
+
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 28px;}
+  .filter-chip{background:#fff;border:1.5px solid var(--kraft-dark);padding:8px 18px;border-radius:999px;font-size:0.86rem;font-weight:600;color:var(--charcoal-soft);transition:all .15s ease;}
+  .filter-chip.active,.filter-chip:hover{background:var(--green-deep);color:#fff;border-color:var(--green-deep);}
+
+  main{padding-bottom:60px;}
+  .order-list{display:flex;flex-direction:column;gap:14px;}
+  .order-card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 6px 18px rgba(43,36,32,0.06);cursor:pointer;transition:transform .15s ease;}
+  .order-card:hover{transform:translateY(-3px);}
+  .order-card__top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:10px;}
+  .order-card__id{font-family:var(--font-display);font-weight:700;font-size:0.98rem;color:var(--green-deep);}
+  .order-card__date{font-size:0.78rem;color:var(--charcoal-soft);}
+  .order-status{font-size:0.76rem;font-weight:700;padding:6px 14px;border-radius:999px;white-space:nowrap;}
+  .order-status.progress{background:#DCEAF7;color:#2E6B9E;}
+  .order-status.transit{background:#EFE3F9;color:#7A3FA0;}
+  .order-status.done{background:#E4F1DF;color:var(--green-leaf);}
+  .order-status.cancel{background:#FBE0DC;color:var(--tomato);}
+
+  .order-card__detail{font-size:0.9rem;color:var(--charcoal-soft);margin-bottom:8px;}
+  .order-card__bottom{display:flex;align-items:center;justify-content:space-between;}
+  .order-card__total{font-family:var(--font-hand);font-size:1.4rem;font-weight:700;color:var(--tomato);}
+  .order-card__cta{font-size:0.82rem;font-weight:600;color:var(--green-deep);}
+
+  .empty-state{text-align:center;padding:70px 20px;color:var(--charcoal-soft);}
+  .empty-state a{color:var(--orange);font-weight:600;}
+
+  /* MODAL DETAIL COMMANDE (réutilise le suivi) */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(43,36,32,0.5);z-index:120;align-items:center;justify-content:center;padding:20px;overflow-y:auto;}
+  .modal-overlay.is-open{display:flex;}
+  .modal{background:#fff;border-radius:20px;padding:30px;max-width:440px;width:100%;max-height:90vh;overflow-y:auto;}
+  .modal h2{font-family:var(--font-display);color:var(--green-deep);font-size:1.2rem;margin-bottom:4px;}
+  .modal__sub{font-size:0.86rem;color:var(--charcoal-soft);margin-bottom:20px;}
+
+  .modal-items{margin-bottom:18px;}
+  .modal-item-row{display:flex;justify-content:space-between;font-size:0.9rem;padding:7px 0;border-bottom:1px solid #F0E9DB;}
+  .modal-item-row:last-child{border-bottom:none;}
+  .modal-total-row{display:flex;justify-content:space-between;font-weight:700;color:var(--green-deep);font-size:1.05rem;padding-top:10px;border-top:1px dashed var(--kraft-dark);margin-top:6px;}
+
+  .tracking-steps{list-style:none;margin:22px 0;}
+  .tracking-step{display:flex;gap:14px;position:relative;padding-bottom:22px;}
+  .tracking-step:last-child{padding-bottom:0;}
+  .tracking-step::before{content:'';position:absolute;left:14px;top:30px;bottom:0;width:2px;background:var(--kraft-dark);}
+  .tracking-step:last-child::before{display:none;}
+  .tracking-step__dot{width:28px;height:28px;border-radius:50%;background:var(--kraft);color:var(--charcoal-soft);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;flex-shrink:0;z-index:1;}
+  .tracking-step.is-done .tracking-step__dot{background:var(--green-leaf);color:#fff;}
+  .tracking-step.is-current .tracking-step__dot{background:var(--orange);color:#fff;}
+  .tracking-step__title{font-weight:700;font-size:0.92rem;}
+  .tracking-step__desc{font-size:0.8rem;color:var(--charcoal-soft);margin-top:2px;}
+
+  .close-btn{width:100%;background:#fff;color:var(--green-deep);border:1.5px solid var(--green-deep);padding:13px 0;border-radius:999px;font-weight:700;font-size:0.95rem;margin-top:8px;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav__inner">
+    <div class="nav__brand">Le Panier de Maman</div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="wrap">
+    <h1>Mes commandes</h1>
+    <div class="filters">
+      <button class="filter-chip active" data-filter="all">Toutes</button>
+      <button class="filter-chip" data-filter="progress">En cours</button>
+      <button class="filter-chip" data-filter="done">Livrées</button>
+      <button class="filter-chip" data-filter="cancel">Annulées</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="order-list" id="orderList">
+
+    <div class="order-card" data-status="transit" data-order='{"id":"#A1025","date":"Aujourd\u0027hui, 14:20","items":[{"name":"Oranges","qty":1,"price":6000}],"total":6250,"delivery":250}'>
+      <div class="order-card__top">
+        <div class="order-card__id">Commande #A1025</div>
+        <span class="order-status transit">En livraison</span>
+      </div>
+      <div class="order-card__detail">1 sac oranges — Aujourd'hui, 14:20</div>
+      <div class="order-card__bottom">
+        <div class="order-card__total">6250F</div>
+        <div class="order-card__cta">Suivre →</div>
+      </div>
+    </div>
+
+    <div class="order-card" data-status="done" data-order='{"id":"#A1023","date":"Hier, 10:05","items":[{"name":"Tomates","qty":1,"price":250},{"name":"Chou","qty":1,"price":300}],"total":700,"delivery":150}'>
+      <div class="order-card__top">
+        <div class="order-card__id">Commande #A1023</div>
+        <span class="order-status done">Livrée</span>
+      </div>
+      <div class="order-card__detail">Tomates, chou — Hier, 10:05</div>
+      <div class="order-card__bottom">
+        <div class="order-card__total">700F</div>
+        <div class="order-card__cta">Voir détails →</div>
+      </div>
+    </div>
+
+    <div class="order-card" data-status="cancel" data-order='{"id":"#A1019","date":"3 juillet, 09:12","items":[{"name":"Carottes","qty":3,"price":100}],"total":300,"delivery":0}'>
+      <div class="order-card__top">
+        <div class="order-card__id">Commande #A1019</div>
+        <span class="order-status cancel">Annulée</span>
+      </div>
+      <div class="order-card__detail">3kg carottes — 3 juillet, 09:12</div>
+      <div class="order-card__bottom">
+        <div class="order-card__total">300F</div>
+        <div class="order-card__cta">Voir détails →</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="empty-state" id="emptyState" style="display:none">
+    Aucune commande dans cette catégorie pour l'instant.<br>
+    <a href="#">Retourner au marché du jour</a>
+  </div>
+</main>
+
+<!-- MODAL DETAIL -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal">
+    <h2 id="modalOrderId">Commande</h2>
+    <div class="modal__sub" id="modalOrderDate"></div>
+
+    <div class="modal-items" id="modalItems"></div>
+
+    <ul class="tracking-steps" id="modalTracking"></ul>
+
+    <button class="close-btn" id="closeDetailBtn">laisser vôtre avis</button>
+    <button class="close-btn" id="closeDetailBtn">Fermer</button>
+  </div>
+</div>
+
+<script>
+  // --- Filtres ---
+  const filterChips = document.querySelectorAll('.filter-chip');
+  const orderCards = document.querySelectorAll('.order-card');
+  const emptyState = document.getElementById('emptyState');
+
+  filterChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      filterChips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const filter = chip.dataset.filter;
+      let visibleCount = 0;
+      orderCards.forEach(card => {
+        const show = filter === 'all' || card.dataset.status === filter;
+        card.style.display = show ? '' : 'none';
+        if(show) visibleCount++;
+      });
+      emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+    });
+  });
+
+  // --- Détail commande + suivi ---
+  const detailModal = document.getElementById('detailModal');
+  const statusMeta = {
+    progress: { label: 'En préparation', step: 1 },
+    transit:  { label: 'En livraison', step: 2 },
+    done:     { label: 'Livrée', step: 3 },
+    cancel:   { label: 'Annulée', step: -1 }
+  };
+
+  const stepsDefinition = [
+    { title: 'Commande reçue', desc: 'Maman a reçu votre commande' },
+    { title: 'En préparation', desc: 'Vos produits sont en cours de préparation' },
+    { title: 'En livraison', desc: 'Un livreur est en route vers vous' },
+    { title: 'Livrée', desc: 'Commande remise, confirmée des deux côtés' }
+  ];
+
+  orderCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const data = JSON.parse(card.dataset.order);
+      const status = card.dataset.status;
+
+      document.getElementById('modalOrderId').textContent = 'Commande ' + data.id;
+      document.getElementById('modalOrderDate').textContent = data.date;
+
+      const itemsHtml = data.items.map(it =>
+        `<div class="modal-item-row"><span>${it.name} × ${it.qty}</span><span>${(it.price*it.qty).toLocaleString('fr-FR')}F</span></div>`
+      ).join('') +
+      `<div class="modal-item-row"><span>Frais de livraison</span><span>${data.delivery.toLocaleString('fr-FR')}F</span></div>` +
+      `<div class="modal-total-row"><span>Total</span><span>${data.total.toLocaleString('fr-FR')}F</span></div>`;
+      document.getElementById('modalItems').innerHTML = itemsHtml;
+
+      const trackingEl = document.getElementById('modalTracking');
+      if(status === 'cancel'){
+        trackingEl.innerHTML = `
+          <li class="tracking-step is-done">
+            <div class="tracking-step__dot" style="background:var(--tomato)">×</div>
+            <div><div class="tracking-step__title">Commande annulée</div><div class="tracking-step__desc">Cette commande n'a pas été finalisée</div></div>
+          </li>`;
+      } else {
+        const currentStep = statusMeta[status].step;
+        trackingEl.innerHTML = stepsDefinition.map((s, idx) => {
+          let cls = '';
+          let dotContent = idx + 1;
+          if(idx < currentStep){ cls = 'is-done'; dotContent = '✓'; }
+          else if(idx === currentStep){ cls = 'is-current'; }
+          return `
+            <li class="tracking-step ${cls}">
+              <div class="tracking-step__dot">${dotContent}</div>
+              <div><div class="tracking-step__title">${s.title}</div><div class="tracking-step__desc">${s.desc}</div></div>
+            </li>`;
+        }).join('');
+      }
+
+      detailModal.classList.add('is-open');
+    });
+  });
+
+  document.getElementById('closeDetailBtn').addEventListener('click', () => detailModal.classList.remove('is-open'));
+  detailModal.addEventListener('click', (e) => { if(e.target === detailModal) detailModal.classList.remove('is-open'); });
+</script>
+
+</body>
+</html>

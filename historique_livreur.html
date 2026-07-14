@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes gains — Le Panier de Maman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#2F5233; --green-leaf:#4C7A3D; --orange:#E8752D;
+    --tomato:#C1442E; --cream:#FBF3E3; --kraft:#E9D9B6; --kraft-dark:#CBB27F;
+    --charcoal:#2B2420; --charcoal-soft:#5A5148; --white:#fff;
+    --font-display:'Baloo 2',sans-serif; --font-body:'Work Sans',sans-serif; --font-hand:'Caveat',cursive;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-body);color:var(--charcoal);background:var(--cream);line-height:1.5;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 20px;}
+
+  .topbar{background:var(--green-deep);color:#fff;padding:18px 0;}
+  .topbar__inner{display:flex;align-items:center;gap:14px;}
+  .topbar__back{font-size:1.3rem;}
+  .topbar__brand{font-family:var(--font-display);font-weight:700;font-size:1.2rem;}
+
+  main{padding:28px 0 60px;}
+
+  .period-tabs{display:flex;gap:10px;margin-bottom:24px;}
+  .period-tab{flex:1;text-align:center;padding:11px 0;border-radius:999px;font-weight:600;font-size:0.9rem;
+    background:#fff;border:1.5px solid var(--kraft-dark);color:var(--charcoal-soft);transition:all .15s ease;}
+  .period-tab.active{background:var(--green-deep);color:#fff;border-color:var(--green-deep);}
+
+  .summary-card{
+    background:linear-gradient(135deg,var(--green-deep),#3D6B41);color:#fff;
+    border-radius:20px;padding:26px;margin-bottom:24px;box-shadow:0 12px 28px rgba(47,82,51,0.25);
+  }
+  .summary-card__label{font-size:0.85rem;color:#D9E6D1;margin-bottom:6px;}
+  .summary-card__amount{font-family:var(--font-display);font-weight:800;font-size:2.4rem;}
+  .summary-card__meta{display:flex;gap:24px;margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.15);}
+  .summary-card__meta div span{display:block;font-size:0.78rem;color:#D9E6D1;}
+  .summary-card__meta div b{font-family:var(--font-display);font-size:1.15rem;}
+
+  .chart-card{background:#fff;border-radius:16px;padding:22px;margin-bottom:24px;box-shadow:0 6px 18px rgba(43,36,32,0.06);}
+  .chart-card h3{font-family:var(--font-display);font-size:1.05rem;color:var(--green-deep);margin-bottom:16px;}
+  .bar-chart{display:flex;align-items:flex-end;gap:10px;height:140px;}
+  .bar-chart__col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .bar-chart__bar{width:100%;background:var(--orange);border-radius:6px 6px 0 0;transition:height .3s ease;}
+  .bar-chart__label{font-size:0.72rem;color:var(--charcoal-soft);}
+
+  .section-title{font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--green-deep);margin-bottom:16px;}
+  .gain-item{background:#fff;border-radius:14px;padding:14px 18px;margin-bottom:10px;box-shadow:0 4px 14px rgba(43,36,32,0.05);
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  .gain-item__client{font-weight:600;font-size:0.92rem;}
+  .gain-item__date{font-size:0.78rem;color:var(--charcoal-soft);}
+  .gain-item__amount{font-family:var(--font-hand);font-size:1.3rem;font-weight:700;color:var(--tomato);}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a href="livreur.html" class="topbar__back">←</a>
+    <div class="topbar__brand">Mes gains</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="period-tabs">
+    <button class="period-tab" data-period="day">Jour</button>
+    <button class="period-tab active" data-period="week">Semaine</button>
+    <button class="period-tab" data-period="month">Mois</button>
+  </div>
+
+  <div class="summary-card">
+    <div class="summary-card__label">Total gagné cette semaine</div>
+    <div class="summary-card__amount" id="totalAmount">8 450F</div>
+    <div class="summary-card__meta">
+      <div><span>Livraisons</span><b id="totalCount">14</b></div>
+      <div><span>Moyenne / course</span><b id="avgAmount">604F</b></div>
+      <div><span>Jour le plus actif</span><b>Samedi</b></div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <h3>Répartition par jour</h3>
+    <div class="bar-chart" id="barChart">
+      <div class="bar-chart__col"><div class="bar-chart__bar" style="height:40%"></div><div class="bar-chart__label">Lun</div></div>
+      <div class="bar-chart__col"><div class="bar-chart__bar" style="height:55%"></div><div class="bar-chart__label">Mar</div></div>
+      <div class="bar-chart__col"><div class="bar-chart__bar" style="height:30%"></div><div class="bar-chart__label">Mer</div></div>
+      <div class="bar-chart__col"><div class="bar-chart__bar" style="height:70%"></div><div class="bar-chart__label">Jeu</div></div>
+      <div class="bar-chart__col"><div class="bar-chart__bar" style="height:60%"></div><div class="bar-chart__label">Ven</div></div>
+      <div class="bar-chart__col"><div class="bar-chart__bar" style="height:100%"></div><div class="bar-chart__label">Sam</div></div>
+      <div class="bar-chart__col"><div class="bar-chart__bar" style="height:45%"></div><div class="bar-chart__label">Dim</div></div>
+    </div>
+  </div>
+
+  <div class="section-title">Détail des courses</div>
+  <div id="gainList">
+    <div class="gain-item"><div><div class="gain-item__client">Rachida M.</div><div class="gain-item__date">Samedi, 14:20</div></div><div class="gain-item__amount">300F</div></div>
+    <div class="gain-item"><div><div class="gain-item__client">Josué K.</div><div class="gain-item__date">Samedi, 10:05</div></div><div class="gain-item__amount">500F</div></div>
+    <div class="gain-item"><div><div class="gain-item__client">Aïcha D.</div><div class="gain-item__date">Vendredi, 16:40</div></div><div class="gain-item__amount">400F</div></div>
+    <div class="gain-item"><div><div class="gain-item__client">Ismaël T.</div><div class="gain-item__date">Jeudi, 09:15</div></div><div class="gain-item__amount">350F</div></div>
+  </div>
+
+</main>
+
+<script>
+  const periodData = {
+    day:   { amount: '1 200F', count: 3,  avg: '400F', label: "aujourd'hui" },
+    week:  { amount: '8 450F', count: 14, avg: '604F', label: 'cette semaine' },
+    month: { amount: '32 100F', count: 58, avg: '553F', label: 'ce mois-ci' }
+  };
+
+  document.querySelectorAll('.period-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const data = periodData[tab.dataset.period];
+      document.getElementById('totalAmount').textContent = data.amount;
+      document.getElementById('totalCount').textContent = data.count;
+      document.getElementById('avgAmount').textContent = data.avg;
+      document.querySelector('.summary-card__label').textContent = 'Total gagné ' + data.label;
+    });
+  });
+</script>
+
+</body>
+</html>

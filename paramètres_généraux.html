@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paramètres généraux — Dashboard Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#2F5233; --green-leaf:#4C7A3D; --orange:#E8752D;
+    --tomato:#C1442E; --cream:#FBF3E3; --kraft:#E9D9B6; --kraft-dark:#CBB27F;
+    --charcoal:#2B2420; --charcoal-soft:#5A5148; --white:#fff;
+    --font-display:'Baloo 2',sans-serif; --font-body:'Work Sans',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-body);color:var(--charcoal);background:var(--cream);}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  input,textarea{font-family:inherit;}
+  .wrap{max-width:760px;margin:0 auto;padding:28px 24px 60px;}
+
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px;flex-wrap:wrap;gap:14px;}
+  .topbar__title{font-family:var(--font-display);font-weight:700;font-size:1.4rem;color:var(--green-deep);}
+  .topbar__back{color:var(--charcoal-soft);font-size:0.9rem;}
+
+  .section-card{background:#fff;border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 6px 18px rgba(43,36,32,0.06);}
+  .section-card__title{font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:var(--green-deep);margin-bottom:6px;}
+  .section-card__hint{font-size:0.82rem;color:var(--charcoal-soft);margin-bottom:18px;}
+
+  .form-group{margin-bottom:16px;}
+  .form-group:last-child{margin-bottom:0;}
+  .form-group label{display:block;font-size:0.82rem;font-weight:600;margin-bottom:6px;color:var(--charcoal-soft);}
+  .form-group input,.form-group textarea,.form-group select{
+    width:100%;padding:12px 14px;border:1.5px solid var(--kraft-dark);border-radius:10px;
+    font-size:0.92rem;background:var(--cream);color:var(--charcoal);
+  }
+  .form-group input:focus,.form-group textarea:focus{outline:2px solid var(--green-leaf);}
+  .form-group textarea{resize:vertical;min-height:90px;}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:520px){.two-col{grid-template-columns:1fr;}}
+
+  .radius-display{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+  .radius-display b{font-family:var(--font-display);color:var(--green-deep);font-size:1.3rem;}
+  input[type="range"]{width:100%;accent-color:var(--green-deep);}
+
+  .legal-links{display:flex;flex-direction:column;gap:10px;}
+  .legal-link-row{display:flex;align-items:center;justify-content:space-between;background:var(--cream);
+    border-radius:10px;padding:12px 16px;}
+  .legal-link-row__label{font-weight:600;font-size:0.9rem;}
+  .legal-link-row__status{font-size:0.76rem;color:var(--green-leaf);font-weight:600;}
+  .edit-link{font-size:0.82rem;color:var(--green-deep);font-weight:600;}
+
+  .save-bar{position:sticky;bottom:0;background:var(--cream);padding:16px 0;border-top:1px solid var(--kraft-dark);
+    display:flex;justify-content:flex-end;}
+  .save-btn{background:var(--orange);color:#fff;padding:13px 28px;border-radius:999px;font-weight:700;font-size:0.94rem;transition:transform .15s ease;}
+  .save-btn:hover{transform:translateY(-2px);}
+
+  .toast{
+    position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--green-deep);color:#fff;padding:12px 22px;border-radius:999px;
+    font-size:0.86rem;font-weight:600;z-index:200;opacity:0;transition:opacity .25s ease,transform .25s ease;pointer-events:none;
+  }
+  .toast.is-visible{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="topbar__title">Paramètres généraux</div>
+    <a href="dashboard-admin.html" class="topbar__back">← Retour au tableau de bord</a>
+  </div>
+
+  <!-- INFOS LEGALES -->
+  <div class="section-card">
+    <div class="section-card__title">Informations légales</div>
+    <div class="section-card__hint">Nécessaire pour la conformité et les paiements en ligne.</div>
+
+    <div class="form-group">
+      <label>Nom légal de l'entreprise / statut</label>
+      <input type="text" placeholder="Ex : Entreprise individuelle, Le Panier de Maman">
+    </div>
+    <div class="two-col">
+      <div class="form-group">
+        <label>Numéro IFU</label>
+        <input type="text" placeholder="Ex : 3202600000000">
+      </div>
+      <div class="form-group">
+        <label>Registre de commerce (RCCM)</label>
+        <input type="text" placeholder="Ex : BJ-COT-2026-...">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Adresse légale</label>
+      <input type="text" placeholder="Adresse complète de l'entreprise">
+    </div>
+    <div class="form-group">
+      <label>Email de contact officiel</label>
+      <input type="email" placeholder="contact@lepanierdemaman.bj">
+    </div>
+  </div>
+
+  <!-- DOCUMENTS LEGAUX -->
+  <div class="section-card">
+    <div class="section-card__title">Documents légaux</div>
+    <div class="section-card__hint">Obligatoires pour une plateforme qui gère des paiements et données clients.</div>
+    <div class="legal-links">
+      <div class="legal-link-row"><span class="legal-link-row__label">Conditions générales d'utilisation</span><a href="#" class="edit-link">Modifier</a></div>
+      <div class="legal-link-row"><span class="legal-link-row__label">Politique de confidentialité</span><a href="#" class="edit-link">Modifier</a></div>
+      <div class="legal-link-row"><span class="legal-link-row__label">Politique de remboursement</span><a href="#" class="edit-link">Modifier</a></div>
+    </div>
+  </div>
+
+  <!-- COUVERTURE GLOBALE -->
+  <div class="section-card">
+    <div class="section-card__title">Zone de couverture globale</div>
+    <div class="section-card__hint">Ville(s) et rayon dans lesquels la plateforme opère actuellement.</div>
+
+    <div class="form-group">
+      <label>Ville principale</label>
+      <input type="text" value="Cotonou">
+    </div>
+
+    <div class="radius-display">
+      <span>Rayon de couverture</span>
+      <b id="radiusValue">15 km</b>
+    </div>
+    <input type="range" id="radiusSlider" min="1" max="50" value="15">
+  </div>
+
+  <!-- TARIFICATION PLATEFORME -->
+  <div class="section-card">
+    <div class="section-card__title">Tarification plateforme</div>
+    <div class="two-col">
+      <div class="form-group">
+        <label>Durée essai gratuit (jours)</label>
+        <input type="number" value="30">
+      </div>
+      <div class="form-group">
+        <label>Abonnement mensuel (FCFA)</label>
+        <input type="number" value="2000">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="save-bar wrap">
+  <button class="save-btn" id="saveBtn">Enregistrer les modifications</button>
+</div>
+
+<div class="toast" id="toast">Paramètres enregistrés ✓</div>
+
+<script>
+  const radiusSlider = document.getElementById('radiusSlider');
+  const radiusValue = document.getElementById('radiusValue');
+  radiusSlider.addEventListener('input', () => { radiusValue.textContent = radiusSlider.value + ' km'; });
+
+  document.getElementById('saveBtn').addEventListener('click', () => {
+    const toast = document.getElementById('toast');
+    toast.classList.add('is-visible');
+    setTimeout(() => toast.classList.remove('is-visible'), 2200);
+  });
+</script>
+
+</body>
+</html>

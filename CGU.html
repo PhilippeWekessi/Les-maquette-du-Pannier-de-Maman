@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CGU et Politique de confidentialité — Le Panier de Maman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#2F5233; --green-leaf:#4C7A3D; --orange:#E8752D;
+    --tomato:#C1442E; --cream:#FBF3E3; --kraft:#E9D9B6; --kraft-dark:#CBB27F;
+    --charcoal:#2B2420; --charcoal-soft:#5A5148; --white:#fff;
+    --font-display:'Baloo 2',sans-serif; --font-body:'Work Sans',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-body);color:var(--charcoal);background:var(--cream);line-height:1.6;}
+  a{color:var(--green-deep);}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  .wrap{max-width:820px;margin:0 auto;padding:0 24px;}
+
+  .nav{position:sticky;top:0;z-index:50;background:var(--green-deep);color:#fff;}
+  .nav__inner{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;}
+  .nav__brand{font-family:var(--font-display);font-weight:700;font-size:1.15rem;}
+
+  .page-header{padding:36px 0 10px;}
+  .page-header h1{font-family:var(--font-display);font-weight:700;font-size:1.7rem;color:var(--green-deep);}
+  .page-header p{font-size:0.85rem;color:var(--charcoal-soft);margin-top:6px;}
+
+  .tabs{display:flex;gap:10px;margin:22px 0 32px;border-bottom:1px solid var(--kraft-dark);}
+  .tab{padding:12px 4px;font-weight:600;font-size:0.92rem;color:var(--charcoal-soft);background:none;
+    border-bottom:3px solid transparent;margin-right:20px;}
+  .tab.active{color:var(--green-deep);border-bottom-color:var(--orange);}
+
+  main{padding-bottom:70px;}
+  .doc{display:none;background:#fff;border-radius:16px;padding:32px;box-shadow:0 6px 18px rgba(43,36,32,0.06);}
+  .doc.active{display:block;}
+
+  .doc h2{font-family:var(--font-display);font-size:1.15rem;color:var(--green-deep);margin:28px 0 10px;}
+  .doc h2:first-child{margin-top:0;}
+  .doc p{font-size:0.92rem;color:var(--charcoal-soft);margin-bottom:10px;}
+  .doc ul{margin:0 0 10px 20px;font-size:0.92rem;color:var(--charcoal-soft);}
+  .doc li{margin-bottom:6px;}
+
+  .last-updated{font-size:0.78rem;color:var(--charcoal-soft);margin-top:30px;padding-top:16px;border-top:1px dashed var(--kraft-dark);}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav__inner">
+    <a href="accueil.html" class="nav__brand">Le Panier de Maman</a>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="wrap">
+    <h1>Conditions et confidentialité</h1>
+    <p>Merci de lire attentivement ces documents avant d'utiliser la plateforme.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="tabs">
+    <button class="tab active" data-doc="cgu">Conditions générales d'utilisation</button>
+    <button class="tab" data-doc="confidentialite">Politique de confidentialité</button>
+  </div>
+
+  <!-- CGU -->
+  <div class="doc active" id="doc-cgu">
+    <h2>1. Objet</h2>
+    <p>Les présentes conditions générales d'utilisation (CGU) régissent l'accès et l'utilisation de la plateforme "Le Panier de Maman", qui permet la commande, le paiement et la livraison de fruits et légumes frais.</p>
+
+    <h2>2. Acceptation des conditions</h2>
+    <p>En créant un compte ou en passant une commande sur la plateforme, vous acceptez sans réserve les présentes conditions générales d'utilisation.</p>
+
+    <h2>3. Comptes utilisateurs</h2>
+    <p>La plateforme distingue trois types de comptes : client, vendeuse et livreur. Chaque utilisateur est responsable de la confidentialité de ses identifiants de connexion.</p>
+
+    <h2>4. Commandes et paiement</h2>
+    <ul>
+      <li>Les prix affichés sont exprimés en Francs CFA (FCFA) et incluent les frais de livraison calculés selon la distance.</li>
+      <li>Le paiement s'effectue via Kkiapay (Mobile Money, carte bancaire) ou en espèces à la livraison.</li>
+      <li>Une commande est considérée comme confirmée après validation du paiement ou acceptation du paiement à la livraison.</li>
+    </ul>
+
+    <h2>5. Livraison</h2>
+    <p>La livraison est assurée par un livreur partenaire dans la zone de couverture définie. La remise de la commande doit être confirmée à la fois par le livreur et par le client afin de garantir la bonne exécution de la commande.</p>
+
+    <h2>6. Annulation et remboursement</h2>
+    <p>Une commande peut être annulée avant sa prise en charge par le livreur. En cas de paiement en ligne déjà effectué, le remboursement s'effectue selon les modalités de l'agrégateur de paiement Kkiapay.</p>
+
+    <h2>7. Responsabilité</h2>
+    <p>La plateforme met en relation clients, vendeuses et livreurs, mais ne saurait être tenue responsable de la qualité intrinsèque des produits vendus, celle-ci relevant de la responsabilité de la vendeuse.</p>
+
+    <h2>8. Modification des CGU</h2>
+    <p>Ces conditions peuvent être modifiées à tout moment. Les utilisateurs seront informés de toute modification substantielle.</p>
+
+    <div class="last-updated">Dernière mise à jour : juillet 2026</div>
+  </div>
+
+  <!-- POLITIQUE DE CONFIDENTIALITE -->
+  <div class="doc" id="doc-confidentialite">
+    <h2>1. Données collectées</h2>
+    <p>Nous collectons les données suivantes lors de votre utilisation de la plateforme :</p>
+    <ul>
+      <li>Nom, numéro de téléphone et adresse de livraison</li>
+      <li>Historique des commandes et des paiements</li>
+      <li>Localisation GPS, uniquement lors du partage volontaire pour calculer les frais de livraison</li>
+    </ul>
+
+    <h2>2. Utilisation des données</h2>
+    <p>Ces données sont utilisées exclusivement pour : traiter vos commandes, calculer les frais de livraison, vous contacter en cas de besoin, et améliorer nos services.</p>
+
+    <h2>3. Partage des données</h2>
+    <p>Vos données de commande (nom, téléphone, localisation, contenu) sont partagées uniquement avec la vendeuse et le livreur concernés par votre commande, dans le seul but d'assurer la livraison.</p>
+
+    <h2>4. Paiement</h2>
+    <p>Les informations de paiement sont traitées directement par notre agrégateur de paiement Kkiapay. Nous ne stockons aucune donnée bancaire ou de carte sur nos serveurs.</p>
+
+    <h2>5. Conservation des données</h2>
+    <p>Vos données sont conservées aussi longtemps que votre compte reste actif. Vous pouvez demander la suppression de votre compte et de vos données à tout moment.</p>
+
+    <h2>6. Vos droits</h2>
+    <p>Vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles. Pour exercer ces droits, contactez-nous via WhatsApp ou par email.</p>
+
+    <h2>7. Sécurité</h2>
+    <p>Nous mettons en œuvre des mesures raisonnables pour protéger vos données contre tout accès non autorisé.</p>
+
+    <div class="last-updated">Dernière mise à jour : juillet 2026</div>
+  </div>
+
+</main>
+
+<script>
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.doc').forEach(d => d.classList.remove('active'));
+      document.getElementById('doc-' + tab.dataset.doc).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
