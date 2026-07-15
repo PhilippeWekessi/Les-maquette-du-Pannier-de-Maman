@@ -40,6 +40,11 @@
   .choice-option__title{font-weight:700;font-size:1rem;color:var(--charcoal);}
   .choice-option__desc{font-size:0.82rem;color:var(--charcoal-soft);margin-top:2px;}
 
+  .choice-note{
+    background:var(--cream);border:1.5px dashed var(--kraft-dark);border-radius:10px;
+    padding:12px 16px;font-size:0.8rem;color:var(--charcoal-soft);margin-bottom:20px;line-height:1.5;
+  }
+
   .back-link{display:block;text-align:center;font-size:0.86rem;color:var(--charcoal-soft);margin-top:14px;}
 </style>
 </head>
@@ -55,15 +60,19 @@
     <div class="choice-body__title">Créer un compte</div>
     <div class="choice-body__hint">Choisissez le type de compte qui vous correspond.</div>
 
-    <a href="inscription-client-livreur.html" class="choice-option">
-      <div class="choice-option__title">Client ou Livreur</div>
-      <div class="choice-option__desc">Commander des produits, ou livrer des commandes</div>
+    <a href="inscription-client.html" class="choice-option">
+      <div class="choice-option__title">Client</div>
+      <div class="choice-option__desc">Commander des fruits et légumes frais</div>
     </a>
 
     <a href="inscription-vendeur.html" class="choice-option">
       <div class="choice-option__title">Vendeur / Vendeuse</div>
       <div class="choice-option__desc">Ouvrir votre boutique sur la plateforme</div>
     </a>
+
+    <div class="choice-note">
+      Vous êtes livreur ? Votre compte est créé directement par le vendeur ou la vendeuse pour qui vous travaillez — vous n'avez pas besoin de vous inscrire ici.
+    </div>
 
     <a href="connexion.html" class="back-link">← Retour à la connexion</a>
   </div>
