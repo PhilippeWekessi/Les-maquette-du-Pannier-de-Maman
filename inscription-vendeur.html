@@ -48,6 +48,19 @@
   }
   .form-group input:focus{outline:2px solid var(--green-leaf);}
 
+  .password-field{position:relative;}
+  .password-field input{padding-right:44px;}
+  .password-toggle{
+    position:absolute;right:12px;top:50%;transform:translateY(-50%);
+    background:none;border:none;cursor:pointer;padding:4px;
+    color:var(--charcoal-soft);display:flex;align-items:center;justify-content:center;
+  }
+  .password-toggle:hover{color:var(--green-deep);}
+  .password-toggle svg{width:20px;height:20px;}
+  .password-toggle .icon-eye-off{display:none;}
+  .password-toggle.is-visible .icon-eye{display:none;}
+  .password-toggle.is-visible .icon-eye-off{display:block;}
+
   .otp-note{
     background:var(--cream);border:1.5px dashed var(--kraft-dark);border-radius:10px;
     padding:12px 14px;font-size:0.82rem;color:var(--charcoal-soft);margin-bottom:16px;
@@ -123,11 +136,23 @@
 
       <div class="form-group">
         <label>Mot de passe</label>
-        <input type="password" placeholder="Choisissez un mot de passe">
+        <div class="password-field">
+          <input type="password" id="vendorPassword" placeholder="Choisissez un mot de passe">
+          <button type="button" class="password-toggle" data-toggle-password="vendorPassword" aria-label="Afficher le mot de passe">
+            <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
       </div>
       <div class="form-group">
         <label>Confirmer le mot de passe</label>
-        <input type="password" placeholder="Retapez le mot de passe">
+        <div class="password-field">
+          <input type="password" id="vendorPasswordConfirm" placeholder="Retapez le mot de passe">
+          <button type="button" class="password-toggle" data-toggle-password="vendorPasswordConfirm" aria-label="Afficher le mot de passe">
+            <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
       </div>
 
       <div class="validation-note" id="validationNote">
@@ -152,6 +177,15 @@
 </div>
 
 <script>
+  document.querySelectorAll('[data-toggle-password]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const input = document.getElementById(btn.dataset.togglePassword);
+      const isVisible = input.type === 'text';
+      input.type = isVisible ? 'password' : 'text';
+      btn.classList.toggle('is-visible', !isVisible);
+    });
+  });
+
   document.querySelectorAll('.gender-chip').forEach(chip => {
     chip.addEventListener('click', () => {
       document.querySelectorAll('.gender-chip').forEach(c => c.classList.remove('selected'));

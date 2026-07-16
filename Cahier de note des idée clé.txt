@@ -1,16 +1,13 @@
 Projet 2 : App vente fruits/légumes (ma mère)
 Phases
 
-Phase 1 : Solo (ma mère) — Bénin
-Phase 2 : Multi-vendeurs — Bénin
-Phase 3 : Multi-pays — Afrique
+Phase 1 : Multi-vendeurs — Bénin
+Phase 2 : Multi-pays — Afrique
 
 Rôles
 
 Admin (toi) — voit tout
-Vendeuse (mère) — gère sa boutique
-Client
-Livreur
+Vendeuse et vendeurs — gère sa boutique
 
 Gestion boutique (mère)
 
@@ -91,5 +88,3 @@ Interviewer ta mère (aisance smartphone, horaires, livraison actuelle, prix/mar
 Comprendre clients potentiels (zone, moyens paiement, type téléphone)
 Vérifier obstacles (réseau, livreurs dispo, aide photos/mise en ligne)
 Tester le concept "à la main" avant de coder (commande WhatsApp + livraison manuelle)
-
-

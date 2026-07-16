@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -186,6 +185,36 @@
   .settings-row__label{font-weight:600;font-size:0.92rem;}
   .settings-row__desc{font-size:0.78rem;color:var(--charcoal-soft);margin-top:2px;}
 
+  /* PAIEMENTS */
+  .period-tabs{display:flex;gap:10px;margin-bottom:20px;}
+  .period-tab{
+    flex:1;text-align:center;padding:10px 0;border-radius:999px;font-weight:600;font-size:0.86rem;
+    background:#fff;border:1.5px solid var(--kraft-dark);color:var(--charcoal-soft);transition:all .15s ease;
+  }
+  .period-tab.active{background:var(--green-deep);color:#fff;border-color:var(--green-deep);}
+
+  .payment-summary{
+    background:linear-gradient(135deg,var(--green-deep),#3D6B41);color:#fff;
+    border-radius:20px;padding:24px;margin-bottom:22px;
+  }
+  .payment-summary__label{font-size:0.85rem;color:#D9E6D1;margin-bottom:6px;}
+  .payment-summary__amount{font-family:var(--font-display);font-weight:800;font-size:2.2rem;}
+  .payment-summary__meta{display:flex;gap:24px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.15);flex-wrap:wrap;}
+  .payment-summary__meta div span{display:block;font-size:0.76rem;color:#D9E6D1;}
+  .payment-summary__meta div b{font-family:var(--font-display);font-size:1.1rem;}
+
+  .payment-item{
+    background:#fff;border-radius:14px;padding:14px 18px;margin-bottom:10px;box-shadow:0 4px 14px rgba(43,36,32,0.05);
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+  .payment-item__client{font-weight:600;font-size:0.92rem;}
+  .payment-item__date{font-size:0.78rem;color:var(--charcoal-soft);}
+  .payment-item__right{display:flex;align-items:center;gap:12px;}
+  .payment-item__amount{font-family:var(--font-hand);font-size:1.3rem;font-weight:700;color:var(--tomato);}
+  .payment-method-tag{font-size:0.74rem;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap;}
+  .payment-method-tag.online{background:#DCEAF7;color:#2E6B9E;}
+  .payment-method-tag.cash{background:#FBE0DC;color:var(--tomato);}
+
   .toast{
     position:fixed;bottom:24px;right:24px;z-index:200;
     background:var(--green-deep);color:#fff;padding:16px 20px;border-radius:14px;
@@ -261,6 +290,7 @@
       <li class="active" data-view="dashboard-view">Tableau de bord</li>
       <li data-view="products-view">Mes produits</li>
       <li data-view="orders-view">Commandes</li>
+      <li data-view="payments-view">Paiements</li>
       <li data-view="announce-view">Faire une annonce</li>
       <li data-view="drivers-view">Mes livreurs</li>
       <li data-view="reviews-view">Avis des clients</li>
@@ -365,6 +395,59 @@
             <tr><td>Ismaël T.</td><td>3kg carottes</td><td>300F</td><td>—</td><td><span class="badge cancel">Annulée</span></td></tr>
           </tbody>
         </table>
+      </div>
+    </section>
+
+    <!-- ================= PAIEMENTS ================= -->
+    <section id="payments-view" class="view">
+      <div class="section-title">Mes paiements</div>
+      <div class="section-hint">Voyez ce que vos clients ont payé, en ligne ou en espèces à la livraison.</div>
+
+      <div class="period-tabs">
+        <button class="period-tab" data-period="day">Jour</button>
+        <button class="period-tab active" data-period="week">Semaine</button>
+        <button class="period-tab" data-period="month">Mois</button>
+      </div>
+
+      <div class="payment-summary">
+        <div class="payment-summary__label" id="paymentSummaryLabel">Total reçu cette semaine</div>
+        <div class="payment-summary__amount" id="paymentTotalAmount">18 400F</div>
+        <div class="payment-summary__meta">
+          <div><span>Paiements en ligne</span><b id="paymentOnlineAmount">6 000F</b></div>
+          <div><span>Paiements en espèces</span><b id="paymentCashAmount">12 400F</b></div>
+          <div><span>Nombre de paiements</span><b id="paymentCount">4</b></div>
+        </div>
+      </div>
+
+      <div id="paymentList">
+        <div class="payment-item">
+          <div><div class="payment-item__client">Josué K.</div><div class="payment-item__date">Aujourd'hui, 14:20</div></div>
+          <div class="payment-item__right">
+            <span class="payment-method-tag online">Kkiapay</span>
+            <div class="payment-item__amount">6000F</div>
+          </div>
+        </div>
+        <div class="payment-item">
+          <div><div class="payment-item__client">Aïcha D.</div><div class="payment-item__date">Hier, 10:05</div></div>
+          <div class="payment-item__right">
+            <span class="payment-method-tag cash">Cash à la livraison</span>
+            <div class="payment-item__amount">800F</div>
+          </div>
+        </div>
+        <div class="payment-item">
+          <div><div class="payment-item__client">Rachida M.</div><div class="payment-item__date">Hier, 09:12</div></div>
+          <div class="payment-item__right">
+            <span class="payment-method-tag cash">Cash à la livraison</span>
+            <div class="payment-item__amount">550F</div>
+          </div>
+        </div>
+        <div class="payment-item">
+          <div><div class="payment-item__client">Ismaël T.</div><div class="payment-item__date">Il y a 3 jours</div></div>
+          <div class="payment-item__right">
+            <span class="payment-method-tag cash">Cash à la livraison</span>
+            <div class="payment-item__amount">300F</div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -613,6 +696,26 @@
     t.addEventListener('click', () => t.classList.toggle('is-on'));
   });
 
+  // Onglets Paiements (Jour / Semaine / Mois)
+  const paymentPeriodData = {
+    day:   { label: "aujourd'hui", total: '6 000F', online: '6 000F', cash: '0F', count: 1 },
+    week:  { label: 'cette semaine', total: '18 400F', online: '6 000F', cash: '12 400F', count: 4 },
+    month: { label: 'ce mois-ci', total: '52 300F', online: '21 000F', cash: '31 300F', count: 15 }
+  };
+
+  document.querySelectorAll('.period-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const data = paymentPeriodData[tab.dataset.period];
+      document.getElementById('paymentSummaryLabel').textContent = 'Total reçu ' + data.label;
+      document.getElementById('paymentTotalAmount').textContent = data.total;
+      document.getElementById('paymentOnlineAmount').textContent = data.online;
+      document.getElementById('paymentCashAmount').textContent = data.cash;
+      document.getElementById('paymentCount').textContent = data.count;
+    });
+  });
+
   // Ajouter produit
   const addModal = document.getElementById('addModal');
   const addPreview = document.getElementById('addPreview');
@@ -705,6 +808,10 @@
     addDriverModal.classList.remove('is-open');
     resetDriverForm();
     showToast(`Livreur ajouté — ses identifiants (email : ${email}) ont été envoyés par SMS au ${phone}`);
+  });
+
+  document.querySelectorAll('.driver-row__remove').forEach(btn => {
+    btn.addEventListener('click', (e) => e.target.closest('.driver-row').remove());
   });
 
   // Faire une annonce
@@ -805,812 +912,4 @@
 </script>
 
 </body>
-=======
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard Vendeur/Vendeuse — Le Panier de Maman</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --green-deep:#2F5233; --green-leaf:#4C7A3D; --orange:#E8752D;
-    --tomato:#C1442E; --cream:#FBF3E3; --kraft:#E9D9B6; --kraft-dark:#CBB27F;
-    --charcoal:#2B2420; --charcoal-soft:#5A5148; --white:#fff;
-    --font-display:'Baloo 2',sans-serif; --font-body:'Work Sans',sans-serif; --font-hand:'Caveat',cursive;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:var(--font-body);color:var(--charcoal);background:var(--cream);}
-  a{color:inherit;text-decoration:none;}
-  button{font-family:inherit;cursor:pointer;border:none;}
-  input,textarea{font-family:inherit;}
-  img{display:block;max-width:100%;}
-
-  .app{display:flex;min-height:100vh;}
-
-  .sidebar{
-    width:230px;flex-shrink:0;background:var(--green-deep);color:#fff;
-    padding:24px 18px;position:relative;
-    display:flex;flex-direction:column;
-    transition:transform .25s ease;
-  }
-  .sidebar__brand{font-family:var(--font-display);font-weight:700;font-size:1.1rem;}
-  .sidebar__sub{font-size:0.78rem;color:#B7D3A8;margin-bottom:34px;}
-
-  .nav{list-style:none;display:flex;flex-direction:column;gap:6px;}
-  .nav li{
-    padding:11px 14px;border-radius:10px;font-size:0.92rem;font-weight:500;
-    cursor:pointer;color:#D9E6D1;transition:background .15s ease,color .15s ease;
-  }
-  .nav li a{display:block;color:inherit;}
-  .nav li:hover{background:rgba(255,255,255,0.08);color:#fff;}
-  .nav li.active{background:var(--orange);color:#fff;font-weight:600;}
-
-  .sidebar__foot{margin-top:auto;font-size:0.75rem;color:#8FAE86;padding-top:20px;}
-  .sidebar__foot a{color:#B7D3A8;text-decoration:underline;}
-
-  @media (max-width:880px){
-    .sidebar{position:fixed;top:0;left:0;bottom:0;z-index:60;transform:translateX(-100%);}
-    .sidebar.is-open{transform:translateX(0);}
-  }
-
-  .main{flex:1;min-width:0;padding:26px 30px 50px;}
-
-  .topbar{
-    display:flex;align-items:center;justify-content:space-between;
-    margin-bottom:28px;flex-wrap:wrap;gap:14px;
-  }
-  .topbar__left{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
-  .topbar__search{
-    display:flex;align-items:center;gap:10px;background:#fff;
-    border:1.5px solid var(--kraft-dark);border-radius:999px;padding:10px 18px;
-    min-width:220px;flex:1;max-width:340px;
-  }
-  .topbar__search input{border:0;outline:none;background:transparent;font-size:0.9rem;width:100%;color:var(--charcoal);}
-  .topbar__right{display:flex;align-items:center;gap:14px;}
-  .topbar__toggle{display:none;background:var(--green-deep);color:#fff;padding:9px 12px;border-radius:8px;font-size:1.1rem;}
-  .topbar__hello{font-size:0.9rem;color:var(--charcoal-soft);}
-  .avatar{
-    width:38px;height:38px;border-radius:50%;background:var(--orange);color:#fff;
-    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.95rem;
-  }
-  .avatar a{color:#fff;display:flex;align-items:center;justify-content:center;width:100%;height:100%;}
-  @media (max-width:880px){.topbar__toggle{display:block;}}
-
-  .shop-status{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid var(--kraft-dark);
-    padding:8px 14px;border-radius:999px;}
-  .shop-status__label{font-weight:600;font-size:0.86rem;}
-  .toggle{position:relative;width:44px;height:24px;background:var(--tomato);border-radius:999px;transition:background .25s ease;flex-shrink:0;}
-  .toggle.is-on{background:#5FA85A;}
-  .toggle__knob{position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform .25s ease;}
-  .toggle.is-on .toggle__knob{transform:translateX(20px);}
-
-  .section-title{font-family:var(--font-display);font-weight:700;font-size:1.3rem;color:var(--green-deep);margin-bottom:18px;}
-  .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
-  .section-hint{font-size:0.82rem;color:var(--charcoal-soft);margin-top:-10px;margin-bottom:16px;}
-
-  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;}
-  .card{
-    grid-column:span 12;background:#fff;border-radius:16px;padding:22px;
-    box-shadow:0 6px 18px rgba(43,36,32,0.06);
-  }
-  .span-8{grid-column:span 8;}
-  .span-4{grid-column:span 4;}
-  @media (max-width:960px){ .span-8,.span-4{grid-column:span 12;} }
-
-  .card h3{font-family:var(--font-display);font-size:1.05rem;color:var(--green-deep);margin-bottom:4px;}
-  .card__muted{font-size:0.85rem;color:var(--charcoal-soft);margin-bottom:14px;}
-  .chart-wrap{position:relative;height:220px;}
-  .chart-wrap.small{height:180px;}
-
-  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
-  @media (max-width:700px){.stats-row{grid-template-columns:repeat(2,1fr);}}
-  .stat{
-    background:var(--cream);border-radius:12px;padding:16px;
-    border-left:4px solid var(--green-leaf);
-  }
-  .stat.warn{border-left-color:var(--tomato);}
-  .stat__value{font-family:var(--font-display);font-weight:700;font-size:1.35rem;color:var(--green-deep);}
-  .stat__label{font-size:0.8rem;color:var(--charcoal-soft);margin-top:3px;}
-
-  .driver-list{display:flex;flex-direction:column;gap:12px;}
-  .driver-row{
-    display:flex;align-items:center;justify-content:space-between;
-    padding:12px 14px;background:var(--cream);border-radius:12px;flex-wrap:wrap;gap:10px;
-  }
-  .driver-row img{width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;}
-  .driver-row__name{font-weight:600;font-size:0.92rem;}
-  .driver-row__zone{font-size:0.78rem;color:var(--charcoal-soft);}
-  .driver-status{display:flex;align-items:center;gap:7px;font-size:0.8rem;font-weight:600;}
-  .driver-dot{width:9px;height:9px;border-radius:50%;}
-  .driver-status.online .driver-dot{background:var(--green-leaf);}
-  .driver-status.online{color:var(--green-leaf);}
-  .driver-status.offline .driver-dot{background:#B7AFA3;}
-  .driver-status.offline{color:#8A8177;}
-  .driver-row__remove{font-size:0.78rem;color:var(--tomato);font-weight:600;}
-
-  table{width:100%;border-collapse:collapse;}
-  thead th{
-    text-align:left;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.04em;
-    color:var(--charcoal-soft);padding:10px 12px;border-bottom:1.5px solid var(--kraft-dark);
-  }
-  tbody td{padding:13px 12px;font-size:0.9rem;border-bottom:1px solid #F0E9DB;}
-  tbody tr:last-child td{border-bottom:none;}
-  .badge{font-size:0.76rem;font-weight:600;padding:5px 12px;border-radius:999px;white-space:nowrap;}
-  .badge.new{background:#FDEBD3;color:var(--orange);}
-  .badge.progress{background:#DCEAF7;color:#2E6B9E;}
-  .badge.done{background:#E4F1DF;color:var(--green-leaf);}
-  .badge.cancel{background:#FBE0DC;color:var(--tomato);}
-
-  .btn{
-    display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;
-    font-weight:600;font-size:0.88rem;background:var(--orange);color:#fff;transition:transform .15s;
-  }
-  .btn:hover{transform:translateY(-2px);}
-  .btn-outline{background:#fff;color:var(--green-deep);border:1.5px solid var(--green-deep);}
-  .btn-small{padding:8px 16px;font-size:0.8rem;}
-
-  .view{display:none;}
-  .view.active{display:block;}
-
-  /* MES PRODUITS */
-  .product-list{display:flex;flex-direction:column;gap:12px;}
-  .product-row{background:#fff;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 4px 14px rgba(43,36,32,0.05);}
-  .product-row img{width:56px;height:56px;border-radius:10px;object-fit:cover;flex-shrink:0;}
-  .product-row__info{flex:1;min-width:140px;}
-  .product-row__name{font-weight:600;font-size:1rem;}
-  .product-row__unit{font-size:0.8rem;color:var(--charcoal-soft);}
-  .product-row__price{font-family:var(--font-hand);font-size:1.5rem;font-weight:700;color:var(--tomato);min-width:70px;text-align:right;}
-  .stock-badge{font-size:0.75rem;font-weight:600;padding:5px 12px;border-radius:999px;white-space:nowrap;}
-  .stock-badge.in{background:#E4F1DF;color:var(--green-leaf);}
-  .stock-badge.out{background:#FBE0DC;color:var(--tomato);}
-
-  /* ANNONCE */
-  .announce-box{background:#fff;border-radius:16px;padding:22px;box-shadow:0 6px 18px rgba(43,36,32,0.06);}
-  .announce-box textarea{width:100%;border:1.5px solid var(--kraft-dark);border-radius:12px;padding:14px;font-size:0.95rem;resize:vertical;min-height:90px;background:var(--cream);color:var(--charcoal);}
-  .announce-box textarea:focus{outline:2px solid var(--green-leaf);}
-  .announce-box__actions{display:flex;justify-content:flex-end;margin-top:12px;}
-
-  /* AVIS */
-  .review-card{background:#fff;border-radius:14px;padding:18px 20px;margin-bottom:12px;box-shadow:0 4px 14px rgba(43,36,32,0.05);}
-  .review-card__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:8px;}
-  .review-card__client{font-weight:600;font-size:0.9rem;}
-  .review-card__date{font-size:0.76rem;color:var(--charcoal-soft);}
-  .review-card__stars{color:#F2A65A;font-size:0.95rem;letter-spacing:2px;}
-  .review-card__text{font-size:0.9rem;color:var(--charcoal-soft);line-height:1.6;margin-bottom:10px;}
-  .review-card__actions{display:flex;gap:10px;flex-wrap:wrap;}
-  .review-reply-box{display:none;margin-top:12px;}
-  .review-reply-box.is-open{display:block;}
-  .review-reply-box textarea{width:100%;border:1.5px solid var(--kraft-dark);border-radius:10px;padding:10px 12px;font-size:0.86rem;background:var(--cream);min-height:60px;resize:vertical;}
-  .review-reply-posted{margin-top:10px;background:var(--cream);border-radius:10px;padding:10px 14px;font-size:0.85rem;}
-  .review-reply-posted b{color:var(--green-deep);}
-
-  /* PARAMETRES */
-  .settings-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #F0E9DB;flex-wrap:wrap;gap:10px;}
-  .settings-row:last-child{border-bottom:none;}
-  .settings-row__label{font-weight:600;font-size:0.92rem;}
-  .settings-row__desc{font-size:0.78rem;color:var(--charcoal-soft);margin-top:2px;}
-
-  .toast{
-    position:fixed;bottom:24px;right:24px;z-index:200;
-    background:var(--green-deep);color:#fff;padding:16px 20px;border-radius:14px;
-    box-shadow:0 12px 28px rgba(0,0,0,0.25);
-    max-width:300px;font-size:0.88rem;
-    opacity:0;transform:translateY(16px);
-    transition:opacity .3s ease,transform .3s ease;
-    pointer-events:none;
-  }
-  .toast.is-visible{opacity:1;transform:translateY(0);}
-  .toast b{color:#F2A65A;}
-
-  .overlay-bg{
-    display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:50;
-  }
-  .overlay-bg.is-open{display:block;}
-  @media (min-width:881px){.overlay-bg{display:none !important;}}
-
-  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(43,36,32,0.5);align-items:center;justify-content:center;padding:20px;z-index:100;overflow-y:auto;}
-  .modal-overlay.is-open{display:flex;}
-  .modal{background:#fff;border-radius:18px;padding:28px;max-width:420px;width:100%;max-height:90vh;overflow-y:auto;}
-  .modal h3{font-family:var(--font-display);color:var(--green-deep);margin-bottom:18px;font-size:1.15rem;}
-  .modal label{display:block;font-size:0.85rem;font-weight:600;margin-bottom:6px;color:var(--charcoal-soft);}
-  .modal input{width:100%;padding:11px 14px;border:1.5px solid var(--kraft-dark);border-radius:10px;margin-bottom:16px;font-family:inherit;font-size:0.95rem;background:var(--cream);}
-  .modal__actions{display:flex;gap:10px;justify-content:flex-end;}
-
-  .photo-trigger-row{
-    display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap;
-  }
-  .photo-trigger-row.compact{margin-bottom:18px;}
-  .photo-trigger-row__preview{
-    width:64px;height:64px;border-radius:12px;background:var(--cream);
-    border:1.5px dashed var(--kraft-dark);display:flex;align-items:center;justify-content:center;
-    font-size:0.72rem;color:var(--charcoal-soft);overflow:hidden;flex-shrink:0;text-align:center;
-  }
-  .photo-trigger-row__preview img{width:100%;height:100%;object-fit:cover;}
-  .photo-trigger-btn{
-    background:#fff;color:var(--green-deep);border:1.5px solid var(--green-deep);
-    padding:10px 18px;border-radius:999px;font-weight:600;font-size:0.85rem;
-    display:inline-flex;align-items:center;gap:8px;transition:transform .15s ease;
-  }
-  .photo-trigger-btn:hover{transform:translateY(-2px);}
-
-  .sheet-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;align-items:flex-end;justify-content:center;}
-  .sheet-overlay.is-open{display:flex;}
-  .photo-sheet{
-    background:#fff;width:100%;max-width:480px;border-radius:22px 22px 0 0;
-    padding:10px 20px 28px;
-    transform:translateY(100%);transition:transform .25s ease;
-  }
-  .sheet-overlay.is-open .photo-sheet{transform:translateY(0);}
-  .photo-sheet__handle{width:38px;height:4px;background:var(--kraft-dark);border-radius:999px;margin:6px auto 16px;}
-  .photo-sheet__head{display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:22px;}
-  .photo-sheet__title{font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:var(--green-deep);}
-  .photo-sheet__close{position:absolute;left:0;background:none;font-size:1.3rem;color:var(--charcoal-soft);width:32px;height:32px;}
-  .photo-sheet__options{display:flex;gap:18px;justify-content:center;}
-  .photo-sheet__option{display:flex;flex-direction:column;align-items:center;gap:10px;background:none;width:96px;}
-  .photo-sheet__icon{width:60px;height:60px;border-radius:50%;background:var(--cream);border:1.5px solid var(--kraft-dark);display:flex;align-items:center;justify-content:center;transition:background .15s ease,transform .15s ease;}
-  .photo-sheet__option:hover .photo-sheet__icon{background:var(--green-deep);transform:translateY(-2px);}
-  .photo-sheet__option:hover .photo-sheet__icon svg{stroke:#fff;}
-  .photo-sheet__icon svg{width:26px;height:26px;stroke:var(--green-deep);}
-  .photo-sheet__label{font-size:0.85rem;font-weight:600;color:var(--charcoal);}
-</style>
-</head>
-<body>
-
-<div class="app">
-
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar__brand">Le Panier de Maman</div>
-    <div class="sidebar__sub">Espace Vendeur / Vendeuse</div>
-    <ul class="nav">
-      <li class="active" data-view="dashboard-view">Tableau de bord</li>
-      <li data-view="products-view">Mes produits</li>
-      <li data-view="orders-view">Commandes</li>
-      <li data-view="announce-view">Faire une annonce</li>
-      <li data-view="drivers-view">Mes livreurs</li>
-      <li data-view="reviews-view">Avis des clients</li>
-      <li><a href="parametres-boutique.html">Ma boutique</a></li>
-      <li data-view="settings-view">Paramètres</li>
-    </ul>
-    <div class="sidebar__foot">v1.0 — <a href="abonnement.html">Mon abonnement</a></div>
-  </aside>
-
-  <div class="overlay-bg" id="overlayBg"></div>
-
-  <main class="main">
-
-    <div class="topbar">
-      <div class="topbar__left">
-        <button class="topbar__toggle" id="sidebarToggle">☰</button>
-        <div class="topbar__search"><input placeholder="Rechercher une commande, un client..."></div>
-        <div class="shop-status">
-          <span class="shop-status__label" id="statusLabel">Boutique ouverte</span>
-          <button class="toggle is-on" id="shopToggle" aria-label="Ouvrir ou fermer la boutique"><div class="toggle__knob"></div></button>
-        </div>
-      </div>
-      <div class="topbar__right">
-        <span class="topbar__hello">Bonjour, Rosine</span>
-        <div class="avatar"><a href="profil_vendeur_vendeuse.html">R</a></div>
-      </div>
-    </div>
-
-    <!-- ================= ACCUEIL ================= -->
-    <section id="dashboard-view" class="view active">
-      <div class="section-title">Vue d'ensemble de ma boutique</div>
-      <div class="grid">
-
-        <div class="card span-8">
-          <h3>Revenu de la semaine</h3>
-          <div class="card__muted">Total encaissé, du lundi à aujourd'hui</div>
-          <div class="chart-wrap"><canvas id="chartLine"></canvas></div>
-        </div>
-
-        <div class="card span-4">
-          <h3>Produits les plus vendus</h3>
-          <div class="card__muted">Répartition cette semaine</div>
-          <div class="chart-wrap small"><canvas id="chartDoughnut"></canvas></div>
-        </div>
-
-        <div class="card span-8">
-          <h3>Statistiques rapides</h3>
-          <div class="stats-row" style="margin-top:14px">
-            <div class="stat"><div class="stat__value">7</div><div class="stat__label">Commandes aujourd'hui</div></div>
-            <div class="stat"><div class="stat__value">18 400F</div><div class="stat__label">Revenu aujourd'hui</div></div>
-            <div class="stat"><div class="stat__value">2</div><div class="stat__label">Mes livreurs en ligne</div></div>
-            <div class="stat warn"><div class="stat__value">1</div><div class="stat__label">Produit en rupture</div></div>
-          </div>
-        </div>
-
-        <div class="card span-4">
-          <h3>Livraisons</h3>
-          <div class="card__muted">Livrées vs annulées, 4 dernières semaines</div>
-          <div class="chart-wrap small"><canvas id="chartBar"></canvas></div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ================= MES PRODUITS ================= -->
-    <section id="products-view" class="view">
-      <div class="section-head">
-        <div class="section-title" style="margin-bottom:0">Mes produits</div>
-        <button class="btn" id="openAddBtn">+ Ajouter un produit</button>
-      </div>
-      <div class="product-list" id="productList">
-
-        <div class="product-row">
-          <img src="images6.jpg" alt="Oranges">
-          <div class="product-row__info"><div class="product-row__name">Oranges</div><div class="product-row__unit">le sac</div></div>
-          <span class="stock-badge in">En stock</span>
-          <div class="product-row__price">6000F</div>
-          <button class="btn btn-outline btn-small">Modifier</button>
-        </div>
-
-        <div class="product-row">
-          <img src="images5.jpg" alt="Chou">
-          <div class="product-row__info"><div class="product-row__name">Chou</div><div class="product-row__unit">l'unité</div></div>
-          <span class="stock-badge out">Rupture</span>
-          <div class="product-row__price">300F</div>
-          <button class="btn btn-outline btn-small">Modifier</button>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ================= COMMANDES ================= -->
-    <section id="orders-view" class="view">
-      <div class="section-title">Mes commandes récentes</div>
-      <div class="card">
-        <table>
-          <thead><tr><th>Client</th><th>Produits</th><th>Montant</th><th>Livreur</th><th>Statut</th></tr></thead>
-          <tbody>
-            <tr><td>Aïcha D.</td><td>2kg carottes, 1 chou</td><td>800F</td><td>Koffi A.</td><td><span class="badge new">Nouvelle</span></td></tr>
-            <tr><td>Josué K.</td><td>1 sac oranges</td><td>6000F</td><td>Bruno S.</td><td><span class="badge progress">En livraison</span></td></tr>
-            <tr><td>Rachida M.</td><td>Tomates, chou</td><td>550F</td><td>Koffi A.</td><td><span class="badge done">Livrée</span></td></tr>
-            <tr><td>Ismaël T.</td><td>3kg carottes</td><td>300F</td><td>—</td><td><span class="badge cancel">Annulée</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- ================= FAIRE UNE ANNONCE ================= -->
-    <section id="announce-view" class="view">
-      <div class="section-title">Faire une annonce</div>
-      <div class="section-hint">Votre annonce apparaîtra sur votre boutique et en haut de la page d'accueil.</div>
-      <div class="announce-box">
-        <div class="photo-trigger-row">
-          <div class="photo-trigger-row__preview" id="announcePreview">Photo</div>
-          <button class="photo-trigger-btn" id="announcePhotoBtn" type="button">Ajouter une photo</button>
-        </div>
-        <textarea id="announceText" placeholder="Exemple : Nouvelles oranges bien sucrées disponibles aujourd'hui !"></textarea>
-        <div class="announce-box__actions"><button class="btn" id="publishAnnounceBtn">Publier l'annonce</button></div>
-      </div>
-    </section>
-
-    <!-- ================= MES LIVREURS ================= -->
-    <section id="drivers-view" class="view">
-      <div class="section-head">
-        <div class="section-title" style="margin-bottom:0">Mes livreurs</div>
-        <button class="btn" id="openAddDriverBtn">+ Ajouter un livreur</button>
-      </div>
-      <div class="section-hint">Ces livreurs travaillent exclusivement pour votre boutique. En ajoutant un livreur, un SMS avec ses identifiants de connexion lui sera envoyé automatiquement.</div>
-      <div class="card">
-        <div class="driver-list" id="driverList">
-          <div class="driver-row">
-            <img src="images6.jpg" alt="Koffi A.">
-            <div><div class="driver-row__name">Koffi A.</div><div class="driver-row__zone">Zone : Akpakpa</div></div>
-            <div class="driver-status online"><span class="driver-dot"></span>En ligne</div>
-            <button class="driver-row__remove">Retirer</button>
-          </div>
-          <div class="driver-row">
-            <img src="images7.jpg" alt="Bruno S.">
-            <div><div class="driver-row__name">Bruno S.</div><div class="driver-row__zone">Zone : Cadjèhoun</div></div>
-            <div class="driver-status online"><span class="driver-dot"></span>En ligne</div>
-            <button class="driver-row__remove">Retirer</button>
-          </div>
-          <div class="driver-row">
-            <img src="images5.jpg" alt="Léa M.">
-            <div><div class="driver-row__name">Léa M.</div><div class="driver-row__zone">Zone : Fidjrossè</div></div>
-            <div class="driver-status offline"><span class="driver-dot"></span>Hors ligne</div>
-            <button class="driver-row__remove">Retirer</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= AVIS DES CLIENTS ================= -->
-    <section id="reviews-view" class="view">
-      <div class="section-title">Avis de mes clients</div>
-      <div class="section-hint">Ces avis sont publics sur votre boutique. Vous pouvez y répondre ou signaler un avis abusif.</div>
-
-      <div class="review-card">
-        <div class="review-card__top">
-          <div class="review-card__client">Aïcha D.</div>
-          <span class="review-card__stars">★★★★★</span>
-        </div>
-        <div class="review-card__date">Il y a 2 jours</div>
-        <div class="review-card__text" style="margin-top:6px">Toujours fraîches et bien sucrées. Livraison rapide en plus !</div>
-        <div class="review-card__actions">
-          <button class="btn btn-outline btn-small" data-reply>Répondre</button>
-          <button class="btn btn-outline btn-small">Signaler</button>
-        </div>
-        <div class="review-reply-box">
-          <textarea placeholder="Votre réponse publique..."></textarea>
-          <button class="btn btn-small" style="margin-top:8px" data-send-reply>Publier la réponse</button>
-        </div>
-      </div>
-
-      <div class="review-card">
-        <div class="review-card__top">
-          <div class="review-card__client">Josué K.</div>
-          <span class="review-card__stars">★★★★☆</span>
-        </div>
-        <div class="review-card__date">Il y a 1 semaine</div>
-        <div class="review-card__text" style="margin-top:6px">Bons produits, juste un peu petits cette fois-ci.</div>
-        <div class="review-card__actions">
-          <button class="btn btn-outline btn-small" data-reply>Répondre</button>
-          <button class="btn btn-outline btn-small">Signaler</button>
-        </div>
-        <div class="review-reply-box">
-          <textarea placeholder="Votre réponse publique..."></textarea>
-          <button class="btn btn-small" style="margin-top:8px" data-send-reply>Publier la réponse</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= PARAMETRES ================= -->
-    <section id="settings-view" class="view">
-      <div class="section-title">Paramètres</div>
-      <div class="card">
-        <div class="settings-row">
-          <div><div class="settings-row__label">Notifications nouvelles commandes</div><div class="settings-row__desc">Recevoir une alerte à chaque nouvelle commande</div></div>
-          <button class="toggle is-on" data-toggle><div class="toggle__knob"></div></button>
-        </div>
-        <div class="settings-row">
-          <div><div class="settings-row__label">Notifications paiements reçus</div><div class="settings-row__desc">Alerte à chaque paiement confirmé</div></div>
-          <button class="toggle is-on" data-toggle><div class="toggle__knob"></div></button>
-        </div>
-        <div class="settings-row">
-          <div><div class="settings-row__label">Mon abonnement</div><div class="settings-row__desc">Voir le statut de votre essai gratuit et vos paiements</div></div>
-          <a href="abonnement.html" class="btn btn-outline btn-small">Voir</a>
-        </div>
-        <div class="settings-row">
-          <div><div class="settings-row__label">Horaires et zone de livraison</div><div class="settings-row__desc">Gérer les horaires et le rayon de livraison de votre boutique</div></div>
-          <a href="parametres-boutique.html" class="btn btn-outline btn-small">Voir</a>
-        </div>
-      </div>
-    </section>
-
-  </main>
-</div>
-
-<!-- MODAL AJOUT PRODUIT -->
-<div class="modal-overlay" id="addModal">
-  <div class="modal">
-    <h3>Ajouter un nouveau produit</h3>
-
-    <div class="photo-trigger-row compact">
-      <div class="photo-trigger-row__preview" id="addPreview">Aucune photo</div>
-      <button class="photo-trigger-btn" id="addPhotoBtn" type="button">Ajouter une photo</button>
-    </div>
-
-    <label>Nom du produit</label>
-    <input type="text" id="addName" placeholder="Exemple : Ananas">
-    <label>Prix</label>
-    <input type="text" id="addPrice" placeholder="Exemple : 500F">
-    <label>Unité</label>
-    <input type="text" id="addUnit" placeholder="Exemple : le kilo, le tas, l'unité">
-    <div class="modal__actions">
-      <button class="btn btn-outline" id="closeAddBtn">Annuler</button>
-      <button class="btn btn-primary" id="confirmAddBtn">Ajouter</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL AJOUT LIVREUR -->
-<div class="modal-overlay" id="addDriverModal">
-  <div class="modal">
-    <h3>Ajouter un livreur</h3>
-
-    <div class="photo-trigger-row compact">
-      <div class="photo-trigger-row__preview" id="driverPreview">Aucune photo</div>
-      <button class="photo-trigger-btn" id="driverPhotoBtn" type="button">Ajouter une photo</button>
-    </div>
-
-    <label>Nom et prénom</label>
-    <input type="text" id="driverName" placeholder="Nom du livreur">
-    <label>Email</label>
-    <input type="email" id="driverEmail" placeholder="Ex : koffi@gmail.com">
-    <label>Numéro de téléphone</label>
-    <input type="tel" id="driverPhone" placeholder="Ex : 01 90 00 00 00">
-    <label>Zone de livraison</label>
-    <input type="text" id="driverZone" placeholder="Ex : Akpakpa">
-    <div class="modal__actions">
-      <button class="btn btn-outline" id="closeAddDriverBtn">Annuler</button>
-      <button class="btn" id="confirmAddDriverBtn">Ajouter</button>
-    </div>
-  </div>
-</div>
-
-<!-- FEUILLE PHOTO Caméra / Galerie -->
-<div class="sheet-overlay" id="photoSheetOverlay">
-  <div class="photo-sheet">
-    <div class="photo-sheet__handle"></div>
-    <div class="photo-sheet__head">
-      <button class="photo-sheet__close" id="photoSheetClose" type="button" aria-label="Fermer">✕</button>
-      <div class="photo-sheet__title">Ajouter une photo</div>
-    </div>
-    <div class="photo-sheet__options">
-      <button class="photo-sheet__option" id="photoSheetCamera" type="button">
-        <span class="photo-sheet__icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-            <circle cx="12" cy="13" r="4"/>
-          </svg>
-        </span>
-        <span class="photo-sheet__label">Prendre une photo</span>
-      </button>
-      <button class="photo-sheet__option" id="photoSheetGallery" type="button">
-        <span class="photo-sheet__icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="18" height="18" rx="2"/>
-            <circle cx="8.5" cy="8.5" r="1.5"/>
-            <path d="M21 15l-5-5L5 21"/>
-          </svg>
-        </span>
-        <span class="photo-sheet__label">Choisir dans la galerie</span>
-      </button>
-    </div>
-  </div>
-</div>
-<input type="file" id="photoInputCamera" accept="image/*" capture="environment" style="display:none">
-<input type="file" id="photoInputGallery" accept="image/*" style="display:none">
-
-<div class="toast" id="toast"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  const navItems = document.querySelectorAll('.nav li[data-view]');
-  const views = document.querySelectorAll('.view');
-  const sidebar = document.getElementById('sidebar');
-  const overlayBg = document.getElementById('overlayBg');
-
-  navItems.forEach(item => {
-    item.addEventListener('click', () => {
-      navItems.forEach(i => i.classList.remove('active'));
-      item.classList.add('active');
-      views.forEach(v => v.classList.remove('active'));
-      document.getElementById(item.dataset.view).classList.add('active');
-      sidebar.classList.remove('is-open');
-      overlayBg.classList.remove('is-open');
-    });
-  });
-
-  document.getElementById('sidebarToggle').addEventListener('click', () => {
-    sidebar.classList.add('is-open');
-    overlayBg.classList.add('is-open');
-  });
-  overlayBg.addEventListener('click', () => {
-    sidebar.classList.remove('is-open');
-    overlayBg.classList.remove('is-open');
-  });
-
-  const toast = document.getElementById('toast');
-  function showToast(message){
-    toast.innerHTML = message;
-    toast.classList.add('is-visible');
-    setTimeout(() => toast.classList.remove('is-visible'), 3500);
-  }
-  setTimeout(() => {
-    showToast('<b>Paiement reçu</b><br>Josué K. — 6000F via Kkiapay');
-  }, 3000);
-
-  // Statut boutique ouverte/fermée
-  const shopToggle = document.getElementById('shopToggle');
-  const statusLabel = document.getElementById('statusLabel');
-  shopToggle.addEventListener('click', () => {
-    shopToggle.classList.toggle('is-on');
-    statusLabel.textContent = shopToggle.classList.contains('is-on') ? 'Boutique ouverte' : 'Boutique fermée';
-  });
-
-  // Toggles paramètres
-  document.querySelectorAll('.settings-row [data-toggle]').forEach(t => {
-    t.addEventListener('click', () => t.classList.toggle('is-on'));
-  });
-
-  // Ajouter produit
-  const addModal = document.getElementById('addModal');
-  const addPreview = document.getElementById('addPreview');
-
-  function resetAddForm(){
-    document.getElementById('addName').value = '';
-    document.getElementById('addPrice').value = '';
-    document.getElementById('addUnit').value = '';
-    addPreview.innerHTML = 'Aucune photo';
-  }
-
-  document.getElementById('openAddBtn').addEventListener('click', () => addModal.classList.add('is-open'));
-  document.getElementById('closeAddBtn').addEventListener('click', () => {
-    addModal.classList.remove('is-open');
-    resetAddForm();
-  });
-
-  document.getElementById('confirmAddBtn').addEventListener('click', () => {
-    const name = document.getElementById('addName').value.trim();
-    const price = document.getElementById('addPrice').value.trim();
-    const unit = document.getElementById('addUnit').value.trim();
-
-    if(!name || !price || !unit){
-      alert('Merci de remplir le nom, le prix et l\'unité.');
-      return;
-    }
-
-    const previewImg = addPreview.querySelector('img');
-    const imgSrc = previewImg ? previewImg.src : 'images6.jpg';
-
-    const row = document.createElement('div');
-    row.className = 'product-row';
-    row.innerHTML = `
-      <img src="${imgSrc}" alt="${name}">
-      <div class="product-row__info"><div class="product-row__name">${name}</div><div class="product-row__unit">${unit}</div></div>
-      <span class="stock-badge in">En stock</span>
-      <div class="product-row__price">${price}</div>
-      <button class="btn btn-outline btn-small">Modifier</button>
-    `;
-    document.getElementById('productList').appendChild(row);
-
-    addModal.classList.remove('is-open');
-    resetAddForm();
-    showToast('Produit ajouté à votre catalogue');
-  });
-
-  // Ajouter livreur
-  const addDriverModal = document.getElementById('addDriverModal');
-  const driverPreview = document.getElementById('driverPreview');
-
-  function resetDriverForm(){
-    document.getElementById('driverName').value = '';
-    document.getElementById('driverEmail').value = '';
-    document.getElementById('driverPhone').value = '';
-    document.getElementById('driverZone').value = '';
-    driverPreview.innerHTML = 'Aucune photo';
-  }
-
-  document.getElementById('openAddDriverBtn').addEventListener('click', () => addDriverModal.classList.add('is-open'));
-  document.getElementById('closeAddDriverBtn').addEventListener('click', () => {
-    addDriverModal.classList.remove('is-open');
-    resetDriverForm();
-  });
-
-  document.getElementById('confirmAddDriverBtn').addEventListener('click', () => {
-    const name = document.getElementById('driverName').value.trim();
-    const email = document.getElementById('driverEmail').value.trim();
-    const phone = document.getElementById('driverPhone').value.trim();
-    const zone = document.getElementById('driverZone').value.trim();
-
-    if(!name || !email || !phone || !zone){
-      alert('Merci de remplir le nom, l\'email, le téléphone et la zone.');
-      return;
-    }
-
-    const previewImg = driverPreview.querySelector('img');
-    const imgSrc = previewImg ? previewImg.src : 'images6.jpg';
-
-    const row = document.createElement('div');
-    row.className = 'driver-row';
-    row.innerHTML = `
-      <img src="${imgSrc}" alt="${name}">
-      <div><div class="driver-row__name">${name}</div><div class="driver-row__zone">Zone : ${zone}</div></div>
-      <div class="driver-status online"><span class="driver-dot"></span>En ligne</div>
-      <button class="driver-row__remove">Retirer</button>
-    `;
-    document.getElementById('driverList').appendChild(row);
-    row.querySelector('.driver-row__remove').addEventListener('click', (e) => e.target.closest('.driver-row').remove());
-
-    addDriverModal.classList.remove('is-open');
-    resetDriverForm();
-    showToast(`Livreur ajouté — ses identifiants (email : ${email}) ont été envoyés par SMS au ${phone}`);
-  });
-
-  // Faire une annonce
-  document.getElementById('publishAnnounceBtn').addEventListener('click', () => {
-    const text = document.getElementById('announceText').value.trim();
-    if(!text){ alert('Écrivez un message avant de publier.'); return; }
-    document.getElementById('announceText').value = '';
-    showToast('Annonce publiée sur votre boutique et la page d\'accueil');
-  });
-
-  // Répondre à un avis
-  document.querySelectorAll('[data-reply]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.closest('.review-card').querySelector('.review-reply-box').classList.toggle('is-open');
-    });
-  });
-  document.querySelectorAll('[data-send-reply]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const box = btn.closest('.review-reply-box');
-      const text = box.querySelector('textarea').value.trim();
-      if(!text) return;
-      box.innerHTML = `<div class="review-reply-posted"><b>Votre réponse :</b> ${text}</div>`;
-      showToast('Réponse publiée');
-    });
-  });
-
-  // Sélecteur photo (Caméra / Galerie) — partagé entre annonce, produit, livreur
-  const photoSheetOverlay = document.getElementById('photoSheetOverlay');
-  const photoInputCamera = document.getElementById('photoInputCamera');
-  const photoInputGallery = document.getElementById('photoInputGallery');
-  let currentPreviewTarget = null;
-
-  function openPhotoSheet(previewEl){
-    currentPreviewTarget = previewEl;
-    photoSheetOverlay.classList.add('is-open');
-  }
-  function closePhotoSheet(){
-    photoSheetOverlay.classList.remove('is-open');
-  }
-  document.getElementById('announcePhotoBtn').addEventListener('click', () => {
-    openPhotoSheet(document.getElementById('announcePreview'));
-  });
-  document.getElementById('addPhotoBtn').addEventListener('click', () => {
-    openPhotoSheet(document.getElementById('addPreview'));
-  });
-  document.getElementById('driverPhotoBtn').addEventListener('click', () => {
-    openPhotoSheet(document.getElementById('driverPreview'));
-  });
-  document.getElementById('photoSheetClose').addEventListener('click', closePhotoSheet);
-  photoSheetOverlay.addEventListener('click', (e) => {
-    if(e.target === photoSheetOverlay) closePhotoSheet();
-  });
-
-  document.getElementById('photoSheetCamera').addEventListener('click', () => {
-    photoInputCamera.click();
-  });
-  document.getElementById('photoSheetGallery').addEventListener('click', () => {
-    photoInputGallery.click();
-  });
-
-  function handlePhotoSelected(fileInput){
-    const file = fileInput.files && fileInput.files[0];
-    if(!file || !currentPreviewTarget) { closePhotoSheet(); return; }
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      currentPreviewTarget.innerHTML = `<img src="${e.target.result}" alt="Aperçu photo">`;
-      showToast('Photo ajoutée');
-    };
-    reader.readAsDataURL(file);
-    closePhotoSheet();
-    fileInput.value = '';
-  }
-  photoInputCamera.addEventListener('change', () => handlePhotoSelected(photoInputCamera));
-  photoInputGallery.addEventListener('change', () => handlePhotoSelected(photoInputGallery));
-
-  const green = '#4C7A3D', orange = '#E8752D', tomato = '#C1442E', kraft = '#CBB27F';
-
-  new Chart(document.getElementById('chartLine'), {
-    type: 'line',
-    data: {
-      labels: ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'],
-      datasets: [{ label: 'Revenu (FCFA)', data: [4200,5600,3900,7200,8100,9800,6400], borderColor: green, backgroundColor: 'rgba(76,122,61,0.1)', tension: 0.35, fill: true }]
-    },
-    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}} }
-  });
-
-  new Chart(document.getElementById('chartDoughnut'), {
-    type: 'doughnut',
-    data: { labels: ['Oranges','Carottes','Chou','Tomates'], datasets: [{ data: [35,28,20,17], backgroundColor:[orange, green, kraft, tomato] }] },
-    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{boxWidth:12,font:{size:11}}}} }
-  });
-
-  new Chart(document.getElementById('chartBar'), {
-    type: 'bar',
-    data: { labels: ['Sem. 1','Sem. 2','Sem. 3','Sem. 4'], datasets: [{ label:'Livrées', data:[22,26,19,30], backgroundColor: green }, { label:'Annulées', data:[3,2,4,1], backgroundColor: tomato }] },
-    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom', labels:{boxWidth:12,font:{size:11}}}} }
-  });
-</script>
-
-</body>
->>>>>>> a21f6cac35a8ec489834ca2ca029fe8f266c1dfc
 </html>

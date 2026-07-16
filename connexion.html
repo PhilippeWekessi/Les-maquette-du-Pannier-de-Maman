@@ -43,6 +43,20 @@
   .form-group input:focus{outline:2px solid var(--green-leaf);}
   .field-hint{font-size:0.76rem;color:var(--charcoal-soft);margin-top:4px;}
 
+  /* Champ mot de passe avec icone oeil */
+  .password-field{position:relative;}
+  .password-field input{padding-right:44px;}
+  .password-toggle{
+    position:absolute;right:12px;top:50%;transform:translateY(-50%);
+    background:none;border:none;cursor:pointer;padding:4px;
+    color:var(--charcoal-soft);display:flex;align-items:center;justify-content:center;
+  }
+  .password-toggle:hover{color:var(--green-deep);}
+  .password-toggle svg{width:20px;height:20px;}
+  .password-toggle .icon-eye-off{display:none;}
+  .password-toggle.is-visible .icon-eye{display:none;}
+  .password-toggle.is-visible .icon-eye-off{display:block;}
+
   .submit-btn{
     width:100%;background:var(--orange);color:#fff;padding:14px 0;border-radius:999px;
     font-weight:700;font-size:0.98rem;margin-top:8px;transition:transform .15s ease;
@@ -70,7 +84,13 @@
     </div>
     <div class="form-group">
       <label>Mot de passe</label>
-      <input type="password" placeholder="Votre mot de passe">
+      <div class="password-field">
+        <input type="password" id="loginPassword" placeholder="Votre mot de passe">
+        <button type="button" class="password-toggle" data-toggle-password="loginPassword" aria-label="Afficher le mot de passe">
+          <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+          <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a18.5 18.5 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+        </button>
+      </div>
       <div class="field-hint"><a href="#" id="forgotLink">Mot de passe oublié ?</a></div>
     </div>
 
@@ -81,9 +101,17 @@
 </div>
 
 <script>
+  // Bascule affichage/masquage du mot de passe
+  document.querySelectorAll('[data-toggle-password]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const input = document.getElementById(btn.dataset.togglePassword);
+      const isVisible = input.type === 'text';
+      input.type = isVisible ? 'password' : 'text';
+      btn.classList.toggle('is-visible', !isVisible);
+    });
+  });
+
   document.getElementById('loginBtn').addEventListener('click', () => {
-    // Démo : redirection selon le rôle sera gérée par le backend une fois connecté.
-    // Ici on redirige simplement vers l'accueil.
     window.location.href = 'accueil.html';
   });
 </script>

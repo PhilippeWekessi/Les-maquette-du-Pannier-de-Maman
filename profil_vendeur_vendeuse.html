@@ -17,25 +17,29 @@
   body{font-family:var(--font-body);color:var(--charcoal);background:var(--cream);line-height:1.5;}
   a{color:inherit;text-decoration:none;}
   button{font-family:inherit;cursor:pointer;border:none;}
-  img{display:block;max-width:100%;}
   input{font-family:inherit;}
-  .wrap{max-width:640px;margin:0 auto;padding:0 20px;}
+  img{display:block;max-width:100%;}
+  .wrap{max-width:600px;margin:0 auto;padding:0 20px;}
 
-  .nav{position:sticky;top:0;z-index:50;background:var(--green-deep);color:#fff;}
-  .nav__inner{display:flex;align-items:center;gap:14px;padding:16px 24px;}
-  .nav__back{font-size:1.3rem;}
-  .nav__brand{font-family:var(--font-display);font-weight:700;font-size:1.1rem;}
+  .topbar{background:var(--green-deep);color:#fff;padding:18px 0;}
+  .topbar__inner{display:flex;align-items:center;gap:14px;}
+  .topbar__back{font-size:1.3rem;}
+  .topbar__brand{font-family:var(--font-display);font-weight:700;font-size:1.2rem;}
 
   main{padding:32px 0 60px;}
 
-  .profile-head{display:flex;align-items:center;gap:16px;margin-bottom:32px;}
-  .profile-avatar{
-    width:68px;height:68px;border-radius:50%;background:var(--green-deep);color:#fff;
-    display:flex;align-items:center;justify-content:center;font-family:var(--font-display);
-    font-weight:700;font-size:1.6rem;flex-shrink:0;
+  .profile-photo-block{display:flex;flex-direction:column;align-items:center;margin-bottom:32px;}
+  .profile-photo{
+    width:100px;height:100px;border-radius:50%;background:var(--kraft);
+    border:4px solid #fff;box-shadow:0 8px 20px rgba(43,36,32,0.12);
+    display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:14px;
+    font-family:var(--font-display);font-size:2rem;color:var(--green-deep);font-weight:700;
   }
-  .profile-head h1{font-family:var(--font-display);font-weight:700;font-size:1.35rem;color:var(--charcoal);}
-  .profile-head p{font-size:0.86rem;color:var(--charcoal-soft);margin-top:2px;}
+  .profile-photo img{width:100%;height:100%;object-fit:cover;}
+  .change-photo-btn{
+    background:#fff;color:var(--green-deep);border:1.5px solid var(--green-deep);
+    padding:9px 18px;border-radius:999px;font-weight:600;font-size:0.86rem;
+  }
 
   .section-card{background:#fff;border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 6px 18px rgba(43,36,32,0.06);}
   .section-card__title{font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:var(--green-deep);margin-bottom:16px;}
@@ -48,153 +52,154 @@
     font-size:0.92rem;background:var(--cream);color:var(--charcoal);
   }
   .form-group input:focus{outline:2px solid var(--green-leaf);}
-  .form-group input:disabled{color:var(--charcoal-soft);cursor:not-allowed;}
 
   .save-btn{
-    background:var(--orange);color:#fff;padding:12px 24px;border-radius:999px;
-    font-weight:700;font-size:0.9rem;margin-top:16px;transition:transform .15s ease;
+    background:var(--orange);color:#fff;padding:13px 24px;border-radius:999px;
+    font-weight:700;font-size:0.92rem;margin-top:6px;transition:transform .15s ease;
+    width:100%;
   }
   .save-btn:hover{transform:translateY(-2px);}
-
-  /* ADRESSES */
-  .address-list{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
-  .address-item{display:flex;align-items:center;justify-content:space-between;background:var(--cream);border-radius:12px;padding:14px 16px;flex-wrap:wrap;gap:10px;}
-  .address-item__label{font-weight:700;font-size:0.9rem;}
-  .address-item__detail{font-size:0.82rem;color:var(--charcoal-soft);}
-  .address-item__default{font-size:0.72rem;font-weight:700;color:var(--green-leaf);background:#E4F1DF;padding:3px 10px;border-radius:999px;display:inline-block;margin-top:4px;}
-  .address-item__remove{font-size:0.8rem;color:var(--tomato);font-weight:600;}
-
-  .add-address-btn{
-    width:100%;background:#fff;color:var(--green-deep);border:1.5px dashed var(--green-leaf);
-    padding:12px 0;border-radius:12px;font-weight:600;font-size:0.9rem;
-  }
-
-  /* NOTIFICATIONS */
-  .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #F0E9DB;}
-  .toggle-row:last-child{border-bottom:none;}
-  .toggle-row__label{font-size:0.92rem;font-weight:600;}
-  .toggle-row__desc{font-size:0.78rem;color:var(--charcoal-soft);margin-top:2px;}
-  .toggle{position:relative;width:48px;height:26px;background:var(--kraft-dark);border-radius:999px;transition:background .25s ease;flex-shrink:0;}
-  .toggle.is-on{background:var(--green-leaf);}
-  .toggle__knob{position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .25s ease;}
-  .toggle.is-on .toggle__knob{transform:translateX(22px);}
 
   .logout-btn{
     width:100%;background:#fff;color:var(--tomato);border:1.5px solid var(--tomato);
     padding:13px 0;border-radius:999px;font-weight:700;font-size:0.92rem;margin-top:8px;
   }
+
+  /* SHEET PHOTO */
+  .sheet-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;align-items:flex-end;justify-content:center;}
+  .sheet-overlay.is-open{display:flex;}
+  .photo-sheet{background:#fff;width:100%;max-width:480px;border-radius:22px 22px 0 0;padding:10px 20px 28px;transform:translateY(100%);transition:transform .25s ease;}
+  .sheet-overlay.is-open .photo-sheet{transform:translateY(0);}
+  .photo-sheet__handle{width:38px;height:4px;background:var(--kraft-dark);border-radius:999px;margin:6px auto 16px;}
+  .photo-sheet__head{display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:22px;}
+  .photo-sheet__title{font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:var(--green-deep);}
+  .photo-sheet__close{position:absolute;left:0;background:none;font-size:1.3rem;color:var(--charcoal-soft);width:32px;height:32px;}
+  .photo-sheet__options{display:flex;gap:18px;justify-content:center;}
+  .photo-sheet__option{display:flex;flex-direction:column;align-items:center;gap:10px;background:none;width:96px;}
+  .photo-sheet__icon{width:60px;height:60px;border-radius:50%;background:var(--cream);border:1.5px solid var(--kraft-dark);display:flex;align-items:center;justify-content:center;transition:background .15s ease,transform .15s ease;}
+  .photo-sheet__option:hover .photo-sheet__icon{background:var(--green-deep);transform:translateY(-2px);}
+  .photo-sheet__option:hover .photo-sheet__icon svg{stroke:#fff;}
+  .photo-sheet__icon svg{width:26px;height:26px;stroke:var(--green-deep);}
+  .photo-sheet__label{font-size:0.85rem;font-weight:600;color:var(--charcoal);}
+
+  .toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--green-deep);color:#fff;padding:12px 22px;border-radius:999px;
+    font-size:0.86rem;font-weight:600;z-index:250;opacity:0;transition:opacity .25s ease,transform .25s ease;pointer-events:none;
+  }
+  .toast.is-visible{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="wrap nav__inner">
-    <a href="#" class="nav__back">←</a>
-    <div class="nav__brand">Mon profil</div>
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <a href="dashboard_vendeur_vendeuse.html" class="topbar__back">←</a>
+    <div class="topbar__brand">Mon profil</div>
   </div>
-</nav>
+</header>
 
 <main class="wrap">
 
-  <div class="profile-head">
-    <div class="profile-avatar">A</div>
-    <div>
-      <h1>Aïcha D.</h1>
-      <p>Cliente depuis mars 2026</p>
-    </div>
+  <div class="profile-photo-block">
+    <div class="profile-photo" id="profilePhoto">R</div>
+    <button class="change-photo-btn" id="changePhotoBtn" type="button">Changer ma photo</button>
   </div>
 
-  <!-- INFOS PERSONNELLES -->
   <div class="section-card">
-    <div class="section-card__title">Informations personnelles</div>
+    <div class="section-card__title">Mes informations</div>
     <div class="form-group">
       <label>Nom et prénom</label>
-      <input type="text" value="Aïcha Djibril">
+      <input type="text" id="profileName" value="Rosine Ahouansou">
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="profileEmail" value="rosine@gmail.com">
     </div>
     <div class="form-group">
       <label>Numéro de téléphone</label>
-      <input type="tel" value="01 90 22 14 08" disabled>
+      <input type="tel" id="profilePhone" value="01 90 22 00 00">
     </div>
-    <button class="save-btn">Enregistrer les modifications</button>
-  </div>
-
-  <!-- ADRESSES -->
-  <div class="section-card">
-    <div class="section-card__title">Mes adresses de livraison</div>
-    <div class="address-list" id="addressList">
-      <div class="address-item">
-        <div>
-          <div class="address-item__label">Maison</div>
-          <div class="address-item__detail">Cadjèhoun, près de la pharmacie</div>
-          <span class="address-item__default">Par défaut</span>
-        </div>
-        <button class="address-item__remove">Retirer</button>
-      </div>
-      <div class="address-item">
-        <div>
-          <div class="address-item__label">Travail</div>
-          <div class="address-item__detail">Akpakpa, non loin du marché</div>
-        </div>
-        <button class="address-item__remove">Retirer</button>
-      </div>
-    </div>
-    <button class="add-address-btn" id="addAddressBtn">+ Ajouter une adresse</button>
-  </div>
-
-  <!-- NOTIFICATIONS -->
-  <div class="section-card">
-    <div class="section-card__title">Notifications</div>
-
-    <div class="toggle-row">
-      <div>
-        <div class="toggle-row__label">Notifications push</div>
-        <div class="toggle-row__desc">Statut de commande, nouvelles annonces</div>
-      </div>
-      <button class="toggle is-on" data-toggle><div class="toggle__knob"></div></button>
-    </div>
-
-    <div class="toggle-row">
-      <div>
-        <div class="toggle-row__label">SMS</div>
-        <div class="toggle-row__desc">Reçevoir les mises à jour par SMS aussi</div>
-      </div>
-      <button class="toggle is-on" data-toggle><div class="toggle__knob"></div></button>
-    </div>
-
-    <div class="toggle-row">
-      <div>
-        <div class="toggle-row__label">Offres et promotions</div>
-        <div class="toggle-row__desc">Annonces de nouveaux produits</div>
-      </div>
-      <button class="toggle" data-toggle><div class="toggle__knob"></div></button>
-    </div>
+    <button class="save-btn" id="saveProfileBtn">Enregistrer les modifications</button>
   </div>
 
   <button class="logout-btn">Se déconnecter</button>
 
 </main>
 
+<!-- FEUILLE PHOTO -->
+<div class="sheet-overlay" id="photoSheetOverlay">
+  <div class="photo-sheet">
+    <div class="photo-sheet__handle"></div>
+    <div class="photo-sheet__head">
+      <button class="photo-sheet__close" id="photoSheetClose" type="button" aria-label="Fermer">✕</button>
+      <div class="photo-sheet__title">Changer ma photo</div>
+    </div>
+    <div class="photo-sheet__options">
+      <button class="photo-sheet__option" id="photoSheetCamera" type="button">
+        <span class="photo-sheet__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+        </span>
+        <span class="photo-sheet__label">Prendre une photo</span>
+      </button>
+      <button class="photo-sheet__option" id="photoSheetGallery" type="button">
+        <span class="photo-sheet__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+        </span>
+        <span class="photo-sheet__label">Choisir dans la galerie</span>
+      </button>
+    </div>
+  </div>
+</div>
+<input type="file" id="photoInputCamera" accept="image/*" capture="environment" style="display:none">
+<input type="file" id="photoInputGallery" accept="image/*" style="display:none">
+
+<div class="toast" id="toast"></div>
+
 <script>
-  document.querySelectorAll('[data-toggle]').forEach(t => {
-    t.addEventListener('click', () => t.classList.toggle('is-on'));
-  });
+  const photoSheetOverlay = document.getElementById('photoSheetOverlay');
+  const photoInputCamera = document.getElementById('photoInputCamera');
+  const photoInputGallery = document.getElementById('photoInputGallery');
+  const profilePhoto = document.getElementById('profilePhoto');
 
-  document.querySelectorAll('.address-item__remove').forEach(btn => {
-    btn.addEventListener('click', (e) => e.target.closest('.address-item').remove());
-  });
+  document.getElementById('changePhotoBtn').addEventListener('click', () => photoSheetOverlay.classList.add('is-open'));
+  document.getElementById('photoSheetClose').addEventListener('click', () => photoSheetOverlay.classList.remove('is-open'));
+  photoSheetOverlay.addEventListener('click', (e) => { if(e.target === photoSheetOverlay) photoSheetOverlay.classList.remove('is-open'); });
 
-  document.getElementById('addAddressBtn').addEventListener('click', () => {
-    const label = prompt('Nom de l\'adresse (ex : Maison, Travail)');
-    const detail = prompt('Adresse (quartier, repère)');
-    if(!label || !detail) return;
-    const item = document.createElement('div');
-    item.className = 'address-item';
-    item.innerHTML = `
-      <div><div class="address-item__label">${label}</div><div class="address-item__detail">${detail}</div></div>
-      <button class="address-item__remove">Retirer</button>
-    `;
-    item.querySelector('.address-item__remove').addEventListener('click', () => item.remove());
-    document.getElementById('addressList').appendChild(item);
+  document.getElementById('photoSheetCamera').addEventListener('click', () => photoInputCamera.click());
+  document.getElementById('photoSheetGallery').addEventListener('click', () => photoInputGallery.click());
+
+  function handlePhotoSelected(fileInput){
+    const file = fileInput.files && fileInput.files[0];
+    if(!file) { photoSheetOverlay.classList.remove('is-open'); return; }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      profilePhoto.innerHTML = `<img src="${e.target.result}" alt="Photo de profil">`;
+      showToast('Photo de profil mise à jour');
+    };
+    reader.readAsDataURL(file);
+    photoSheetOverlay.classList.remove('is-open');
+    fileInput.value = '';
+  }
+  photoInputCamera.addEventListener('change', () => handlePhotoSelected(photoInputCamera));
+  photoInputGallery.addEventListener('change', () => handlePhotoSelected(photoInputGallery));
+
+  function showToast(msg){
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('is-visible');
+    setTimeout(() => toast.classList.remove('is-visible'), 2200);
+  }
+
+  document.getElementById('saveProfileBtn').addEventListener('click', () => {
+    showToast('Informations mises à jour');
   });
 </script>
 
