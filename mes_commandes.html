@@ -76,6 +76,8 @@
   .tracking-step__desc{font-size:0.8rem;color:var(--charcoal-soft);margin-top:2px;}
 
   .close-btn{width:100%;background:#fff;color:var(--green-deep);border:1.5px solid var(--green-deep);padding:13px 0;border-radius:999px;font-weight:700;font-size:0.95rem;margin-top:8px;}
+  .review-btn{width:100%;background:var(--orange);color:#fff;border:1.5px solid var(--orange);padding:13px 0;border-radius:999px;font-weight:700;font-size:0.95rem;margin-top:16px;display:none;text-align:center;}
+  .review-btn.is-visible{display:block;}
 </style>
 </head>
 <body>
@@ -155,7 +157,7 @@
 
     <ul class="tracking-steps" id="modalTracking"></ul>
 
-    <button class="close-btn" id="closeDetailBtn">laisser vôtre avis</button>
+    <a href="laisser_un_avis.html" class="review-btn" id="reviewBtn">Laisser votre avis</a>
     <button class="close-btn" id="closeDetailBtn">Fermer</button>
   </div>
 </div>
@@ -183,6 +185,7 @@
 
   // --- Détail commande + suivi ---
   const detailModal = document.getElementById('detailModal');
+  const reviewBtn = document.getElementById('reviewBtn');
   const statusMeta = {
     progress: { label: 'En préparation', step: 1 },
     transit:  { label: 'En livraison', step: 2 },
@@ -233,6 +236,9 @@
             </li>`;
         }).join('');
       }
+
+      // N'afficher "Laisser votre avis" que pour les commandes livrées
+      reviewBtn.classList.toggle('is-visible', status === 'done');
 
       detailModal.classList.add('is-open');
     });

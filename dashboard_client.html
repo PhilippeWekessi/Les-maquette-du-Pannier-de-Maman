@@ -23,6 +23,7 @@
   .nav{position:sticky;top:0;z-index:50;background:var(--green-deep);color:#fff;}
   .nav__inner{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;}
   .nav__brand{font-family:var(--font-display);font-weight:700;font-size:1.2rem;}
+  .nav__right{display:flex;align-items:center;gap:12px;}
   .avatar{width:38px;height:38px;border-radius:50%;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.95rem;}
   .avatar a{color:#fff;display:flex;align-items:center;justify-content:center;width:100%;height:100%;}
 
@@ -36,12 +37,11 @@
   @media (max-width:700px){.quick-links{grid-template-columns:1fr;}}
   .quick-link{
     background:#fff;border-radius:16px;padding:20px;box-shadow:0 6px 18px rgba(43,36,32,0.06);
-    display:flex;align-items:center;gap:14px;transition:transform .15s ease;
+    transition:transform .15s ease;
   }
   .quick-link:hover{transform:translateY(-3px);}
-  .quick-link__icon{width:44px;height:44px;border-radius:12px;background:var(--cream);border:1.5px solid var(--kraft-dark);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
   .quick-link__title{font-weight:700;font-size:0.94rem;}
-  .quick-link__desc{font-size:0.78rem;color:var(--charcoal-soft);margin-top:2px;}
+  .quick-link__desc{font-size:0.78rem;color:var(--charcoal-soft);margin-top:4px;}
 
   .section-title{font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--green-deep);margin-bottom:16px;}
   .section{margin-bottom:36px;}
@@ -55,7 +55,8 @@
 
   .vendors{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
   @media (max-width:820px){.vendors{grid-template-columns:1fr;}}
-  .vendor-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 20px rgba(43,36,32,0.08);}
+  .vendor-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 20px rgba(43,36,32,0.08);transition:transform .15s ease;}
+  .vendor-card:hover{transform:translateY(-4px);}
   .vendor-card__cover{width:100%;aspect-ratio:16/9;object-fit:cover;}
   .vendor-card__body{padding:16px;}
   .vendor-card__name{font-weight:700;font-size:0.96rem;}
@@ -68,23 +69,27 @@
 <nav class="nav">
   <div class="wrap nav__inner">
     <a href="accueil.html" class="nav__brand">Le Panier de Maman</a>
-    <div class="avatar"><a href="profil_client.html">A</a></div>
+    <div class="nav__right">
+      <div class="avatar"><a href="profil_client.html">A</a></div>
+    </div>
   </div>
 </nav>
 
 <main class="wrap">
 
   <div class="welcome">
-    <h1>Bonjour, Aïcha </h1>
+    <h1>Bonjour, Aïcha</h1>
     <p>Voici votre espace personnel — commandes, boutiques favorites et suivi en un coup d'œil.</p>
   </div>
 
   <div class="quick-links">
-    <a href="marche.html" class="quick-link">
-      <div><div class="quick-link__title">Marché du jour</div><div class="quick-link__desc">Voir les produits disponibles</div></div>
+    <a href="marche_jour.html" class="quick-link">
+      <div class="quick-link__title">Marché du jour</div>
+      <div class="quick-link__desc">Voir les produits disponibles</div>
     </a>
     <a href="mes_commandes.html" class="quick-link">
-      <div><div class="quick-link__title">Mes commandes</div><div class="quick-link__desc">Suivre mes achats</div></div>
+      <div class="quick-link__title">Mes commandes</div>
+      <div class="quick-link__desc">Suivre mes achats</div>
     </a>
   </div>
 
@@ -103,7 +108,7 @@
   <div class="section">
     <div class="section-title">Boutiques près de chez vous</div>
     <div class="vendors">
-      <a href="vitrine-boutique.html" class="vendor-card">
+      <a href="vitrine_boutique.html?v=panier-de-maman" class="vendor-card">
         <img class="vendor-card__cover" src="images10.webp" alt="Le Panier de Maman">
         <div class="vendor-card__body">
           <div class="vendor-card__name">Le Panier de Maman</div>
@@ -111,7 +116,7 @@
           <div class="vendor-card__rating">★ 4,6 — 28 avis</div>
         </div>
       </a>
-      <a href="vitrine-boutique.html" class="vendor-card">
+      <a href="vitrine_boutique.html?v=chez-rosine" class="vendor-card">
         <img class="vendor-card__cover" src="images6.jpg" alt="Chez Rosine">
         <div class="vendor-card__body">
           <div class="vendor-card__name">Chez Rosine</div>
@@ -119,7 +124,7 @@
           <div class="vendor-card__rating">★ 4,3 — 12 avis</div>
         </div>
       </a>
-      <a href="vitrine-boutique.html" class="vendor-card">
+      <a href="vitrine_boutique.html?v=ferme-ahossi" class="vendor-card">
         <img class="vendor-card__cover" src="images5.jpg" alt="Ferme Ahossi">
         <div class="vendor-card__body">
           <div class="vendor-card__name">Ferme Ahossi</div>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Livreur — Le Panier de Maman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#2F5233; --green-leaf:#4C7A3D; --orange:#E8752D;
+    --tomato:#C1442E; --cream:#FBF3E3; --kraft:#E9D9B6; --kraft-dark:#CBB27F;
+    --charcoal:#2B2420; --charcoal-soft:#5A5148; --white:#fff;
+    --font-display:'Baloo 2',sans-serif; --font-body:'Work Sans',sans-serif; --font-hand:'Caveat',cursive;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-body);color:var(--charcoal);background:var(--cream);}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  input,textarea{font-family:inherit;}
+  img{display:block;max-width:100%;}
+
+  .app{display:flex;min-height:100vh;}
+
+  .sidebar{width:230px;flex-shrink:0;background:var(--green-deep);color:#fff;padding:24px 18px;position:relative;display:flex;flex-direction:column;transition:transform .25s ease;}
+  .sidebar__brand{font-family:var(--font-display);font-weight:700;font-size:1.1rem;}
+  .sidebar__sub{font-size:0.78rem;color:#B7D3A8;margin-bottom:34px;}
+  .nav{list-style:none;display:flex;flex-direction:column;gap:6px;}
+  .nav li{padding:11px 14px;border-radius:10px;font-size:0.92rem;font-weight:500;cursor:pointer;color:#D9E6D1;transition:background .15s ease,color .15s ease;}
+  .nav li a{display:block;color:inherit;}
+  .nav li:hover{background:rgba(255,255,255,0.08);color:#fff;}
+  .nav li.active{background:var(--orange);color:#fff;font-weight:600;}
+  .sidebar__foot{margin-top:auto;font-size:0.75rem;color:#8FAE86;padding-top:20px;}
+  .sidebar__foot a{color:#B7D3A8;text-decoration:underline;}
+  @media (max-width:880px){
+    .sidebar{position:fixed;top:0;left:0;bottom:0;z-index:60;transform:translateX(-100%);}
+    .sidebar.is-open{transform:translateX(0);}
+  }
+
+  .main{flex:1;min-width:0;padding:26px 30px 50px;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:14px;}
+  .topbar__left{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .topbar__toggle{display:none;background:var(--green-deep);color:#fff;padding:9px 12px;border-radius:8px;font-size:1.1rem;}
+  @media (max-width:880px){.topbar__toggle{display:block;}}
+  .topbar__right{display:flex;align-items:center;gap:14px;}
+  .topbar__hello{font-size:0.9rem;color:var(--charcoal-soft);}
+  .avatar{width:38px;height:38px;border-radius:50%;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.95rem;}
+  .avatar a{color:#fff;display:flex;align-items:center;justify-content:center;width:100%;height:100%;}
+
+  .online-status{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid var(--kraft-dark);padding:8px 14px;border-radius:999px;}
+  .online-status__label{font-weight:600;font-size:0.86rem;}
+  .toggle{position:relative;width:44px;height:24px;background:var(--tomato);border-radius:999px;transition:background .25s ease;flex-shrink:0;}
+  .toggle.is-on{background:#5FA85A;}
+  .toggle__knob{position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform .25s ease;}
+  .toggle.is-on .toggle__knob{transform:translateX(20px);}
+
+  .section-title{font-family:var(--font-display);font-weight:700;font-size:1.3rem;color:var(--green-deep);margin-bottom:18px;}
+  .section-hint{font-size:0.82rem;color:var(--charcoal-soft);margin-top:-10px;margin-bottom:16px;}
+
+  .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;}
+  @media (max-width:700px){.stats-row{grid-template-columns:1fr;}}
+  .stat-card{background:#fff;border-radius:16px;padding:22px;box-shadow:0 6px 18px rgba(43,36,32,0.06);border-left:4px solid var(--green-leaf);}
+  .stat-card__value{font-family:var(--font-display);font-weight:700;font-size:1.5rem;color:var(--green-deep);}
+  .stat-card__label{font-size:0.85rem;color:var(--charcoal-soft);margin-top:4px;}
+
+  .view{display:none;} .view.active{display:block;}
+
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;font-weight:600;font-size:0.88rem;background:var(--orange);color:#fff;transition:transform .15s;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn-outline{background:#fff;color:var(--green-deep);border:1.5px solid var(--green-deep);}
+  .btn-full{width:100%;justify-content:center;}
+
+  .course-list{display:flex;flex-direction:column;gap:14px;}
+  .course-card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 6px 18px rgba(43,36,32,0.06);}
+  .course-card__top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
+  .course-card__client{font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:var(--charcoal);}
+  .course-status{font-size:0.76rem;font-weight:700;padding:6px 14px;border-radius:999px;white-space:nowrap;}
+  .course-status.pickup{background:#FDEBD3;color:var(--orange);}
+  .course-status.transit{background:#DCEAF7;color:#2E6B9E;}
+  .course-status.arrived{background:#EFE3F9;color:#7A3FA0;}
+  .course-card__grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;font-size:0.88rem;margin-bottom:14px;}
+  @media (max-width:560px){.course-card__grid{grid-template-columns:1fr;}}
+  .course-card__label{color:var(--charcoal-soft);font-size:0.76rem;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:2px;}
+  .course-card__value{font-weight:600;}
+  .course-card__value.total{color:var(--tomato);font-family:var(--font-hand);font-size:1.3rem;}
+  .payment-tag{font-size:0.75rem;font-weight:700;padding:4px 10px;border-radius:999px;display:inline-block;}
+  .payment-tag.paid{background:#E4F1DF;color:var(--green-leaf);}
+  .payment-tag.cash{background:#FBE0DC;color:var(--tomato);}
+  .course-card__actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+  .contact-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:999px;font-size:0.82rem;font-weight:600;}
+  .contact-btn.call{background:var(--green-deep);color:#fff;}
+  .contact-btn.whatsapp{background:#25D366;color:#fff;}
+  .contact-btn.map{background:var(--cream);color:var(--green-deep);border:1.5px solid var(--kraft-dark);}
+  .course-card__progress{display:flex;justify-content:space-between;padding-top:14px;border-top:1px dashed var(--kraft-dark);}
+
+  .history-item{background:#fff;border-radius:14px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 14px rgba(43,36,32,0.05);margin-bottom:10px;flex-wrap:wrap;gap:10px;}
+  .history-item__client{font-weight:600;}
+  .history-item__detail{font-size:0.82rem;color:var(--charcoal-soft);}
+  .history-item__total{font-family:var(--font-hand);font-size:1.2rem;color:var(--tomato);font-weight:700;}
+
+  .period-tabs{display:flex;gap:10px;margin-bottom:20px;}
+  .period-tab{flex:1;text-align:center;padding:10px 0;border-radius:999px;font-weight:600;font-size:0.86rem;background:#fff;border:1.5px solid var(--kraft-dark);color:var(--charcoal-soft);transition:all .15s ease;}
+  .period-tab.active{background:var(--green-deep);color:#fff;border-color:var(--green-deep);}
+
+  .payment-summary{background:linear-gradient(135deg,var(--green-deep),#3D6B41);color:#fff;border-radius:20px;padding:24px;margin-bottom:22px;}
+  .payment-summary__label{font-size:0.85rem;color:#D9E6D1;margin-bottom:6px;}
+  .payment-summary__amount{font-family:var(--font-display);font-weight:800;font-size:2.2rem;}
+  .payment-summary__meta{display:flex;gap:24px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.15);flex-wrap:wrap;}
+  .payment-summary__meta div span{display:block;font-size:0.76rem;color:#D9E6D1;}
+  .payment-summary__meta div b{font-family:var(--font-display);font-size:1.1rem;}
+
+  .gain-item{background:#fff;border-radius:14px;padding:14px 18px;margin-bottom:10px;box-shadow:0 4px 14px rgba(43,36,32,0.05);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  .gain-item__client{font-weight:600;font-size:0.92rem;}
+  .gain-item__date{font-size:0.78rem;color:var(--charcoal-soft);}
+  .gain-item__amount{font-family:var(--font-hand);font-size:1.3rem;font-weight:700;color:var(--tomato);}
+
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(43,36,32,0.5);align-items:center;justify-content:center;padding:20px;z-index:100;overflow-y:auto;}
+  .modal-overlay.is-open{display:flex;}
+  .modal{background:#fff;border-radius:18px;padding:28px;max-width:420px;width:100%;max-height:90vh;overflow-y:auto;}
+  .modal h3{font-family:var(--font-display);color:var(--green-deep);margin-bottom:8px;font-size:1.15rem;}
+  .modal__sub{font-size:0.86rem;color:var(--charcoal-soft);margin-bottom:20px;}
+  .modal__actions{display:flex;gap:10px;justify-content:flex-end;}
+
+  .photo-trigger-row{display:flex;align-items:center;gap:14px;margin-bottom:20px;flex-wrap:wrap;}
+  .photo-trigger-row__preview{width:64px;height:64px;border-radius:12px;background:var(--cream);border:1.5px dashed var(--kraft-dark);display:flex;align-items:center;justify-content:center;font-size:0.68rem;color:var(--charcoal-soft);overflow:hidden;flex-shrink:0;text-align:center;}
+  .photo-trigger-row__preview img{width:100%;height:100%;object-fit:cover;}
+  .photo-trigger-btn{background:#fff;color:var(--green-deep);border:1.5px solid var(--green-deep);padding:10px 18px;border-radius:999px;font-weight:600;font-size:0.85rem;}
+
+  .validation-box{border:1.5px dashed var(--kraft-dark);border-radius:14px;padding:16px;margin-bottom:20px;}
+  .validation-box p{font-size:0.85rem;color:var(--charcoal-soft);margin-bottom:12px;}
+  .validation-row{display:flex;align-items:center;justify-content:space-between;font-size:0.88rem;font-weight:600;padding:8px 0;}
+  .validation-check{color:var(--green-leaf);}
+  .validation-pending{color:var(--charcoal-soft);}
+
+  .sheet-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;align-items:flex-end;justify-content:center;}
+  .sheet-overlay.is-open{display:flex;}
+  .photo-sheet{background:#fff;width:100%;max-width:480px;border-radius:22px 22px 0 0;padding:10px 20px 28px;transform:translateY(100%);transition:transform .25s ease;}
+  .sheet-overlay.is-open .photo-sheet{transform:translateY(0);}
+  .photo-sheet__handle{width:38px;height:4px;background:var(--kraft-dark);border-radius:999px;margin:6px auto 16px;}
+  .photo-sheet__head{display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:22px;}
+  .photo-sheet__title{font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:var(--green-deep);}
+  .photo-sheet__close{position:absolute;left:0;background:none;font-size:1.3rem;color:var(--charcoal-soft);width:32px;height:32px;}
+  .photo-sheet__options{display:flex;gap:18px;justify-content:center;}
+  .photo-sheet__option{display:flex;flex-direction:column;align-items:center;gap:10px;background:none;width:96px;}
+  .photo-sheet__icon{width:60px;height:60px;border-radius:50%;background:var(--cream);border:1.5px solid var(--kraft-dark);display:flex;align-items:center;justify-content:center;}
+  .photo-sheet__icon svg{width:26px;height:26px;stroke:var(--green-deep);}
+  .photo-sheet__label{font-size:0.85rem;font-weight:600;color:var(--charcoal);}
+
+  .toast{position:fixed;bottom:24px;right:24px;z-index:200;background:var(--green-deep);color:#fff;padding:16px 20px;border-radius:14px;box-shadow:0 12px 28px rgba(0,0,0,0.25);max-width:300px;font-size:0.88rem;opacity:0;transform:translateY(16px);transition:opacity .3s ease,transform .3s ease;pointer-events:none;}
+  .toast.is-visible{opacity:1;transform:translateY(0);}
+
+  .overlay-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:50;}
+  .overlay-bg.is-open{display:block;}
+  @media (min-width:881px){.overlay-bg{display:none !important;}}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__brand">Le Panier de Maman</div>
+    <div class="sidebar__sub">Espace Livreur</div>
+    <ul class="nav">
+      <li class="active" data-view="courses-view">Mes courses</li>
+      <li data-view="history-view">Historique</li>
+      <li data-view="gains-view">Mes gains</li>
+      <li data-view="settings-view">Paramètres</li>
+    </ul>
+    <div class="sidebar__foot">v1.0 — Le Panier de Maman</div>
+  </aside>
+
+  <div class="overlay-bg" id="overlayBg"></div>
+
+  <main class="main">
+
+    <div class="topbar">
+      <div class="topbar__left">
+        <button class="topbar__toggle" id="sidebarToggle">☰</button>
+        <div class="online-status">
+          <span class="online-status__label" id="onlineLabel">En ligne</span>
+          <button class="toggle is-on" id="onlineToggle" aria-label="Passer en ligne ou hors ligne"><div class="toggle__knob"></div></button>
+        </div>
+      </div>
+      <div class="topbar__right">
+        <span class="topbar__hello">Koffi A.</span>
+        <div class="avatar"><a href="profil_livreur.html">K</a></div>
+      </div>
+    </div>
+
+    <!-- ================= MES COURSES ================= -->
+    <section id="courses-view" class="view active">
+      <div class="section-title">Vue d'ensemble</div>
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-card__value">3</div><div class="stat-card__label">Courses aujourd'hui</div></div>
+        <div class="stat-card"><div class="stat-card__value">1500F</div><div class="stat-card__label">Gains du jour</div></div>
+        <div class="stat-card"><div class="stat-card__value">2</div><div class="stat-card__label">Courses en attente</div></div>
+      </div>
+
+      <div class="section-title">Mes courses</div>
+      <div class="course-list" id="courseList">
+
+        <div class="course-card" data-status="pickup" data-course="A1024">
+          <div class="course-card__top"><div class="course-card__client">Aïcha D.</div><span class="course-status pickup">À récupérer</span></div>
+          <div class="course-card__grid">
+            <div><div class="course-card__label">Téléphone</div><div class="course-card__value">01 90 22 14 08</div></div>
+            <div><div class="course-card__label">Localisation</div><div class="course-card__value">Cadjèhoun, près de la pharmacie</div></div>
+            <div><div class="course-card__label">Commande</div><div class="course-card__value">2kg carottes, 1 chou</div></div>
+            <div><div class="course-card__label">Total</div><div class="course-card__value total">800F</div></div>
+          </div>
+          <span class="payment-tag cash">À encaisser à la livraison</span>
+          <div class="course-card__actions" style="margin-top:14px">
+            <a href="tel:0190221408" class="contact-btn call">Appeler</a>
+            <a href="https://wa.me/22990221408" target="_blank" class="contact-btn whatsapp">WhatsApp</a>
+            <a href="#" class="contact-btn map">Voir sur la carte</a>
+          </div>
+          <div class="course-card__progress"><button class="btn btn-full" data-advance>J'ai récupéré la commande</button></div>
+        </div>
+
+        <div class="course-card" data-status="transit" data-course="A1025">
+          <div class="course-card__top"><div class="course-card__client">Josué K.</div><span class="course-status transit">En route</span></div>
+          <div class="course-card__grid">
+            <div><div class="course-card__label">Téléphone</div><div class="course-card__value">01 90 00 33 21</div></div>
+            <div><div class="course-card__label">Localisation</div><div class="course-card__value">Akpakpa, non loin du marché</div></div>
+            <div><div class="course-card__label">Commande</div><div class="course-card__value">1 sac oranges</div></div>
+            <div><div class="course-card__label">Total</div><div class="course-card__value total">6000F</div></div>
+          </div>
+          <span class="payment-tag paid">Déjà payé via Kkiapay</span>
+          <div class="course-card__actions" style="margin-top:14px">
+            <a href="tel:0190003321" class="contact-btn call">Appeler</a>
+            <a href="https://wa.me/22990003321" target="_blank" class="contact-btn whatsapp">WhatsApp</a>
+            <a href="#" class="contact-btn map">Voir sur la carte</a>
+          </div>
+          <div class="course-card__progress"><button class="btn btn-full" data-open-proof>Je suis arrivé — livrer</button></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= HISTORIQUE ================= -->
+    <section id="history-view" class="view">
+      <div class="section-title">Livraisons terminées</div>
+      <div id="historyList">
+        <div class="history-item"><div><div class="history-item__client">Ismaël T.</div><div class="history-item__detail">3kg carottes — livrée hier</div></div><div class="history-item__total">300F</div></div>
+        <div class="history-item"><div><div class="history-item__client">Rachida M.</div><div class="history-item__detail">Tomates, chou — livrée avant-hier</div></div><div class="history-item__total">550F</div></div>
+      </div>
+    </section>
+
+    <!-- ================= MES GAINS ================= -->
+    <section id="gains-view" class="view">
+      <div class="section-title">Mes gains</div>
+      <div class="period-tabs">
+        <button class="period-tab" data-period="day">Jour</button>
+        <button class="period-tab active" data-period="week">Semaine</button>
+        <button class="period-tab" data-period="month">Mois</button>
+      </div>
+      <div class="payment-summary">
+        <div class="payment-summary__label" id="gainsLabel">Total gagné cette semaine</div>
+        <div class="payment-summary__amount" id="gainsTotal">8 450F</div>
+        <div class="payment-summary__meta">
+          <div><span>Livraisons</span><b id="gainsCount">14</b></div>
+          <div><span>Moyenne / course</span><b id="gainsAvg">604F</b></div>
+        </div>
+      </div>
+      <div id="gainList">
+        <div class="gain-item"><div><div class="gain-item__client">Rachida M.</div><div class="gain-item__date">Samedi, 14:20</div></div><div class="gain-item__amount">300F</div></div>
+        <div class="gain-item"><div><div class="gain-item__client">Josué K.</div><div class="gain-item__date">Samedi, 10:05</div></div><div class="gain-item__amount">500F</div></div>
+        <div class="gain-item"><div><div class="gain-item__client">Aïcha D.</div><div class="gain-item__date">Vendredi, 16:40</div></div><div class="gain-item__amount">400F</div></div>
+      </div>
+    </section>
+
+    <!-- ================= PARAMETRES ================= -->
+    <section id="settings-view" class="view">
+      <div class="section-title">Paramètres</div>
+      <div class="stat-card" style="border-left:none">
+        <div style="font-weight:700;margin-bottom:8px">Notifications</div>
+        <p style="font-size:0.85rem;color:var(--charcoal-soft)">Recevoir une alerte pour chaque nouvelle course assignée.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- MODAL PREUVE DE LIVRAISON -->
+<div class="modal-overlay" id="proofModal">
+  <div class="modal">
+    <h3>Confirmer la livraison</h3>
+    <div class="modal__sub">Prenez une photo de la remise pour garantir la confiance des deux côtés.</div>
+    <div class="photo-trigger-row"><div class="photo-trigger-row__preview" id="proofPreview">Aucune photo</div><button class="photo-trigger-btn" id="proofPhotoBtn" type="button">Ajouter une photo</button></div>
+    <div class="validation-box">
+      <p>La livraison sera marquée "confirmée" de votre côté. Le client devra aussi confirmer.</p>
+      <div class="validation-row"><span>Votre confirmation</span><span class="validation-pending">En attente</span></div>
+      <div class="validation-row"><span>Confirmation du client</span><span class="validation-pending">En attente</span></div>
+    </div>
+    <div class="modal__actions">
+      <button class="btn btn-outline" id="closeProofBtn">Annuler</button>
+      <button class="btn" id="confirmProofBtn">J'ai livré la commande</button>
+    </div>
+  </div>
+</div>
+
+<div class="sheet-overlay" id="photoSheetOverlay">
+  <div class="photo-sheet">
+    <div class="photo-sheet__handle"></div>
+    <div class="photo-sheet__head"><button class="photo-sheet__close" id="photoSheetClose" type="button">✕</button><div class="photo-sheet__title">Ajouter une photo</div></div>
+    <div class="photo-sheet__options">
+      <button class="photo-sheet__option" id="photoSheetCamera" type="button">
+        <span class="photo-sheet__icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>
+        <span class="photo-sheet__label">Prendre une photo</span>
+      </button>
+      <button class="photo-sheet__option" id="photoSheetGallery" type="button">
+        <span class="photo-sheet__icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>
+        <span class="photo-sheet__label">Choisir dans la galerie</span>
+      </button>
+    </div>
+  </div>
+</div>
+<input type="file" id="photoInputCamera" accept="image/*" capture="environment" style="display:none">
+<input type="file" id="photoInputGallery" accept="image/*" style="display:none">
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const navItems = document.querySelectorAll('.nav li[data-view]');
+  const views = document.querySelectorAll('.view');
+  const sidebar = document.getElementById('sidebar');
+  const overlayBg = document.getElementById('overlayBg');
+
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      navItems.forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      views.forEach(v => v.classList.remove('active'));
+      document.getElementById(item.dataset.view).classList.add('active');
+      sidebar.classList.remove('is-open');
+      overlayBg.classList.remove('is-open');
+    });
+  });
+  document.getElementById('sidebarToggle').addEventListener('click', () => { sidebar.classList.add('is-open'); overlayBg.classList.add('is-open'); });
+  overlayBg.addEventListener('click', () => { sidebar.classList.remove('is-open'); overlayBg.classList.remove('is-open'); });
+
+  const toast = document.getElementById('toast');
+  function showToast(msg){ toast.textContent = msg; toast.classList.add('is-visible'); setTimeout(() => toast.classList.remove('is-visible'), 2800); }
+
+  const onlineToggle = document.getElementById('onlineToggle');
+  const onlineLabel = document.getElementById('onlineLabel');
+  onlineToggle.addEventListener('click', () => {
+    onlineToggle.classList.toggle('is-on');
+    onlineLabel.textContent = onlineToggle.classList.contains('is-on') ? 'En ligne' : 'Hors ligne';
+    showToast(onlineToggle.classList.contains('is-on') ? 'Vous êtes en ligne' : 'Vous êtes hors ligne');
+  });
+
+  document.querySelectorAll('[data-advance]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.course-card');
+      card.dataset.status = 'transit';
+      card.querySelector('.course-status').textContent = 'En route';
+      card.querySelector('.course-status').className = 'course-status transit';
+      btn.textContent = 'Je suis arrivé — livrer';
+      btn.removeAttribute('data-advance');
+      btn.setAttribute('data-open-proof', '');
+      btn.addEventListener('click', () => openProofModal(card));
+      showToast('Commande récupérée, en route');
+    });
+  });
+
+  let activeCourseCard = null;
+  const proofModal = document.getElementById('proofModal');
+  const proofPreview = document.getElementById('proofPreview');
+  function openProofModal(card){ activeCourseCard = card; proofModal.classList.add('is-open'); }
+  document.querySelectorAll('[data-open-proof]').forEach(btn => btn.addEventListener('click', () => openProofModal(btn.closest('.course-card'))));
+  document.getElementById('closeProofBtn').addEventListener('click', () => proofModal.classList.remove('is-open'));
+
+  const photoSheetOverlay = document.getElementById('photoSheetOverlay');
+  const photoInputCamera = document.getElementById('photoInputCamera');
+  const photoInputGallery = document.getElementById('photoInputGallery');
+  document.getElementById('proofPhotoBtn').addEventListener('click', () => photoSheetOverlay.classList.add('is-open'));
+  document.getElementById('photoSheetClose').addEventListener('click', () => photoSheetOverlay.classList.remove('is-open'));
+  document.getElementById('photoSheetCamera').addEventListener('click', () => photoInputCamera.click());
+  document.getElementById('photoSheetGallery').addEventListener('click', () => photoInputGallery.click());
+  function handlePhoto(input){
+    const file = input.files && input.files[0];
+    if(!file) { photoSheetOverlay.classList.remove('is-open'); return; }
+    const reader = new FileReader();
+    reader.onload = (e) => { proofPreview.innerHTML = `<img src="${e.target.result}" alt="preuve">`; };
+    reader.readAsDataURL(file);
+    photoSheetOverlay.classList.remove('is-open');
+  }
+  photoInputCamera.addEventListener('change', () => handlePhoto(photoInputCamera));
+  photoInputGallery.addEventListener('change', () => handlePhoto(photoInputGallery));
+
+  document.getElementById('confirmProofBtn').addEventListener('click', () => {
+    if(!activeCourseCard) return;
+    if(!proofPreview.querySelector('img')){ alert('Merci d\'ajouter une photo de la remise.'); return; }
+    proofModal.classList.remove('is-open');
+    activeCourseCard.remove();
+    proofPreview.innerHTML = 'Aucune photo';
+    showToast('Livraison confirmée, en attente de la confirmation du client');
+  });
+
+  const gainsData = {
+    day:   { label: "aujourd'hui", total: '1 200F', count: 3, avg: '400F' },
+    week:  { label: 'cette semaine', total: '8 450F', count: 14, avg: '604F' },
+    month: { label: 'ce mois-ci', total: '32 100F', count: 58, avg: '553F' }
+  };
+  document.querySelectorAll('.period-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const d = gainsData[tab.dataset.period];
+      document.getElementById('gainsLabel').textContent = 'Total gagné ' + d.label;
+      document.getElementById('gainsTotal').textContent = d.total;
+      document.getElementById('gainsCount').textContent = d.count;
+      document.getElementById('gainsAvg').textContent = d.avg;
+    });
+  });
+</script>
+
+</body>
+</html>

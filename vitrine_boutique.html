@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chez Rosine — Le Panier de Maman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#2F5233; --green-leaf:#4C7A3D; --orange:#E8752D;
+    --tomato:#C1442E; --cream:#FBF3E3; --kraft:#E9D9B6; --kraft-dark:#CBB27F;
+    --charcoal:#2B2420; --charcoal-soft:#5A5148; --white:#fff;
+    --font-display:'Baloo 2',sans-serif; --font-body:'Work Sans',sans-serif; --font-hand:'Caveat',cursive;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-body);color:var(--charcoal);background:var(--cream);line-height:1.5;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  img{display:block;max-width:100%;}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
+
+  .nav{position:sticky;top:0;z-index:60;background:var(--green-deep);color:#fff;}
+  .nav__inner{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;}
+  .nav__brand{font-family:var(--font-display);font-weight:700;font-size:1.2rem;}
+  .nav__cart-btn{position:relative;display:flex;align-items:center;gap:8px;background:var(--orange);color:#fff;padding:10px 18px;border-radius:999px;font-weight:600;font-size:0.9rem;}
+  .nav__cart-badge{position:absolute;top:-7px;right:-8px;background:var(--tomato);color:#fff;font-size:0.68rem;font-weight:700;min-width:18px;height:18px;border-radius:999px;display:flex;align-items:center;justify-content:center;}
+
+  .shop-header{position:relative;}
+  .shop-header__cover{width:100%;aspect-ratio:16/6;object-fit:cover;}
+  .shop-header__overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,30,15,0.1),rgba(20,30,15,0.55));}
+
+  .shop-card{background:#fff;border-radius:20px;box-shadow:0 12px 30px rgba(43,36,32,0.12);padding:26px;margin-top:-60px;position:relative;z-index:2;}
+  .shop-card__top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .shop-card__name{font-family:var(--font-display);font-weight:800;font-size:1.6rem;color:var(--charcoal);}
+  .shop-card__zone{font-size:0.9rem;color:var(--charcoal-soft);margin-top:4px;}
+  .shop-card__rating{color:var(--orange);font-weight:700;font-size:0.95rem;margin-top:8px;}
+  .shop-card__desc{font-size:0.92rem;color:var(--charcoal-soft);margin-top:14px;max-width:60ch;}
+
+  .status-chip{display:inline-flex;align-items:center;gap:7px;background:#E4F1DF;color:var(--green-leaf);padding:7px 16px;border-radius:999px;font-size:0.82rem;font-weight:700;}
+  .status-dot{width:7px;height:7px;border-radius:50%;background:currentColor;}
+
+  .shop-actions{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 24px;border-radius:999px;font-weight:600;font-size:0.94rem;transition:transform .15s ease;}
+  .btn-whatsapp{background:#25D366;color:#fff;}
+  .btn-whatsapp:hover{transform:translateY(-2px);}
+
+  .section{padding:44px 0;}
+  .section__title{font-family:var(--font-display);font-weight:700;font-size:1.35rem;color:var(--green-deep);margin-bottom:6px;}
+  .section__hint{font-size:0.85rem;color:var(--charcoal-soft);margin-bottom:26px;}
+
+  .products{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+  @media (max-width:920px){.products{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:520px){.products{grid-template-columns:1fr;}}
+  .product{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 20px rgba(43,36,32,0.07);transition:transform .2s ease;}
+  .product:hover{transform:translateY(-5px);}
+  .product.is-out{opacity:0.6;}
+  .product__image{position:relative;}
+  .product__image img{width:100%;aspect-ratio:1/1;object-fit:cover;}
+  .product__price-badge{position:absolute;top:12px;right:12px;background:var(--tomato);color:#fff;font-family:var(--font-hand);font-weight:700;font-size:1.05rem;padding:5px 14px 6px;border-radius:999px;}
+  .product__out-badge{position:absolute;top:12px;left:12px;background:var(--charcoal);color:#fff;font-size:0.68rem;font-weight:700;padding:5px 10px;border-radius:999px;}
+  .product__info{padding:14px 16px;}
+  .product__name{font-weight:700;font-size:0.96rem;}
+  .product__unit{font-size:0.78rem;color:var(--charcoal-soft);margin:2px 0 10px;}
+
+  .qty-row{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .qty-control{display:flex;align-items:center;border:1.5px solid var(--kraft-dark);border-radius:999px;overflow:hidden;}
+  .qty-control button{width:28px;height:28px;background:var(--cream);font-weight:700;color:var(--green-deep);font-size:0.95rem;}
+  .qty-control span{width:24px;text-align:center;font-weight:600;font-size:0.85rem;}
+  .add-btn{flex:1;background:var(--green-deep);color:#fff;padding:8px 0;border-radius:999px;font-weight:600;font-size:0.8rem;transition:background .2s ease;}
+  .add-btn:hover{background:var(--green-leaf);}
+  .add-btn.is-added{background:var(--orange);}
+  .add-btn:disabled,.qty-control button:disabled{background:#E5DDCC;color:#A79E8E;cursor:not-allowed;}
+
+  /* CART DRAWER */
+  .drawer-overlay{display:none;position:fixed;inset:0;background:rgba(43,36,32,0.45);z-index:90;}
+  .drawer-overlay.is-open{display:block;}
+  .cart-drawer{position:fixed;top:0;right:0;bottom:0;width:400px;max-width:92vw;background:#fff;z-index:100;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s ease;box-shadow:-10px 0 30px rgba(0,0,0,0.15);}
+  .cart-drawer.is-open{transform:translateX(0);}
+  .cart-drawer__head{padding:22px 24px;border-bottom:1px solid var(--kraft-dark);display:flex;align-items:center;justify-content:space-between;}
+  .cart-drawer__head h2{font-family:var(--font-display);font-size:1.2rem;color:var(--green-deep);}
+  .cart-drawer__close{background:none;font-size:1.4rem;color:var(--charcoal-soft);width:32px;height:32px;}
+  .cart-items{flex:1;overflow-y:auto;padding:16px 24px;display:flex;flex-direction:column;gap:14px;}
+  .cart-empty{text-align:center;color:var(--charcoal-soft);padding:60px 20px;font-size:0.95rem;}
+  .cart-item{display:flex;align-items:center;gap:12px;}
+  .cart-item img{width:54px;height:54px;border-radius:10px;object-fit:cover;flex-shrink:0;}
+  .cart-item__info{flex:1;min-width:0;}
+  .cart-item__name{font-weight:600;font-size:0.92rem;}
+  .cart-item__price{font-size:0.8rem;color:var(--charcoal-soft);}
+  .cart-item__remove{font-size:0.78rem;color:var(--tomato);font-weight:600;margin-top:2px;}
+  .cart-drawer__foot{padding:20px 24px;border-top:1px solid var(--kraft-dark);}
+  .cart-line{display:flex;justify-content:space-between;font-size:0.92rem;margin-bottom:8px;color:var(--charcoal-soft);}
+  .cart-line.total{font-weight:700;font-size:1.1rem;color:var(--green-deep);border-top:1px dashed var(--kraft-dark);padding-top:10px;margin-top:10px;}
+  .checkout-btn{width:100%;background:var(--orange);color:#fff;padding:14px 0;border-radius:999px;font-weight:700;font-size:0.98rem;margin-top:14px;transition:transform .15s;}
+  .checkout-btn:hover{transform:translateY(-2px);}
+  .checkout-btn:disabled{background:var(--kraft-dark);cursor:not-allowed;transform:none;}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green-deep);color:#fff;padding:13px 24px;border-radius:999px;font-size:0.88rem;font-weight:600;z-index:150;opacity:0;transition:opacity .25s ease,transform .25s ease;pointer-events:none;max-width:90vw;text-align:center;}
+  .toast.is-visible{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  footer{background:var(--charcoal);color:#E8E2D8;padding:40px 0;text-align:center;}
+  footer p{font-size:0.85rem;color:#B7AFA3;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav__inner">
+    <a href="accueil.html" class="nav__brand">Le Panier de Maman</a>
+    <button class="nav__cart-btn" id="openCartBtn">Panier<span class="nav__cart-badge" id="cartBadge">0</span></button>
+  </div>
+</nav>
+
+<header class="shop-header">
+  <img class="shop-header__cover" src="images6.jpg" alt="Chez Rosine">
+  <div class="shop-header__overlay"></div>
+</header>
+
+<div class="wrap">
+  <div class="shop-card">
+    <div class="shop-card__top">
+      <div>
+        <div class="shop-card__name">Chez Rosine</div>
+        <div class="shop-card__zone">Akpakpa, Cotonou</div>
+        <div class="shop-card__rating">★ 4,3 — 12 avis</div>
+      </div>
+      <span class="status-chip"><span class="status-dot"></span>Ouverte maintenant</span>
+    </div>
+    <p class="shop-card__desc">Fruits et légumes frais du quartier, récoltés le matin même.</p>
+    <div class="shop-actions">
+      <a href="https://wa.me/22900000000" class="btn btn-whatsapp">Écrire sur WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section__title">Marché du jour</div>
+    <div class="section__hint">Sélection fraîche annoncée par la boutique aujourd'hui.</div>
+    <div class="products" id="todayGrid">
+      <div class="product" data-id="carottes" data-name="Carottes" data-unit="le tas" data-price="100" data-img="250px-منطقة_طمينة_مصراتة_ليبيا_06.jpg">
+        <div class="product__image"><img src="250px-منطقة_طمينة_مصراتة_ليبيا_06.jpg" alt="Carottes"><span class="product__price-badge">100F</span></div>
+        <div class="product__info">
+          <div class="product__name">Carottes</div>
+          <div class="product__unit">le tas</div>
+          <div class="qty-row"><div class="qty-control"><button data-decr>–</button><span data-qty>0</span><button data-incr>+</button></div><button class="add-btn" data-add>Ajouter</button></div>
+        </div>
+      </div>
+      <div class="product" data-id="tomates" data-name="Tomates" data-unit="le tas" data-price="250" data-img="images7.jpg">
+        <div class="product__image"><img src="images7.jpg" alt="Tomates"><span class="product__price-badge">250F</span></div>
+        <div class="product__info">
+          <div class="product__name">Tomates</div>
+          <div class="product__unit">le tas</div>
+          <div class="qty-row"><div class="qty-control"><button data-decr>–</button><span data-qty>0</span><button data-incr>+</button></div><button class="add-btn" data-add>Ajouter</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section__title">Tous les produits de la boutique</div>
+    <div class="section__hint">Le stock complet de Chez Rosine, disponible ou en rupture.</div>
+    <div class="products" id="fullGrid">
+      <div class="product" data-id="carottes" data-name="Carottes" data-unit="le tas" data-price="100" data-img="250px-منطقة_طمينة_مصراتة_ليبيا_06.jpg">
+        <div class="product__image"><img src="250px-منطقة_طمينة_مصراتة_ليبيا_06.jpg" alt="Carottes"><span class="product__price-badge">100F</span></div>
+        <div class="product__info">
+          <div class="product__name">Carottes</div>
+          <div class="product__unit">le tas</div>
+          <div class="qty-row"><div class="qty-control"><button data-decr>–</button><span data-qty>0</span><button data-incr>+</button></div><button class="add-btn" data-add>Ajouter</button></div>
+        </div>
+      </div>
+      <div class="product" data-id="tomates" data-name="Tomates" data-unit="le tas" data-price="250" data-img="images7.jpg">
+        <div class="product__image"><img src="images7.jpg" alt="Tomates"><span class="product__price-badge">250F</span></div>
+        <div class="product__info">
+          <div class="product__name">Tomates</div>
+          <div class="product__unit">le tas</div>
+          <div class="qty-row"><div class="qty-control"><button data-decr>–</button><span data-qty>0</span><button data-incr>+</button></div><button class="add-btn" data-add>Ajouter</button></div>
+        </div>
+      </div>
+      <div class="product is-out" data-id="chou" data-name="Chou" data-unit="l'unité" data-price="300" data-img="images5.jpg">
+        <div class="product__image"><img src="images5.jpg" alt="Chou"><span class="product__out-badge">Rupture</span></div>
+        <div class="product__info">
+          <div class="product__name">Chou</div>
+          <div class="product__unit">l'unité</div>
+          <div class="qty-row"><div class="qty-control"><button disabled>–</button><span data-qty>0</span><button disabled>+</button></div><button class="add-btn" disabled>Indisponible</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer__head"><h2>Mon panier</h2><button class="cart-drawer__close" id="closeCartBtn">×</button></div>
+  <div class="cart-items" id="cartItems"><div class="cart-empty">Votre panier est vide pour l'instant.</div></div>
+  <div class="cart-drawer__foot">
+    <div class="cart-line"><span>Sous-total</span><span id="cartSubtotal">0F</span></div>
+    <div class="cart-line total"><span>Total</span><span id="cartTotal">0F</span></div>
+    <a href="marche.html" class="checkout-btn" id="checkoutBtn" style="display:block;text-align:center;text-decoration:none">Passer la commande</a>
+  </div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<footer><div class="wrap"><p>© 2026 Le Panier de Maman — Fait avec soin, au Bénin.</p></div></footer>
+
+<script>
+  const cart = {};
+  const cartBadge = document.getElementById('cartBadge');
+  const cartItemsEl = document.getElementById('cartItems');
+  const cartSubtotalEl = document.getElementById('cartSubtotal');
+  const cartTotalEl = document.getElementById('cartTotal');
+
+  function formatF(n){ return n.toLocaleString('fr-FR') + 'F'; }
+
+  document.querySelectorAll('.product:not(.is-out)').forEach(card => {
+    const id = card.dataset.id;
+    const qtyEl = card.querySelector('[data-qty]');
+    let localQty = 0;
+    card.querySelector('[data-incr]').addEventListener('click', () => { localQty++; qtyEl.textContent = localQty; });
+    card.querySelector('[data-decr]').addEventListener('click', () => { if(localQty > 0){ localQty--; qtyEl.textContent = localQty; } });
+    card.querySelector('[data-add]').addEventListener('click', (e) => {
+      if(localQty === 0){ localQty = 1; qtyEl.textContent = 1; }
+      addToCart(id, card.dataset.name, parseInt(card.dataset.price), card.dataset.img, localQty);
+      localQty = 0; qtyEl.textContent = 0;
+      const btn = e.currentTarget; const original = btn.textContent;
+      btn.textContent = 'Ajouté ✓'; btn.classList.add('is-added');
+      setTimeout(() => { btn.textContent = original; btn.classList.remove('is-added'); }, 900);
+      showToast(card.dataset.name + ' ajouté au panier');
+    });
+  });
+
+  function addToCart(id, name, price, img, qty){
+    if(cart[id]){ cart[id].qty += qty; } else { cart[id] = { name, price, img, qty }; }
+    renderCart();
+  }
+  function removeFromCart(id){ delete cart[id]; renderCart(); }
+
+  function renderCart(){
+    const ids = Object.keys(cart);
+    let count = 0, subtotal = 0;
+    if(ids.length === 0){
+      cartItemsEl.innerHTML = '<div class="cart-empty">Votre panier est vide pour l\'instant.</div>';
+    } else {
+      cartItemsEl.innerHTML = ids.map(id => {
+        const item = cart[id]; count += item.qty; subtotal += item.qty * item.price;
+        return `<div class="cart-item"><img src="${item.img}" alt="${item.name}"><div class="cart-item__info"><div class="cart-item__name">${item.name} × ${item.qty}</div><div class="cart-item__price">${formatF(item.price * item.qty)}</div><div class="cart-item__remove" data-remove="${id}">Retirer</div></div></div>`;
+      }).join('');
+      cartItemsEl.querySelectorAll('[data-remove]').forEach(el => el.addEventListener('click', () => removeFromCart(el.dataset.remove)));
+    }
+    cartBadge.textContent = count;
+    cartSubtotalEl.textContent = formatF(subtotal);
+    cartTotalEl.textContent = formatF(subtotal);
+  }
+
+  function showToast(msg){
+    const toast = document.getElementById('toast');
+    toast.textContent = msg; toast.classList.add('is-visible');
+    setTimeout(() => toast.classList.remove('is-visible'), 2400);
+  }
+
+  const cartDrawer = document.getElementById('cartDrawer');
+  const drawerOverlay = document.getElementById('drawerOverlay');
+  document.getElementById('openCartBtn').addEventListener('click', () => { cartDrawer.classList.add('is-open'); drawerOverlay.classList.add('is-open'); });
+  document.getElementById('closeCartBtn').addEventListener('click', closeCart);
+  drawerOverlay.addEventListener('click', closeCart);
+  function closeCart(){ cartDrawer.classList.remove('is-open'); drawerOverlay.classList.remove('is-open'); }
+</script>
+
+</body>
+</html>

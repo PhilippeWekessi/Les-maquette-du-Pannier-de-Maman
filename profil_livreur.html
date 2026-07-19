@@ -17,7 +17,7 @@
   body{font-family:var(--font-body);color:var(--charcoal);background:var(--cream);line-height:1.5;}
   a{color:inherit;text-decoration:none;}
   button{font-family:inherit;cursor:pointer;border:none;}
-  input{font-family:inherit;}
+  input,select{font-family:inherit;}
   .wrap{max-width:640px;margin:0 auto;padding:0 20px;}
 
   .nav{position:sticky;top:0;z-index:50;background:var(--green-deep);color:#fff;}
@@ -28,30 +28,40 @@
   main{padding:32px 0 60px;}
 
   .profile-head{display:flex;align-items:center;gap:16px;margin-bottom:32px;}
+  .profile-avatar{width:68px;height:68px;border-radius:50%;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:1.6rem;flex-shrink:0;}
   .profile-head h1{font-family:var(--font-display);font-weight:700;font-size:1.35rem;color:var(--charcoal);}
   .profile-head p{font-size:0.86rem;color:var(--charcoal-soft);margin-top:2px;}
+
+  .profile-badges{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+  .profile-badge{font-size:0.72rem;font-weight:700;padding:4px 12px;border-radius:999px;display:inline-block;}
+  .profile-badge.rating{background:#FDEBD3;color:var(--orange);}
+  .profile-badge.verified{background:#E4F1DF;color:var(--green-leaf);}
 
   .section-card{background:#fff;border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 6px 18px rgba(43,36,32,0.06);}
   .section-card__title{font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:var(--green-deep);margin-bottom:16px;}
 
+  .stats-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:6px;}
+  .stats-mini__item{text-align:center;background:var(--cream);border-radius:12px;padding:14px 8px;}
+  .stats-mini__value{font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--green-deep);}
+  .stats-mini__label{font-size:0.72rem;color:var(--charcoal-soft);margin-top:2px;}
+
   .form-group{margin-bottom:16px;}
   .form-group:last-child{margin-bottom:0;}
   .form-group label{display:block;font-size:0.82rem;font-weight:600;margin-bottom:6px;color:var(--charcoal-soft);}
-  .form-group input{width:100%;padding:12px 14px;border:1.5px solid var(--kraft-dark);border-radius:10px;font-size:0.92rem;background:var(--cream);color:var(--charcoal);}
-  .form-group input:focus{outline:2px solid var(--green-leaf);}
+  .form-group input,.form-group select{width:100%;padding:12px 14px;border:1.5px solid var(--kraft-dark);border-radius:10px;font-size:0.92rem;background:var(--cream);color:var(--charcoal);}
+  .form-group input:focus,.form-group select:focus{outline:2px solid var(--green-leaf);}
   .form-group input:disabled{color:var(--charcoal-soft);cursor:not-allowed;}
 
   .save-btn{background:var(--orange);color:#fff;padding:12px 24px;border-radius:999px;font-weight:700;font-size:0.9rem;margin-top:16px;transition:transform .15s ease;}
   .save-btn:hover{transform:translateY(-2px);}
 
-  .address-list{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
-  .address-item{display:flex;align-items:center;justify-content:space-between;background:var(--cream);border-radius:12px;padding:14px 16px;flex-wrap:wrap;gap:10px;}
-  .address-item__label{font-weight:700;font-size:0.9rem;}
-  .address-item__detail{font-size:0.82rem;color:var(--charcoal-soft);}
-  .address-item__default{font-size:0.72rem;font-weight:700;color:var(--green-leaf);background:#E4F1DF;padding:3px 10px;border-radius:999px;display:inline-block;margin-top:4px;}
-  .address-item__remove{font-size:0.8rem;color:var(--tomato);font-weight:600;}
-
-  .add-address-btn{width:100%;background:#fff;color:var(--green-deep);border:1.5px dashed var(--green-leaf);padding:12px 0;border-radius:12px;font-weight:600;font-size:0.9rem;}
+  .doc-list{display:flex;flex-direction:column;gap:12px;margin-bottom:4px;}
+  .doc-item{display:flex;align-items:center;justify-content:space-between;background:var(--cream);border-radius:12px;padding:14px 16px;flex-wrap:wrap;gap:10px;}
+  .doc-item__label{font-weight:700;font-size:0.9rem;}
+  .doc-item__detail{font-size:0.82rem;color:var(--charcoal-soft);}
+  .doc-item__status{font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:999px;display:inline-block;margin-top:4px;}
+  .doc-item__status.valid{color:var(--green-leaf);background:#E4F1DF;}
+  .doc-item__status.pending{color:var(--orange);background:#FDEBD3;}
 
   .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #F0E9DB;}
   .toggle-row:last-child{border-bottom:none;}
@@ -66,7 +76,7 @@
 
   /* PHOTO DE PROFIL */
   .profile-photo{
-    width:68px;height:68px;border-radius:50%;background:var(--green-deep);color:#fff;
+    width:68px;height:68px;border-radius:50%;background:var(--orange);color:#fff;
     display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;
     font-family:var(--font-display);font-weight:700;font-size:1.6rem;
     border:3px solid #fff;box-shadow:0 6px 16px rgba(43,36,32,0.1);
@@ -103,7 +113,7 @@
 
 <nav class="nav">
   <div class="wrap nav__inner">
-    <a href="dashboard_client.html" class="nav__back">←</a>
+    <a href="dashboard_livreur.html" class="nav__back">←</a>
     <div class="nav__brand">Mon profil</div>
   </div>
 </nav>
@@ -112,12 +122,25 @@
 
   <div class="profile-head">
     <div>
-      <div class="profile-photo" id="profilePhoto">A</div>
+      <div class="profile-photo" id="profilePhoto">K</div>
       <button class="change-photo-btn" id="changePhotoBtn" type="button">Changer ma photo</button>
     </div>
     <div>
-      <h1>Aïcha D.</h1>
-      <p>Cliente depuis mars 2026</p>
+      <h1>Koffi A.</h1>
+      <p>Livreur depuis février 2026</p>
+      <div class="profile-badges">
+        <span class="profile-badge rating">⭐ 4.8 / 5</span>
+        <span class="profile-badge verified">✓ Identité vérifiée</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-card__title">Vue d'ensemble</div>
+    <div class="stats-mini">
+      <div class="stats-mini__item"><div class="stats-mini__value">312</div><div class="stats-mini__label">Livraisons totales</div></div>
+      <div class="stats-mini__item"><div class="stats-mini__value">4.8</div><div class="stats-mini__label">Note moyenne</div></div>
+      <div class="stats-mini__item"><div class="stats-mini__value">98%</div><div class="stats-mini__label">Taux de réussite</div></div>
     </div>
   </div>
 
@@ -125,42 +148,64 @@
     <div class="section-card__title">Informations personnelles</div>
     <div class="form-group">
       <label>Nom et prénom</label>
-      <input type="text" value="Aïcha Djibril">
+      <input type="text" value="Koffi Agbodjan">
     </div>
     <div class="form-group">
       <label>Email</label>
-      <input type="email" value="aicha@gmail.com">
+      <input type="email" value="koffi.a@gmail.com">
     </div>
     <div class="form-group">
       <label>Numéro de téléphone</label>
       <input type="tel" value="01 90 22 14 08" disabled>
     </div>
+    <div class="form-group">
+      <label>Zone de livraison</label>
+      <select>
+        <option>Cotonou — Akpakpa</option>
+        <option>Cotonou — Cadjèhoun</option>
+        <option>Abomey-Calavi</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Moyen de transport</label>
+      <select>
+        <option>Moto</option>
+        <option>Vélo</option>
+        <option>Voiture</option>
+        <option>À pied</option>
+      </select>
+    </div>
     <button class="save-btn">Enregistrer les modifications</button>
   </div>
 
   <div class="section-card">
-    <div class="section-card__title">Mes adresses de livraison</div>
-    <div class="address-list" id="addressList">
-      <div class="address-item">
+    <div class="section-card__title">Mes documents</div>
+    <div class="doc-list">
+      <div class="doc-item">
         <div>
-          <div class="address-item__label">Maison</div>
-          <div class="address-item__detail">Cadjèhoun, près de la pharmacie</div>
-          <span class="address-item__default">Par défaut</span>
+          <div class="doc-item__label">Pièce d'identité</div>
+          <div class="doc-item__detail">CNI — soumise le 12 février 2026</div>
+          <span class="doc-item__status valid">Validée</span>
         </div>
-        <button class="address-item__remove">Retirer</button>
+      </div>
+      <div class="doc-item">
+        <div>
+          <div class="doc-item__label">Permis de conduire</div>
+          <div class="doc-item__detail">Catégorie A — soumise le 12 février 2026</div>
+          <span class="doc-item__status valid">Validée</span>
+        </div>
       </div>
     </div>
-    <button class="add-address-btn" id="addAddressBtn">+ Ajouter une adresse</button>
   </div>
 
   <div class="section-card">
     <div class="section-card__title">Notifications</div>
     <div class="toggle-row">
-      <div><div class="toggle-row__label">Notifications push</div><div class="toggle-row__desc">Statut de commande, nouvelles annonces</div></div>
+      <div><div class="toggle-row__label">Notifications push</div><div class="toggle-row__desc">Nouvelle course assignée, mise à jour de statut</div></div>
       <button class="toggle is-on" data-toggle><div class="toggle__knob"></div></button>
     </div>
     <div class="toggle-row">
-      <div><div class="toggle-row__label">SMS</div><div class="toggle-row__desc">Recevoir les mises à jour par SMS aussi</div></div>
+      <div><div class="toggle-row__label">SMS</div><div class="toggle-row__desc">Recevoir les alertes de course par SMS aussi</div></div>
       <button class="toggle is-on" data-toggle><div class="toggle__knob"></div></button>
     </div>
   </div>
@@ -219,19 +264,8 @@
     showToast('Informations mises à jour');
   });
 
-  document.querySelectorAll('.address-item__remove').forEach(btn => {
-    btn.addEventListener('click', (e) => e.target.closest('.address-item').remove());
-  });
-
-  document.getElementById('addAddressBtn').addEventListener('click', () => {
-    const label = prompt('Nom de l\'adresse (ex : Maison, Travail)');
-    const detail = prompt('Adresse (quartier, repère)');
-    if(!label || !detail) return;
-    const item = document.createElement('div');
-    item.className = 'address-item';
-    item.innerHTML = `<div><div class="address-item__label">${label}</div><div class="address-item__detail">${detail}</div></div><button class="address-item__remove">Retirer</button>`;
-    item.querySelector('.address-item__remove').addEventListener('click', () => item.remove());
-    document.getElementById('addressList').appendChild(item);
+  document.querySelector('.logout-btn').addEventListener('click', () => {
+    window.location.href = 'connexion.html';
   });
 
   // --- Changer la photo de profil ---

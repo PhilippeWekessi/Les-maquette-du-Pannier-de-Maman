@@ -26,25 +26,15 @@
 
   main{padding:28px 0 60px;}
 
-  /* CARTE STATUT ESSAI */
-  .trial-card{
-    background:linear-gradient(135deg,var(--green-deep),#3D6B41);
-    color:#fff;border-radius:20px;padding:28px;margin-bottom:22px;
-    box-shadow:0 12px 28px rgba(47,82,51,0.25);
-  }
-  .trial-badge{
-    display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.15);
-    padding:6px 14px;border-radius:999px;font-size:0.8rem;font-weight:600;margin-bottom:16px;
-  }
+  .trial-card{background:linear-gradient(135deg,var(--green-deep),#3D6B41);color:#fff;border-radius:20px;padding:28px;margin-bottom:22px;box-shadow:0 12px 28px rgba(47,82,51,0.25);}
+  .trial-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.15);padding:6px 14px;border-radius:999px;font-size:0.8rem;font-weight:600;margin-bottom:16px;}
   .trial-badge-dot{width:7px;height:7px;border-radius:50%;background:#F2A65A;}
   .trial-card h2{font-family:var(--font-display);font-size:1.3rem;margin-bottom:8px;}
   .trial-card p{font-size:0.9rem;color:#D9E6D1;margin-bottom:18px;}
-
   .trial-progress{background:rgba(255,255,255,0.18);border-radius:999px;height:8px;overflow:hidden;margin-bottom:8px;}
   .trial-progress__fill{height:100%;background:#F2A65A;border-radius:999px;}
   .trial-days{display:flex;justify-content:space-between;font-size:0.78rem;color:#D9E6D1;}
 
-  /* PROCHAIN PAIEMENT */
   .section-card{background:#fff;border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 6px 18px rgba(43,36,32,0.06);}
   .section-card__title{font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:var(--green-deep);margin-bottom:16px;}
 
@@ -53,36 +43,22 @@
   .price-row span{font-size:0.9rem;color:var(--charcoal-soft);}
   .next-charge-date{font-size:0.86rem;color:var(--charcoal-soft);margin-bottom:20px;}
 
-  .payment-method{
-    display:flex;align-items:center;justify-content:space-between;background:var(--cream);
-    border-radius:12px;padding:14px 16px;margin-bottom:16px;
-  }
+  .payment-method{display:flex;align-items:center;justify-content:space-between;background:var(--cream);border-radius:12px;padding:14px 16px;margin-bottom:16px;}
   .payment-method__info{display:flex;align-items:center;gap:12px;}
-  .payment-method__icon{width:38px;height:38px;border-radius:10px;background:var(--green-deep);color:#fff;
-    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;flex-shrink:0;}
+  .payment-method__icon{width:38px;height:38px;border-radius:10px;background:var(--green-deep);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;flex-shrink:0;}
   .payment-method__label{font-weight:600;font-size:0.9rem;}
   .payment-method__sub{font-size:0.78rem;color:var(--charcoal-soft);}
   .payment-method__change{font-size:0.82rem;font-weight:600;color:var(--green-deep);}
 
-  .pay-now-btn{
-    width:100%;background:var(--orange);color:#fff;padding:14px 0;border-radius:999px;
-    font-weight:700;font-size:0.96rem;transition:transform .15s ease;
-  }
+  .pay-now-btn{width:100%;background:var(--orange);color:#fff;padding:14px 0;border-radius:999px;font-weight:700;font-size:0.96rem;transition:transform .15s ease;}
   .pay-now-btn:hover{transform:translateY(-2px);}
 
-  /* HISTORIQUE PAIEMENTS */
   .history-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #F0E9DB;}
   .history-item:last-child{border-bottom:none;}
   .history-item__date{font-weight:600;font-size:0.88rem;}
   .history-item__method{font-size:0.78rem;color:var(--charcoal-soft);}
-  .history-item__amount{font-weight:700;font-size:0.9rem;color:var(--green-deep);}
-  .history-status{font-size:0.72rem;font-weight:700;padding:4px 10px;border-radius:999px;background:#E4F1DF;color:var(--green-leaf);margin-left:8px;}
 
-  .toast{
-    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
-    background:var(--green-deep);color:#fff;padding:12px 22px;border-radius:999px;
-    font-size:0.86rem;font-weight:600;z-index:200;opacity:0;transition:opacity .25s ease,transform .25s ease;pointer-events:none;
-  }
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green-deep);color:#fff;padding:12px 22px;border-radius:999px;font-size:0.86rem;font-weight:600;z-index:200;opacity:0;transition:opacity .25s ease,transform .25s ease;pointer-events:none;}
   .toast.is-visible{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
@@ -90,14 +66,13 @@
 
 <header class="topbar">
   <div class="wrap topbar__inner">
-    <a href="vendeuse.html" class="topbar__back">←</a>
+    <a href="dashboard_vendeur_vendeuse.html" class="topbar__back">←</a>
     <div class="topbar__brand">Mon abonnement</div>
   </div>
 </header>
 
 <main class="wrap">
 
-  <!-- STATUT ESSAI GRATUIT -->
   <div class="trial-card">
     <span class="trial-badge"><span class="trial-badge-dot"></span>Essai gratuit en cours</span>
     <h2>Il vous reste 9 jours d'essai gratuit</h2>
@@ -106,7 +81,6 @@
     <div class="trial-days"><span>Jour 21 sur 30</span><span>9 jours restants</span></div>
   </div>
 
-  <!-- PROCHAIN PAIEMENT -->
   <div class="section-card">
     <div class="section-card__title">Après l'essai gratuit</div>
     <div class="price-row"><b>2 000F</b><span>/ mois</span></div>
@@ -115,10 +89,7 @@
     <div class="payment-method">
       <div class="payment-method__info">
         <div class="payment-method__icon">MM</div>
-        <div>
-          <div class="payment-method__label">Mobile Money (Kkiapay)</div>
-          <div class="payment-method__sub">Numéro : •• •• •• 08</div>
-        </div>
+        <div><div class="payment-method__label">Mobile Money (Kkiapay)</div><div class="payment-method__sub">Numéro : •• •• •• 08</div></div>
       </div>
       <button class="payment-method__change">Changer</button>
     </div>
@@ -126,16 +97,10 @@
     <button class="pay-now-btn" id="payNowBtn">Activer l'abonnement maintenant</button>
   </div>
 
-  <!-- HISTORIQUE -->
   <div class="section-card">
     <div class="section-card__title">Historique des paiements</div>
     <div id="historyList">
-      <div class="history-item">
-        <div>
-          <div class="history-item__date">Aucun paiement effectué</div>
-          <div class="history-item__method">Votre essai gratuit est encore actif</div>
-        </div>
-      </div>
+      <div class="history-item"><div><div class="history-item__date">Aucun paiement effectué</div><div class="history-item__method">Votre essai gratuit est encore actif</div></div></div>
     </div>
   </div>
 

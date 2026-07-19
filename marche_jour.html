@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marché du jour — Le Panier de Maman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#2F5233; --green-leaf:#4C7A3D; --orange:#E8752D;
+    --tomato:#C1442E; --cream:#FBF3E3; --kraft:#E9D9B6; --kraft-dark:#CBB27F;
+    --charcoal:#2B2420; --charcoal-soft:#5A5148; --white:#fff;
+    --font-display:'Baloo 2',sans-serif; --font-body:'Work Sans',sans-serif; --font-hand:'Caveat',cursive;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-body);color:var(--charcoal);background:var(--cream);line-height:1.5;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  img{display:block;max-width:100%;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+  .nav{position:sticky;top:0;z-index:60;background:var(--green-deep);color:#fff;}
+  .nav__inner{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;}
+  .nav__brand{font-family:var(--font-display);font-weight:700;font-size:1.2rem;}
+  .nav__right{display:flex;align-items:center;gap:14px;}
+  .avatar{width:36px;height:36px;border-radius:50%;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;}
+  .avatar a{color:#fff;display:flex;align-items:center;justify-content:center;width:100%;height:100%;}
+
+  .page-header{padding:36px 0 8px;}
+  .page-header__eyebrow{font-weight:700;color:var(--green-leaf);text-transform:uppercase;letter-spacing:0.08em;font-size:0.8rem;margin-bottom:6px;}
+  .page-header h1{font-family:var(--font-display);font-weight:700;font-size:1.8rem;color:var(--green-deep);}
+  .page-header p{font-size:0.9rem;color:var(--charcoal-soft);margin-top:10px;max-width:60ch;}
+
+  main{padding:30px 0 80px;}
+
+  .vendor-group{margin-bottom:44px;}
+  .vendor-group__head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+  .vendor-group__name{font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--green-deep);}
+  .vendor-group__link{font-size:0.85rem;color:var(--orange);font-weight:600;}
+
+  .products{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  @media (max-width:960px){.products{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:520px){.products{grid-template-columns:1fr;}}
+
+  .product{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 20px rgba(43,36,32,0.07);transition:transform .2s ease;}
+  .product:hover{transform:translateY(-5px);}
+  .product__image{position:relative;}
+  .product__image img{width:100%;aspect-ratio:1/1;object-fit:cover;}
+  .product__price-badge{position:absolute;top:12px;right:12px;background:var(--tomato);color:#fff;font-family:var(--font-hand);font-weight:700;font-size:1.05rem;padding:5px 14px 6px;border-radius:999px;}
+  .product__info{padding:14px 16px;}
+  .product__name{font-weight:700;font-size:0.96rem;}
+  .product__unit{font-size:0.78rem;color:var(--charcoal-soft);margin-top:2px;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav__inner">
+    <a href="accueil.html" class="nav__brand">Le Panier de Maman</a>
+    <div class="nav__right">
+      <div class="avatar"><a href="profil_client.html">A</a></div>
+    </div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="wrap">
+    <div class="page-header__eyebrow">Fraîcheur du jour</div>
+    <h1>Marché du jour</h1>
+    <p>La sélection annoncée aujourd'hui par chaque boutique — cliquez sur une boutique pour commander directement.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="vendor-group">
+    <div class="vendor-group__head">
+      <div class="vendor-group__name">Le Panier de Maman</div>
+      <a href="vitrine_boutique.html?v=panier-de-maman" class="vendor-group__link">Voir la boutique →</a>
+    </div>
+    <div class="products">
+      <a href="vitrine_boutique.html?v=panier-de-maman" class="product">
+        <div class="product__image"><img src="images6.jpg" alt="Oranges"><span class="product__price-badge">6000F</span></div>
+        <div class="product__info"><div class="product__name">Oranges</div><div class="product__unit">le sac</div></div>
+      </a>
+      <a href="vitrine_boutique.html?v=panier-de-maman" class="product">
+        <div class="product__image"><img src="images7.jpg" alt="Tomates"><span class="product__price-badge">250F</span></div>
+        <div class="product__info"><div class="product__name">Tomates</div><div class="product__unit">le tas</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="vendor-group">
+    <div class="vendor-group__head">
+      <div class="vendor-group__name">Chez Rosine</div>
+      <a href="vitrine_boutique.html?v=chez-rosine" class="vendor-group__link">Voir la boutique →</a>
+    </div>
+    <div class="products">
+      <a href="vitrine_boutique.html?v=chez-rosine" class="product">
+        <div class="product__image"><img src="250px-منطقة_طمينة_مصراتة_ليبيا_06.jpg" alt="Carottes"><span class="product__price-badge">100F</span></div>
+        <div class="product__info"><div class="product__name">Carottes</div><div class="product__unit">le tas</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="vendor-group">
+    <div class="vendor-group__head">
+      <div class="vendor-group__name">Ferme Ahossi</div>
+      <a href="vitrine_boutique.html?v=ferme-ahossi" class="vendor-group__link">Voir la boutique →</a>
+    </div>
+    <div class="products">
+      <a href="vitrine_boutique.html?v=ferme-ahossi" class="product">
+        <div class="product__image"><img src="images5.jpg" alt="Chou"><span class="product__price-badge">300F</span></div>
+        <div class="product__info"><div class="product__name">Chou</div><div class="product__unit">l'unité</div></div>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+</body>
+</html>
