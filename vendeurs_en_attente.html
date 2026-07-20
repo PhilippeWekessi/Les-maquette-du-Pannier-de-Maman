@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendeurs en attente — Dashboard Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#2F5233; --green-leaf:#4C7A3D; --orange:#E8752D;
+    --tomato:#C1442E; --cream:#FBF3E3; --kraft:#E9D9B6; --kraft-dark:#CBB27F;
+    --charcoal:#2B2420; --charcoal-soft:#5A5148; --white:#fff;
+    --font-display:'Baloo 2',sans-serif; --font-body:'Work Sans',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-body);color:var(--charcoal);background:var(--cream);}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  .wrap{max-width:900px;margin:0 auto;padding:28px 24px 60px;}
+
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px;flex-wrap:wrap;gap:14px;}
+  .topbar__title{font-family:var(--font-display);font-weight:700;font-size:1.4rem;color:var(--green-deep);}
+  .topbar__back{color:var(--charcoal-soft);font-size:0.9rem;}
+
+  .pending-card{background:#fff;border-radius:16px;padding:20px 22px;margin-bottom:14px;box-shadow:0 6px 18px rgba(43,36,32,0.06);}
+  .pending-card__top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px;}
+  .pending-card__name{font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:var(--charcoal);}
+  .pending-card__date{font-size:0.78rem;color:var(--charcoal-soft);}
+
+  .pending-card__grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;font-size:0.88rem;margin-bottom:16px;}
+  @media (max-width:560px){.pending-card__grid{grid-template-columns:1fr;}}
+  .pending-card__label{color:var(--charcoal-soft);font-size:0.76rem;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:2px;}
+  .pending-card__value{font-weight:600;}
+
+  .pending-card__actions{display:flex;gap:10px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:999px;font-weight:600;font-size:0.86rem;transition:transform .15s;}
+  .btn-accept{background:var(--green-leaf);color:#fff;}
+  .btn-reject{background:#fff;color:var(--tomato);border:1.5px solid var(--tomato);}
+  .btn:hover{transform:translateY(-2px);}
+
+  .decided-badge{font-size:0.76rem;font-weight:700;padding:5px 14px;border-radius:999px;}
+  .decided-badge.accepted{background:#E4F1DF;color:var(--green-leaf);}
+  .decided-badge.rejected{background:#FBE0DC;color:var(--tomato);}
+
+  .empty-state{text-align:center;padding:60px 20px;color:var(--charcoal-soft);font-size:0.92rem;}
+
+  .toast{position:fixed;bottom:24px;right:24px;z-index:200;background:var(--green-deep);color:#fff;padding:16px 20px;border-radius:14px;box-shadow:0 12px 28px rgba(0,0,0,0.25);max-width:300px;font-size:0.88rem;opacity:0;transform:translateY(16px);transition:opacity .3s ease,transform .3s ease;pointer-events:none;}
+  .toast.is-visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="topbar__title">Vendeurs en attente de validation</div>
+    <a href="dashboard-admin.html" class="topbar__back">← Retour au tableau de bord</a>
+  </div>
+
+  <div id="pendingList">
+
+    <div class="pending-card" data-name="Fatima Sossou">
+      <div class="pending-card__top">
+        <div class="pending-card__name">Fatima Sossou — Chez Fatima</div>
+        <div class="pending-card__date">Demande envoyée le 18 juillet 2026</div>
+      </div>
+      <div class="pending-card__grid">
+        <div><div class="pending-card__label">Téléphone</div><div class="pending-card__value">01 90 45 12 09</div></div>
+        <div><div class="pending-card__label">Email</div><div class="pending-card__value">fatima.s@gmail.com</div></div>
+        <div><div class="pending-card__label">Zone de vente</div><div class="pending-card__value">Godomey, Cotonou</div></div>
+        <div><div class="pending-card__label">Type de compte</div><div class="pending-card__value">Vendeuse</div></div>
+      </div>
+      <div class="pending-card__actions">
+        <button class="btn btn-accept" data-accept>Accepter</button>
+        <button class="btn btn-reject" data-reject>Refuser</button>
+      </div>
+    </div>
+
+    <div class="pending-card" data-name="Michel Dossou">
+      <div class="pending-card__top">
+        <div class="pending-card__name">Michel Dossou — Chez Michel Fruits</div>
+        <div class="pending-card__date">Demande envoyée le 19 juillet 2026</div>
+      </div>
+      <div class="pending-card__grid">
+        <div><div class="pending-card__label">Téléphone</div><div class="pending-card__value">01 90 33 21 05</div></div>
+        <div><div class="pending-card__label">Email</div><div class="pending-card__value">michel.d@gmail.com</div></div>
+        <div><div class="pending-card__label">Zone de vente</div><div class="pending-card__value">Sainte-Rita, Cotonou</div></div>
+        <div><div class="pending-card__label">Type de compte</div><div class="pending-card__value">Vendeur</div></div>
+      </div>
+      <div class="pending-card__actions">
+        <button class="btn btn-accept" data-accept>Accepter</button>
+        <button class="btn btn-reject" data-reject>Refuser</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="empty-state" id="emptyState" style="display:none">
+    Aucune demande en attente pour le moment.
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  function showToast(msg){
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('is-visible');
+    setTimeout(() => toast.classList.remove('is-visible'), 3000);
+  }
+
+  function checkEmpty(){
+    const remaining = document.querySelectorAll('.pending-card').length;
+    document.getElementById('emptyState').style.display = remaining === 0 ? 'block' : 'none';
+  }
+
+  document.querySelectorAll('[data-accept]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.pending-card');
+      const name = card.dataset.name;
+      showToast(`${name} accepté(e) — un SMS de confirmation lui a été envoyé, l'essai gratuit démarre`);
+      card.remove();
+      checkEmpty();
+    });
+  });
+
+  document.querySelectorAll('[data-reject]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.pending-card');
+      const name = card.dataset.name;
+      if(!confirm(`Confirmer le refus de la demande de ${name} ?`)) return;
+      showToast(`Demande de ${name} refusée`);
+      card.remove();
+      checkEmpty();
+    });
+  });
+</script>
+
+</body>
+</html>
